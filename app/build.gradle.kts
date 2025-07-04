@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
     id("com.google.devtools.ksp") version "2.2.0-2.0.2"
-    id ("org.jetbrains.kotlin.plugin.serialization") version "2.2.0"
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0"
 }
 
 android {
@@ -45,17 +45,16 @@ android {
 dependencies {
     implementation(libs.androidX.core)
     implementation(libs.androidX.appCompat)
-    implementation (libs.fragment.ktx)
+    implementation(libs.fragment.ktx)
     implementation(libs.kotlin.stdlib)
 
     // UI layer libraries
     implementation(libs.ui.material)
     implementation(libs.ui.constraintLayout)
 
-
-    //navigation libraries
-    implementation (libs.navigation.fragment.ktx)
-    implementation (libs.navigation.ui.ktx)
+    // navigation libraries
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
 
     // region Unit tests
     testImplementation(libs.unitTests.junit)
@@ -66,25 +65,25 @@ dependencies {
     androidTestImplementation(libs.uiTests.espressoCore)
     // endregion
 
-    //annotation processor
+    // annotation processor
     ksp(libs.moshi.kotlin.codegen)
 
-    //reactive
-    implementation( libs.kotlinx.coroutines.android)
+    // reactive
+    implementation(libs.kotlinx.coroutines.android)
 
-    //DI
-    implementation (libs.koin.android)
+    // DI
+    implementation(libs.koin.android)
 
-    //DB
+    // DB
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
 
-    //network
+    // network
     implementation(libs.retrofit)
     implementation(libs.converter.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
 
-    //images
-    implementation (libs.glide)
+    // images
+    implementation(libs.glide)
 }
