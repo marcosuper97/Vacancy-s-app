@@ -10,16 +10,16 @@ koinAndroid = "4.1.0"
 kotlinxCoroutinesAndroid = "1.10.2"
 kotlinxSerializationJson = "1.9.0"
 minSdk = "26"
-compileSdk = "33"
+compileSdk = "35"
 moshiKotlinCodegen = "1.15.2"
 navigationFragmentKtx = "2.9.1"
 retrofit = "3.0.0"
 roomRuntime = "2.7.2"
-targetSdk = "33"
+targetSdk = "35"
 
 # Detekt
 detekt = "1.23.3"
-detektTwitterComposeRules ="0.0.26"
+detektTwitterComposeRules = "0.0.26"
 
 [libraries]
 
