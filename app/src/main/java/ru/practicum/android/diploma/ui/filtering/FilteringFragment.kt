@@ -1,22 +1,22 @@
-package ru.practicum.android.diploma.ui.sectorwork
+package ru.practicum.android.diploma.ui.filtering
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import ru.practicum.android.diploma.databinding.FragmentSectorWorkBinding
+import ru.practicum.android.diploma.databinding.FragmentFilteringBinding
 
-class SectorWorkFragment : Fragment() {
+class FilteringFragment : Fragment() {
 
-    private var _binding: FragmentSectorWorkBinding? = null
-    private val binding: FragmentSectorWorkBinding get() = requireNotNull(_binding) {"Binding wasn't initiliazed"}
+    private var _binding: FragmentFilteringBinding? = null
+    private val binding: FragmentFilteringBinding get() = requireNotNull(_binding) { "Binding wasn't initiliazed" }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSectorWorkBinding.inflate(inflater, container, false)
+        _binding = FragmentFilteringBinding.inflate(inflater, container, false)
         return binding.root
     }
 

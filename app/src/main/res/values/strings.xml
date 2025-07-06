@@ -27,6 +27,7 @@
     <string name="filtering_settings">Настройка фильтрации</string>
     <string name="choosing_a_place_of_work">Выбор места работы</string>
     <string name="country_choose">Выбор страны</string>
+    <string name="region_choose">Выбор региона</string>
     <string name="select_branch">Выбор отрасли</string>
     <string name="country">Страна</string>
     <string name="region">Регион</string>
