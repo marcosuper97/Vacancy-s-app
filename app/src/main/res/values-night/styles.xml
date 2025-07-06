@@ -61,6 +61,7 @@
         <item name="colorOnSecondaryContainer">@color/blue</item>
         <item name="colorOnSurface">@color/blue</item>
         <item name="colorOnSurfaceVariant">@color/grey</item>
+        <item name="colorSecondaryContainer">@color/transparent</item>
     </style>
 
     <style name="AppearanceBottomNavigationText">
