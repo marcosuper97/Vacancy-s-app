@@ -1,10 +1,10 @@
-package ru.practicum.android.diploma.presentation.fragment
+package ru.practicum.android.diploma.ui.region
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import ru.practicum.android.diploma.databinding.FragmentRegionBinding
 
 class RegionFragment : Fragment() {
