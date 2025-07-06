@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="appearance_regular_12">
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+    </style>
+
+    <style name="appearance_regular_16">
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+
+    <style name="appearance_medium_16">
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+
+    <style name="appearance_medium_22">
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="android:textSize">@dimen/text_size_22</item>
+    </style>
+
+    <style name="appearance_bold_32">
+        <item name="fontFamily">@font/ys_display_bold</item>
+        <item name="android:textSize">@dimen/text_size_32</item>
+    </style>
+
+    <style name="ShapeAppearance">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="Widget.Material3.Button">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Button</item>
+        <item name="android:textAppearance">@style/TextAppearance.App.Button</item>
+        <item name="shapeAppearance">@style/ShapeAppearance</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Button" parent="ThemeOverlay.Material3.Button">
+        <item name="colorContainer">@color/blue</item>
+        <item name="colorOnContainer">@color/white_universal</item>
+    </style>
+
+    <style name="TextAppearance.App.Button" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+        <item name="itemTextAppearanceActive">@style/AppearanceBottomNavigationText</item>
+        <item name="itemTextAppearanceInactive">@style/AppearanceBottomNavigationText</item>
+        <item name="itemTextAppearanceActiveBoldEnabled">false</item>
+        <item name="itemPaddingTop">10dp</item>
+        <item name="itemPaddingBottom">10dp</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView">
+        <item name="colorSurfaceContainer">@color/black</item>
+        <item name="colorOnSecondaryContainer">@color/blue</item>
+        <item name="colorOnSurface">@color/blue</item>
+        <item name="colorOnSurfaceVariant">@color/grey</item>
+    </style>
+
+    <style name="AppearanceBottomNavigationText">
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:letterSpacing">0.03</item>
+    </style>
+
+    <style name="Widget.App.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/blue</item>
+        <item name="buttonIconTint">@color/white_universal</item>
+    </style>
+
+    <style name="Widget.App.RadioButton" parent="Widget.Material3.CompoundButton.RadioButton">
+        <item name="buttonTint">@color/blue</item>
+    </style>
+</resources>
