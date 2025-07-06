@@ -3,7 +3,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 
-suspend fun isConnected(context: Context): Boolean {
+suspend fun isInternetAvailable(context: Context): Boolean {
     val connectivityManager = context.getSystemService(
         Context.CONNECTIVITY_SERVICE
     ) as ConnectivityManager
