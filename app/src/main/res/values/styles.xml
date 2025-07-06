@@ -32,12 +32,12 @@
     </style>
 
     <style name="Widget.App.Button" parent="Widget.Material3.Button">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Button</item>
+        <item name="materialThemeOverlay">@style/buttonOverlay</item>
         <item name="android:textAppearance">@style/TextAppearance.App.Button</item>
         <item name="shapeAppearance">@style/ShapeAppearance</item>
     </style>
 
-    <style name="ThemeOverlay.App.Button" parent="ThemeOverlay.Material3.Button">
+    <style name="buttonOverlay" parent="ThemeOverlay.Material3.Button">
         <item name="colorContainer">@color/blue</item>
         <item name="colorOnContainer">@color/white_universal</item>
     </style>
@@ -48,7 +48,7 @@
     </style>
 
     <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+        <item name="materialThemeOverlay">@style/overlayBottomNavigationView</item>
         <item name="itemTextAppearanceActive">@style/AppearanceBottomNavigationText</item>
         <item name="itemTextAppearanceInactive">@style/AppearanceBottomNavigationText</item>
         <item name="itemTextAppearanceActiveBoldEnabled">false</item>
@@ -56,7 +56,7 @@
         <item name="itemPaddingBottom">10dp</item>
     </style>
 
-    <style name="ThemeOverlay.App.BottomNavigationView">
+    <style name="overlayBottomNavigationView">
         <item name="colorSurfaceContainer">@color/white_universal</item>
         <item name="colorOnSecondaryContainer">@color/blue</item>
         <item name="colorOnSurface">@color/blue</item>
