@@ -9,8 +9,8 @@
         android:translateX="70.680214"
         android:translateY="72.45">
         <path
-            android:pathData="M35.89,0V28.97H165.11V0H35.89ZM0,43.45H28.71V210H0V43.45ZM172.29,43.45H201V209.35H172.29V43.45Z"
             android:fillColor="#FDFDFD"
-            android:fillType="evenOdd" />
+            android:fillType="evenOdd"
+            android:pathData="M35.89,0V28.97H165.11V0H35.89ZM0,43.45H28.71V210H0V43.45ZM172.29,43.45H201V209.35H172.29V43.45Z" />
     </group>
 </vector>
