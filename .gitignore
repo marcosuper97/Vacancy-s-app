@@ -47,3 +47,7 @@ google-services.json
 # OS specific
 .DS_Store
 *.log
+/.idea/migrations.xml
+/.idea/AndroidProjectSystem.xml
+/.idea/deploymentTargetSelector.xml
+/.idea/runConfigurations.xml
