@@ -17,7 +17,8 @@ class CountryFragment : Fragment() {
     private val viewModel: CountryViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCountryBinding.inflate(inflater, container, false)

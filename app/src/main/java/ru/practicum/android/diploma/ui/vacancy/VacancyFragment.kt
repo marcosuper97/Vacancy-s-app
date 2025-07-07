@@ -16,7 +16,8 @@ class VacancyFragment : Fragment() {
     private val viewModel: VacancyViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentVacancyBinding.inflate(inflater, container, false)

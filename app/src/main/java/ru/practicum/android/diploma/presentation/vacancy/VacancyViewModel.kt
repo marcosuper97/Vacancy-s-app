@@ -3,5 +3,5 @@ package ru.practicum.android.diploma.presentation.vacancy
 import androidx.lifecycle.ViewModel
 
 class VacancyViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+    // Implement the ViewModel
 }

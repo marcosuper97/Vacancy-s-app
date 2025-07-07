@@ -17,7 +17,8 @@ class SectorWorkFragment : Fragment() {
     private val viewModel: SectorWorkViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSectorWorkBinding.inflate(inflater, container, false)
