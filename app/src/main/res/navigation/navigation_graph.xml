@@ -8,18 +8,18 @@
     <fragment
         android:id="@+id/main_fragment"
         android:name="ru.practicum.android.diploma.ui.main.MainFragment"
-        android:label="MediaFragment"
+        android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
 
     <fragment
         android:id="@+id/favorites_fragment"
         android:name="ru.practicum.android.diploma.ui.favorites.FavoritesFragment"
-        android:label="FavoritesFragment"
+        android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
 
     <fragment
         android:id="@+id/team_fragment"
         android:name="ru.practicum.android.diploma.ui.team.TeamFragment"
-        android:label="TeamFragment"
+        android:label="fragment_team"
         tools:layout="@layout/fragment_team" />
 </navigation>
