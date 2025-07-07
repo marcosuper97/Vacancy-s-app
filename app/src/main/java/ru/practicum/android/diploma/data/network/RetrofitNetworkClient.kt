@@ -2,10 +2,15 @@ package ru.practicum.android.diploma.data.network
 
 import android.content.Context
 import retrofit2.HttpException
+import ru.practicum.android.diploma.data.dto.AreasRequest
+import ru.practicum.android.diploma.data.dto.DataResponse
+import ru.practicum.android.diploma.data.dto.IndustriesRequest
 import ru.practicum.android.diploma.data.dto.Response
 import ru.practicum.android.diploma.data.dto.VacancyDetailsRequest
 import ru.practicum.android.diploma.data.dto.VacancySearchRequest
 import ru.practicum.android.diploma.util.isInternetAvailable
+import java.io.IOException
+import java.net.SocketTimeoutException
 
 class RetrofitNetworkClient(
     private val context: Context,
@@ -13,7 +18,7 @@ class RetrofitNetworkClient(
 ) : NetworkClient {
 
     override suspend fun doRequest(dto: Any): Response {
-        if (isInternetAvailable(context)) return Response().apply { resultCode = -1 }
+        if (!isInternetAvailable(context)) return Response().apply { resultCode = -1 }
 
         return when (dto) {
             is VacancySearchRequest -> apiCall(
@@ -23,7 +28,8 @@ class RetrofitNetworkClient(
                         page = dto.page,
                         perPage = dto.perPage,
                         area = dto.area,
-                        industry = dto.industry
+                        industry = dto.industry,
+                        onlyWithSalary = dto.onlyWithSalary
                     )
                 },
                 errorMessage = "Ошибка поиска вакансий"
@@ -32,6 +38,22 @@ class RetrofitNetworkClient(
             is VacancyDetailsRequest -> apiCall(
                 call = { apiService.getVacancyDetails(dto.vacancyId) },
                 errorMessage = "Ошибка получения вакансии"
+            )
+
+            is IndustriesRequest -> apiCall(
+                call = {
+                    val response = apiService.getIndustries()
+                    DataResponse(response)
+                },
+                errorMessage = "Ошибка получения отраслей"
+            )
+
+            is AreasRequest -> apiCall(
+                call = {
+                    val response = apiService.getAreas()
+                    DataResponse(response)
+                },
+                errorMessage = "Ошибка получения регионов"
             )
 
             else -> Response().apply {
@@ -44,22 +66,36 @@ class RetrofitNetworkClient(
     private fun handleApiError(e: Exception, defaultMessage: String): Response {
         return when (e) {
             is HttpException -> {
-                val (code, message) = when (e.code()) {
-                    400 -> 400 to "$defaultMessage: Параметры переданы с ошибкой"
-                    403 -> 403 to "$defaultMessage: Требуется ввести капчу"
-                    404 -> 404 to "$defaultMessage: Указанная вакансия не существует или у пользователя нет прав на просмотр вакансии"
-                    429 -> 429 to "$defaultMessage: Слишком много запросов"
-                    else -> e.code() to "$defaultMessage: Ошибка сервера (${e.code()})"
-                }
+                val errorBody = e.response()?.errorBody()?.string()
+                val message = errorBody?.takeIf { it.isNotBlank() }
+                    ?: when (e.code()) {
+                        400 -> "Неверные параметры запроса"
+                        401 -> "Ошибка авторизации"
+                        403 -> "Доступ запрещен"
+                        404 -> "Ресурс не найден"
+                        429 -> "Слишком много запросов"
+                        else -> "Ошибка сервера (${e.code()})"
+                    }
+
                 Response().apply {
-                    resultCode = code
-                    errorMessage = message
+                    resultCode = e.code()
+                    errorMessage = "$defaultMessage: $message"
                 }
+            }
+
+            is SocketTimeoutException -> Response().apply {
+                resultCode = 504
+                errorMessage = "$defaultMessage: Таймаут соединения"
+            }
+
+            is IOException -> Response().apply {
+                resultCode = 503
+                errorMessage = "$defaultMessage: Сетевая ошибка"
             }
 
             else -> Response().apply {
                 resultCode = 500
-                errorMessage = "$defaultMessage: ${e.message ?: "Неизвестная ошибка"}"
+                errorMessage = "$defaultMessage: Неизвестная ошибка"
             }
         }
     }
@@ -70,11 +106,16 @@ class RetrofitNetworkClient(
         errorMessage: String
     ): Response {
         return try {
-            val result = call() // Выполняем API-вызов
-            successAction(result) // Применяем дополнительное действие
+            val result = call()
+            successAction(result)
+
             when (result) {
-                is Response -> result.apply { resultCode = 200 }
-                else -> Response().apply { resultCode = 200 }
+                is Response -> result.apply {
+                    if (resultCode == 0) resultCode = 200
+                }
+                else -> DataResponse(result).apply {
+                    resultCode = 200
+                }
             }
         } catch (e: Exception) {
             handleApiError(e, errorMessage)
