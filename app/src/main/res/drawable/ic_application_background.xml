@@ -11,14 +11,14 @@
         <group>
             <clip-path android:pathData="M0,0h512v512h-512z" />
             <path
-                android:pathData="M0,0h512v512h-512z"
-                android:fillColor="#1A1B22" />
+                android:fillColor="#1A1B22"
+                android:pathData="M0,0h512v512h-512z" />
             <path
-                android:pathData="M0,0h256v256h-256z"
-                android:fillColor="#3772E7" />
+                android:fillColor="#3772E7"
+                android:pathData="M0,0h256v256h-256z" />
             <path
-                android:pathData="M256,256h256v256h-256z"
-                android:fillColor="#3772E7" />
+                android:fillColor="#3772E7"
+                android:pathData="M256,256h256v256h-256z" />
         </group>
     </group>
 </vector>

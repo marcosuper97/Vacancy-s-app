@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.ui.vacancy
+package ru.practicum.android.diploma.ui.favorites
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,22 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
-import ru.practicum.android.diploma.presentation.vacancy.VacancyViewModel
+import ru.practicum.android.diploma.databinding.FragmentFavoritesBinding
+import ru.practicum.android.diploma.presentation.favorites.FavoritesViewModel
 
-class VacancyFragment : Fragment() {
+class FavoritesFragment : Fragment() {
 
-    private var _binding: FragmentVacancyBinding? = null
-    private val binding: FragmentVacancyBinding get() = requireNotNull(_binding) { "Binding wasn't initiliazed" }
-    private val viewModel: VacancyViewModel by viewModels()
+    private var _binding: FragmentFavoritesBinding? = null
+    private val binding: FragmentFavoritesBinding get() = requireNotNull(_binding) { "Binding wasn't initiliazed" }
+    private val viewModel: FavoritesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentVacancyBinding.inflate(inflater, container, false)
+        _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,4 +31,5 @@ class VacancyFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

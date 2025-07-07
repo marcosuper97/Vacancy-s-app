@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.databinding.FragmentRegionBinding
+import ru.practicum.android.diploma.presentation.region.RegionViewModel
 
 class RegionFragment : Fragment() {
 
     private var _binding: FragmentRegionBinding? = null
-    private val binding: FragmentRegionBinding get() = requireNotNull(_binding) {"Binding wasn't initiliazed"}
+    private val binding: FragmentRegionBinding get() = requireNotNull(_binding) { "Binding wasn't initiliazed" }
+    private val viewModel: RegionViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
