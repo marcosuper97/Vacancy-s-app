@@ -1,12 +1,11 @@
 package ru.practicum.android.diploma.data.network
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import retrofit2.HttpException
 import ru.practicum.android.diploma.data.dto.Response
 import ru.practicum.android.diploma.data.dto.VacancyDetailsRequest
 import ru.practicum.android.diploma.data.dto.VacancySearchRequest
+import ru.practicum.android.diploma.util.isInternetAvailable
 
 class RetrofitNetworkClient(
     private val context: Context,
@@ -14,7 +13,7 @@ class RetrofitNetworkClient(
 ) : NetworkClient {
 
     override suspend fun doRequest(dto: Any): Response {
-        if (!isConnected()) return Response().apply { resultCode = -1 }
+        if (isInternetAvailable(context)) return Response().apply { resultCode = -1 }
 
         return when (dto) {
             is VacancySearchRequest -> apiCall(
@@ -42,8 +41,6 @@ class RetrofitNetworkClient(
         }
     }
 
-
-    ///
     private fun handleApiError(e: Exception, defaultMessage: String): Response {
         return when (e) {
             is HttpException -> {
@@ -59,6 +56,7 @@ class RetrofitNetworkClient(
                     errorMessage = message
                 }
             }
+
             else -> Response().apply {
                 resultCode = 500
                 errorMessage = "$defaultMessage: ${e.message ?: "Неизвестная ошибка"}"
@@ -76,30 +74,11 @@ class RetrofitNetworkClient(
             successAction(result) // Применяем дополнительное действие
             when (result) {
                 is Response -> result.apply { resultCode = 200 }
-                else -> Response().apply {
-                    resultCode = 200
-                    // Можно добавить данные из result, если нужно:
-                    // data = result
-                }
+                else -> Response().apply { resultCode = 200 }
             }
         } catch (e: Exception) {
             handleApiError(e, errorMessage)
         }
     }
 
-    private fun isConnected(): Boolean {
-        val connectivityManager = context.getSystemService(
-            Context.CONNECTIVITY_SERVICE
-        ) as ConnectivityManager
-        val capabilities =
-            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-        if (capabilities != null) {
-            when {
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> return true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> return true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> return true
-            }
-        }
-        return false
-    }
 }
