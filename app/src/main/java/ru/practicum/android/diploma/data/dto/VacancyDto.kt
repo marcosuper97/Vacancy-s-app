@@ -8,16 +8,11 @@ data class VacancyDto(
     val name: String,
     val employer: EmployerDto,
     val area: Area,
-    val description: String,
     @SerialName("salary_range")
     val salaryRange:SalaryRangeDto,
-    @SerialName("employment_form")
-    private val _employmentForm: Map<String, String>,
-    @SerialName("experience")
-    private val _experience: Map<String, String>
-) {
-    val employmentName: String get() = _employmentForm["name"] ?: ""
-    val experienceName: String get() = _experience["name"] ?: ""
+    private val _schedule:  Map<String, String>,
+)  {
+    val scheduleName: String get() = _schedule["name"] ?: ""
 }
 
 data class EmployerDto(
