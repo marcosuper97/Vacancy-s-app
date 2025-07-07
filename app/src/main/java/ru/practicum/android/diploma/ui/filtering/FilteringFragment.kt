@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilteringBinding
 
 class FilteringFragment : Fragment() {
@@ -22,6 +24,18 @@ class FilteringFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbarFiltering.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.inputPlaceWork.setOnClickListener {
+            findNavController().navigate(R.id.action_filteringFragment_to_placeWorkFragment)
+        }
+
+        binding.inputSectorWork.setOnClickListener {
+            findNavController().navigate(R.id.action_filteringFragment_to_sectorWorkFragment)
+        }
     }
 
     override fun onDestroyView() {

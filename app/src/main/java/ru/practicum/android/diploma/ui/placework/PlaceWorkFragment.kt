@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentPlaceWorkBinding
 
 class PlaceWorkFragment : Fragment() {
@@ -22,6 +24,18 @@ class PlaceWorkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbarPlaceWork.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.inputCountry.setOnClickListener {
+            findNavController().navigate(R.id.action_placeWorkFragment_to_countryFragment)
+        }
+
+        binding.inputRegion.setOnClickListener {
+            findNavController().navigate(R.id.action_placeWorkFragment_to_regionFragment)
+        }
     }
 
     override fun onDestroyView() {
