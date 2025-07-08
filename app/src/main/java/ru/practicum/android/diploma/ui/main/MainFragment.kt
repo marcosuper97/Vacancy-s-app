@@ -32,7 +32,7 @@ class MainFragment : Fragment() {
         binding.toolbarMain.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.filtering -> {
-                    findNavController().navigate(R.id.action_mainFragment_to_filteringFragment)
+                    findNavController().navigate(R.id.action_to_filtering_fragment)
                     true
                 }
 

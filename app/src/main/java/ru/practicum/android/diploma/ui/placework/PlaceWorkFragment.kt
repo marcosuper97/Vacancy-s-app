@@ -34,11 +34,11 @@ class PlaceWorkFragment : Fragment() {
         }
 
         binding.choiceCountry.setOnClickListener {
-            findNavController().navigate(R.id.action_placeWorkFragment_to_countryFragment)
+            findNavController().navigate(R.id.action_to_country_fragment)
         }
 
         binding.choiceRegion.setOnClickListener {
-            findNavController().navigate(R.id.action_placeWorkFragment_to_regionFragment)
+            findNavController().navigate(R.id.action_to_region_fragment)
         }
     }
 

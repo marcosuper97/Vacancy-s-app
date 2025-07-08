@@ -34,11 +34,11 @@ class FilteringFragment : Fragment() {
         }
 
         binding.choicePlaceWork.setOnClickListener {
-            findNavController().navigate(R.id.action_filteringFragment_to_placeWorkFragment)
+            findNavController().navigate(R.id.action_to_place_work_fragment)
         }
 
         binding.choiceSectorWork.setOnClickListener {
-            findNavController().navigate(R.id.action_filteringFragment_to_sectorWorkFragment)
+            findNavController().navigate(R.id.action_to_sector_work_fragment)
         }
     }
 

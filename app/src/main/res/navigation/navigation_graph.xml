@@ -21,10 +21,10 @@
         android:label="fragment_filtering"
         tools:layout="@layout/fragment_filtering">
         <action
-            android:id="@+id/action_filteringFragment_to_placeWorkFragment"
+            android:id="@+id/action_to_place_work_fragment"
             app:destination="@id/place_work_fragment" />
         <action
-            android:id="@+id/action_filteringFragment_to_sectorWorkFragment"
+            android:id="@+id/action_to_sector_work_fragment"
             app:destination="@id/sector_work_fragment" />
     </fragment>
     <fragment
@@ -33,10 +33,10 @@
         android:label="fragment_place_work"
         tools:layout="@layout/fragment_place_work">
         <action
-            android:id="@+id/action_placeWorkFragment_to_countryFragment"
+            android:id="@+id/action_to_country_fragment"
             app:destination="@id/country_fragment" />
         <action
-            android:id="@+id/action_placeWorkFragment_to_regionFragment"
+            android:id="@+id/action_to_region_fragment"
             app:destination="@id/region_fragment" />
     </fragment>
     <fragment
@@ -50,10 +50,10 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_main">
         <action
-            android:id="@+id/action_mainFragment_to_filteringFragment"
+            android:id="@+id/action_to_filtering_fragment"
             app:destination="@id/filtering_fragment" />
         <action
-            android:id="@+id/action_mainFragment_to_vacancyFragment"
+            android:id="@+id/action_to_vacancy_fragment"
             app:destination="@id/vacancy_fragment" />
     </fragment>
     <fragment
