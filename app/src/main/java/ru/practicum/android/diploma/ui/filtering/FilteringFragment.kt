@@ -14,13 +14,11 @@ import ru.practicum.android.diploma.presentation.filtering.FilteringViewModel
 class FilteringFragment : Fragment() {
 
     private var _binding: FragmentFilteringBinding? = null
-    private val binding: FragmentFilteringBinding get() = requireNotNull(_binding) { getString(R.string.binding_not_initialized) }
+    private val binding: FragmentFilteringBinding get() = _binding!!
     private val viewModel: FilteringViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFilteringBinding.inflate(inflater, container, false)
         return binding.root

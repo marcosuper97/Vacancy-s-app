@@ -14,13 +14,11 @@ import ru.practicum.android.diploma.presentation.placework.PlaceWorkViewModel
 class PlaceWorkFragment : Fragment() {
 
     private var _binding: FragmentPlaceWorkBinding? = null
-    private val binding: FragmentPlaceWorkBinding get() = requireNotNull(_binding) { getString(R.string.binding_not_initialized) }
+    private val binding: FragmentPlaceWorkBinding get() = _binding!!
     private val viewModel: PlaceWorkViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPlaceWorkBinding.inflate(inflater, container, false)
         return binding.root

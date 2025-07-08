@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentCountryBinding
 import ru.practicum.android.diploma.presentation.country.CountryViewModel
 
 class CountryFragment : Fragment() {
 
     private var _binding: FragmentCountryBinding? = null
-    private val binding: FragmentCountryBinding get() = requireNotNull(_binding) { getString(R.string.binding_not_initialized) }
+    private val binding: FragmentCountryBinding get() = _binding!!
     private val viewModel: CountryViewModel by viewModels()
 
     override fun onCreateView(
