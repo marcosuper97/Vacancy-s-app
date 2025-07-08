@@ -33,11 +33,11 @@ class PlaceWorkFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        binding.iconInputCountry.setOnClickListener {
+        binding.choiceCountry.setOnClickListener {
             findNavController().navigate(R.id.action_placeWorkFragment_to_countryFragment)
         }
 
-        binding.iconInputRegion.setOnClickListener {
+        binding.choiceRegion.setOnClickListener {
             findNavController().navigate(R.id.action_placeWorkFragment_to_regionFragment)
         }
     }
