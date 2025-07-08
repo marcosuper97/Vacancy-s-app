@@ -9,10 +9,6 @@ import ru.practicum.android.diploma.data.network.HhApiService
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
 
-object ApiConfig {
-    const val BASE_URL = "https://hh.api.ru/"
-}
-
 val dataModule = module {
 
     single<HhApiService> {
@@ -28,4 +24,8 @@ val dataModule = module {
     factory<NetworkClient> {
         RetrofitNetworkClient(get(), get())
     }
+}
+
+object ApiConfig {
+    const val BASE_URL = "https://hh.api.ru/"
 }
