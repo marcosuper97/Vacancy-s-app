@@ -17,49 +17,77 @@
         app:title="@string/filtering_settings"
         app:titleTextAppearance="@style/appearance_medium_22" />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:id="@+id/choicePlaceWork"
-        style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_60"
         android:layout_marginTop="@dimen/dp_16"
-        android:hint="@string/place_of_work"
-        app:boxCollapsedPaddingTop="@dimen/dp_12"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/dp_16"
+        android:paddingVertical="@dimen/dp_12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarFiltering">
+        app:layout_constraintTop_toBottomOf="@id/toolbarFiltering"
+        tools:ignore="UseCompoundDrawables">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/inputPlaceWork"
-            style="@style/TextInputEditTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_60"
-            android:text="" />
-    </com.google.android.material.textfield.TextInputLayout>
+            style="@style/appearance_regular_16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:hint="@string/place_of_work"
+            android:text=""
+            android:textColorHint="@color/grey" />
 
-    <com.google.android.material.textfield.TextInputLayout
+        <ImageView
+            android:id="@+id/iconInputPlaceWork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
+            android:contentDescription="@string/place_of_work"
+            android:src="@drawable/ic_arrow_forward_24" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/choiceSectorWork"
-        style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/branch"
-        app:boxCollapsedPaddingTop="@dimen/dp_12"
+        android:layout_height="@dimen/dp_60"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/dp_16"
+        android:paddingVertical="@dimen/dp_12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/choicePlaceWork">
+        app:layout_constraintTop_toBottomOf="@id/choicePlaceWork"
+        tools:ignore="UseCompoundDrawables">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/inputSectorWork"
-            style="@style/TextInputEditTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_60"
-            android:text="" />
-    </com.google.android.material.textfield.TextInputLayout>
+            style="@style/appearance_regular_16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:hint="@string/branch"
+            android:text=""
+            android:textColorHint="@color/grey" />
+
+        <ImageView
+            android:id="@+id/iconInputSectorWork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
+            android:contentDescription="@string/branch"
+            android:src="@drawable/ic_arrow_forward_24" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="@string/filtering_settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
