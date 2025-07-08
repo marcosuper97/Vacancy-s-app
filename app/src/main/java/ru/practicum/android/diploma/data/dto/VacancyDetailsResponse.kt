@@ -9,13 +9,13 @@ data class VacancyDetailsResponse(
     val area: Area,
     val description: String,
     @SerialName("salary_range")
-    val salaryRange:SalaryRangeDto,
+    val salaryRange: SalaryRangeDto,
     @SerialName("employment_form")
-    private val _employmentForm: Map<String, String>,
+    private val employmentForm: Map<String, String>,
     @SerialName("experience")
-    private val _experience: Map<String, String>
-) : Response(){
-    val employmentName: String get() = _employmentForm["name"] ?: ""
-    val experienceName: String get() = _experience["name"] ?: ""
+    private val experience: Map<String, String>
+) : Response() {
+    val employmentName: String get() = employmentForm["name"] ?: ""
+    val experienceName: String get() = experience["name"] ?: ""
 }
 
