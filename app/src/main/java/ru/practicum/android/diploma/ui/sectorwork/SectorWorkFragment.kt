@@ -21,7 +21,7 @@ class SectorWorkFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSectorWorkBinding.inflate(inflater, container, false)
         return binding.root
     }

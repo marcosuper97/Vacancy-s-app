@@ -52,8 +52,9 @@
         <item name="itemTextAppearanceActive">@style/AppearanceBottomNavigationText</item>
         <item name="itemTextAppearanceInactive">@style/AppearanceBottomNavigationText</item>
         <item name="itemTextAppearanceActiveBoldEnabled">false</item>
-        <item name="itemPaddingTop">10dp</item>
-        <item name="itemPaddingBottom">10dp</item>
+        <item name="itemPaddingTop">@dimen/bottom_nav_item_padding_top</item>
+        <item name="itemPaddingBottom">@dimen/bottom_nav_item_padding_bottom</item>
+        <item name="android:minHeight">@dimen/bottom_nav_min_height</item>
     </style>
 
     <style name="overlayBottomNavigationView">

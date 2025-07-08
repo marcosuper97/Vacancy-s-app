@@ -4,7 +4,9 @@
     <dimen name="text_size_22">22sp</dimen>
     <dimen name="text_size_16">16sp</dimen>
     <dimen name="text_size_12">12sp</dimen>
-
+    <dimen name="bottom_nav_min_height">56dp</dimen>
+    <dimen name="bottom_nav_item_padding_top">8dp</dimen>
+    <dimen name="bottom_nav_item_padding_bottom">8dp</dimen>
     <dimen name="dp_0">0dp</dimen>
     <dimen name="dp_8">8dp</dimen>
     <dimen name="dp_12">12dp</dimen>

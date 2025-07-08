@@ -21,7 +21,7 @@ class CountryFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCountryBinding.inflate(inflater, container, false)
         return binding.root
     }

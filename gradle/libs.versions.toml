@@ -60,5 +60,6 @@ unitTests-junit = "junit:junit:4.13.2"
 # UI tests
 uiTests-junitExt = "androidx.test.ext:junit:1.2.1"
 uiTests-espressoCore = "androidx.test.espresso:espresso-core:3.6.1"
+[plugins]
 
 [bundles]
