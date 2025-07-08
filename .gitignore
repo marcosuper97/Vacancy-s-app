@@ -47,5 +47,3 @@ google-services.json
 # OS specific
 .DS_Store
 *.log
-/.idea/AndroidProjectSystem.xml
-/.idea/runConfigurations.xml
