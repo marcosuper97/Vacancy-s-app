@@ -12,11 +12,6 @@ interface HhApiService {
     @GET("vacancies")
     suspend fun search(
         @Query("term") text: String,
-        @Query("page") page: Int?,
-        @Query("per_page") perPage: Int?,
-        @Query("area") area: String?,
-        @Query("industry") industry: String?,
-        @Query("only_with_salary") onlyWithSalary: Boolean?
     ): VacancySearchResponse
 
     @GET("vacancies/{vacancy_id}")
