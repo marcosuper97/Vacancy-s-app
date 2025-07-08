@@ -12,5 +12,3 @@ data class VacancySearchResponse(
     val pages: Int,
     val page: Int,
 ) : Response()
-
-
