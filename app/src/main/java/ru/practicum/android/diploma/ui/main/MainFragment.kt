@@ -14,7 +14,7 @@ import ru.practicum.android.diploma.presentation.main.MainViewModel
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
-    private val binding: FragmentMainBinding get() = requireNotNull(_binding) { "Binding wasn't initiliazed" }
+    private val binding: FragmentMainBinding get() = requireNotNull(_binding) { getString(R.string.binding_not_initialized) }
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreateView(

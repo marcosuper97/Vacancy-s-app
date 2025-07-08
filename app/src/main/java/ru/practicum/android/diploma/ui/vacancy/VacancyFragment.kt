@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
 import ru.practicum.android.diploma.presentation.vacancy.VacancyViewModel
 
 class VacancyFragment : Fragment() {
 
     private var _binding: FragmentVacancyBinding? = null
-    private val binding: FragmentVacancyBinding get() = requireNotNull(_binding) { "Binding wasn't initiliazed" }
+    private val binding: FragmentVacancyBinding get() = requireNotNull(_binding) { getString(R.string.binding_not_initialized) }
     private val viewModel: VacancyViewModel by viewModels()
 
     override fun onCreateView(

@@ -12,7 +12,7 @@ import ru.practicum.android.diploma.databinding.ActivityRootBinding
 class RootActivity : AppCompatActivity() {
 
     private var _binding: ActivityRootBinding? = null
-    private val binding: ActivityRootBinding get() = requireNotNull(_binding) { "Binding wasn't initiliazed!" }
+    private val binding: ActivityRootBinding get() = requireNotNull(_binding) { getString(R.string.binding_not_initialized) }
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -14,7 +14,7 @@ import ru.practicum.android.diploma.presentation.filtering.FilteringViewModel
 class FilteringFragment : Fragment() {
 
     private var _binding: FragmentFilteringBinding? = null
-    private val binding: FragmentFilteringBinding get() = requireNotNull(_binding) { "Binding wasn't initiliazed" }
+    private val binding: FragmentFilteringBinding get() = requireNotNull(_binding) { getString(R.string.binding_not_initialized) }
     private val viewModel: FilteringViewModel by viewModels()
 
     override fun onCreateView(

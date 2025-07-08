@@ -14,7 +14,7 @@ import ru.practicum.android.diploma.presentation.placework.PlaceWorkViewModel
 class PlaceWorkFragment : Fragment() {
 
     private var _binding: FragmentPlaceWorkBinding? = null
-    private val binding: FragmentPlaceWorkBinding get() = requireNotNull(_binding) { "Binding wasn't initiliazed" }
+    private val binding: FragmentPlaceWorkBinding get() = requireNotNull(_binding) { getString(R.string.binding_not_initialized) }
     private val viewModel: PlaceWorkViewModel by viewModels()
 
     override fun onCreateView(
