@@ -11,10 +11,9 @@ data class VacancyDto(
     val area: Area,
     @SerialName("salary_range")
     val salaryRange: SalaryRangeDto,
-    private val schedule: Map<String, String>,
-) {
-    val scheduleName: String get() = schedule["name"] ?: ""
-}
+    @SerialName("work_format")
+    val workFormat: WorkFormat,
+)
 
 @Serializable
 data class EmployerDto(
@@ -26,12 +25,12 @@ data class EmployerDto(
 @Serializable
 data class LogoUrlDto(
     @SerialName("90")
-    val size90: String,
+    val size90: String?,
 )
 
 @Serializable
 data class Area(
-    val id: String,
+    val id: String?,
     val name: String,
 )
 
@@ -39,6 +38,11 @@ data class Area(
 data class SalaryRangeDto(
     val currency: String,
     val from: Int? = 0,
-    val gross: Boolean,
-    val to: Int? = 0
+    val gross: Boolean?,
+    val to: Int? = 0,
+)
+
+@Serializable
+data class WorkFormat(
+    val name: String?,
 )
