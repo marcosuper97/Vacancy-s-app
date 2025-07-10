@@ -2,8 +2,8 @@ package ru.practicum.android.diploma.data.impl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ru.practicum.android.diploma.data.db.Converter
 import ru.practicum.android.diploma.data.db.DataBase
+import ru.practicum.android.diploma.data.db.Converter
 import ru.practicum.android.diploma.data.db.VacancyEntity
 import ru.practicum.android.diploma.domain.entity.Vacancy
 import ru.practicum.android.diploma.domain.repositories.FavoritesRepository
@@ -22,6 +22,7 @@ class FavoritesRepositoryImpl(private val dataBase: DataBase) : FavoritesReposit
         dataBase.vacanciesDao()
             .getAllVacancies()
             .map { entitiesList -> entitiesList.map { entity -> Converter.map(entity) } }
+
 
     override fun getOneVacancy(id: String): Flow<Vacancy> =
         dataBase.vacanciesDao()
