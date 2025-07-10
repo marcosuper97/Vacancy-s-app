@@ -13,11 +13,11 @@ data class VacancyDto(
     @SerialName("salary_range")
     val salaryRange: SalaryRangeDto?,
     @SerialName("work_format")
-    val workFormat: WorkFormat?,
+    val workFormat: WorkFormatDto?,
     @SerialName("employment_form")
     val employmentFrom: EmploymentFormDto,
     val description: String,
-    val address: String?,
+    val address: AddressDto?,
     @SerialName("key_skills")
     val keySkills: List<String>
 )
@@ -37,7 +37,6 @@ data class LogoUrlDto(
 
 @Serializable
 data class Area(
-    val id: String,
     val name: String,
 )
 
@@ -50,17 +49,17 @@ data class SalaryRangeDto(
 )
 
 @Serializable
-data class WorkFormat(
-    val name: String
+data class WorkFormatDto(
+    val name: String?
 )
 
 @Serializable
 data class ExperienceDto(
-    val name: String
+    val name: String?
 )
 
 @Serializable
-data class Address(
+data class AddressDto(
     val city: String?,
     val street: String?,
     val building: String?,
@@ -69,7 +68,7 @@ data class Address(
 
 @Serializable
 data class EmploymentFormDto(
-    val name: String
+    val name: String?
 )
 
 

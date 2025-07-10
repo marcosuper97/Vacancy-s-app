@@ -6,8 +6,8 @@ import ru.practicum.android.diploma.data.dto.VacancyDto
 
 interface FavoritesRepository {
     suspend fun insertVacancy(vacancy: VacancyEntity)
-    suspend fun deleteVacancy(id: Long)
+    suspend fun deleteVacancy(id: String)
     fun getAllVacancies(): Flow<List<VacancyDto>>
-    fun getOneVacancy(id: Long): Flow<VacancyDto>
-    suspend fun isFavorite(id: Long): Boolean
+    fun getOneVacancy(id: String): Flow<VacancyDto>
+    suspend fun isFavorite(id: String): Boolean
 }
