@@ -1,13 +1,6 @@
-package ru.practicum.android.diploma.data.db
+package ru.practicum.android.diploma.domain.entity
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(
-    tableName = "vacancies_table"
-)
-data class VacancyEntity(
-    @PrimaryKey
+data class Vacancy(
     val id: String,
     val url: String,
     val name: String,
@@ -23,6 +16,6 @@ data class VacancyEntity(
     val description: String,
     val address: String?,
     val keySkills: List<String>,
-    val additionTime: Long
+    val additionTime: Long,
+    val isFavorite: Boolean
 )
-
