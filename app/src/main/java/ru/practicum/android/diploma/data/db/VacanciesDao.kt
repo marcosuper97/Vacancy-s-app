@@ -12,14 +12,14 @@ interface VacanciesDao {
     suspend fun insertVacancy(vacancy: VacancyEntity)
 
     @Query("Delete FROM vacancies_table WHERE id = :id")
-    suspend fun deleteVacancy(id: Long)
+    suspend fun deleteVacancy(id: String)
 
     @Query("Select * FROM vacancies_table ORDER BY additionTime DESC")
     fun getAllVacancies(): Flow<List<VacancyEntity>>
 
     @Query("SELECT * FROM vacancies_table WHERE id = :id")
-    fun getOneVacancy(id: Long): Flow<VacancyEntity>
+    fun getOneVacancy(id: String): Flow<VacancyEntity>
 
     @Query("SELECT EXISTS(SELECT 1 FROM vacancies_table WHERE id = :id)")
-    suspend fun isFavorite(id: Long): Boolean
+    suspend fun isFavorite(id: String): Boolean
 }

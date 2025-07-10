@@ -25,7 +25,7 @@ data class VacancyEntity(
     val street: String?,
     val building: String?,
     val addressDescription: String?,
-    val keySkills: String,
+    val keySkills: List<String>,
     val additionTime: Long
 )
 

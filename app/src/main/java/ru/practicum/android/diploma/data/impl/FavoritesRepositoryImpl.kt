@@ -9,11 +9,12 @@ import ru.practicum.android.diploma.data.dto.VacancyDto
 import ru.practicum.android.diploma.domain.repositories.FavoritesRepository
 
 class FavoritesRepositoryImpl(private val dataBase: DataBase) : FavoritesRepository {
+
     override suspend fun insertVacancy(vacancy: VacancyEntity) {
         dataBase.vacanciesDao().insertVacancy(vacancy)
     }
 
-    override suspend fun deleteVacancy(id: Long) {
+    override suspend fun deleteVacancy(id: String) {
         dataBase.vacanciesDao().deleteVacancy(id)
     }
 
@@ -23,12 +24,12 @@ class FavoritesRepositoryImpl(private val dataBase: DataBase) : FavoritesReposit
             .map { entities -> mapEntityToDto(entities) }
 
 
-    override fun getOneVacancy(id: Long): Flow<VacancyDto> =
+    override fun getOneVacancy(id: String): Flow<VacancyDto> =
         dataBase.vacanciesDao()
             .getOneVacancy(id)
             .map {vacancy -> Converter.map(vacancy)}
 
-    override suspend fun isFavorite(id: Long): Boolean =
+    override suspend fun isFavorite(id: String): Boolean =
         dataBase.vacanciesDao().isFavorite(id)
 
     private fun mapEntityToDto(vacancies: List<VacancyEntity>): List<VacancyDto> {
