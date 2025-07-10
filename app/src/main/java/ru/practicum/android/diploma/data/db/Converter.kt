@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.data.db
 
+import kotlinx.serialization.json.Json
 import ru.practicum.android.diploma.domain.entity.Vacancy
 
 object Converter {
@@ -23,7 +24,7 @@ object Converter {
             street = vacancyEntity.street,
             building = vacancyEntity.building,
             addressDescription = vacancyEntity.addressDescription,
-            keySkills = vacancyEntity.keySkills,
+            keySkills = Json.decodeFromString(vacancyEntity.keySkills),
             additionTime = vacancyEntity.additionTime,
             isFavorite = true
         )
@@ -48,8 +49,9 @@ object Converter {
             street = vacancy.street,
             building = vacancy.building,
             addressDescription = vacancy.addressDescription,
-            keySkills = vacancy.keySkills,
+            keySkills = Json.encodeToString(vacancy.keySkills),
             additionTime = System.currentTimeMillis()
         )
     }
+
 }
