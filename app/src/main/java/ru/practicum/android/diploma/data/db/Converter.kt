@@ -29,7 +29,7 @@ object Converter {
         )
     }
 
-    fun map (vacancy: Vacancy): VacancyEntity {
+    fun map(vacancy: Vacancy): VacancyEntity {
         return VacancyEntity(
             id = vacancy.id,
             url = vacancy.url,
