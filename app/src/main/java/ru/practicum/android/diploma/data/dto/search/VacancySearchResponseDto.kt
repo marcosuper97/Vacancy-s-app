@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 data class VacancySearchResponseDto(
     val page: Int,
     val pages: Int,
+    val found: Long,
     @SerialName("items")
     val vacancies: List<VacancyPreviewDto>
 )

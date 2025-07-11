@@ -17,7 +17,7 @@ interface HhApiService {
         "HH-User-Agent: Vacancy's app/1.0 anannat@yandex.ru"
     )
     @GET("vacancies")
-    suspend fun search(@QueryMap options: Map<String,String>
+    suspend fun searchVacancies(@QueryMap options: Map<String,String>
     ): VacancySearchResponseDto
 
     @GET("vacancies/{vacancy_id}")
