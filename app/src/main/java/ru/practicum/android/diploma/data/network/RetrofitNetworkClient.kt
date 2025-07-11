@@ -24,20 +24,30 @@ class RetrofitNetworkClient(
                 return Result.failure(AppException.NoInternetConnection())
             }
             val response = apiService.searchVacancies(requestQuery)
-            return Result.success(response)
+            Result.success(response)
         } catch (e: IOException) {
             Log.d("Exception", e.cause.toString())
             Result.failure(AppException.NoInternetConnection())
         } catch (e: HttpException) {
             Log.d("Exception", e.cause.toString())
-            return when (e.code()) {
-                404 -> {
+            when (e.code()) {
+                NOT_FOUND_CODE -> {
                     Result.failure(AppException.NotFound())
                 }
-                in 500..599 -> Result.failure(AppException.ServerError())
+
+                in SERVER_ERROR_CODE_MIN..SERVER_ERROR_CODE_MAX -> {
+                    Result.failure(AppException.ServerError())
+                }
+
                 else -> Result.failure(AppException.UnknownException())
             }
         }
+    }
+
+    companion object {
+        private const val NOT_FOUND_CODE = 404
+        private const val SERVER_ERROR_CODE_MIN = 500
+        private const val SERVER_ERROR_CODE_MAX = 599
     }
 
 }
