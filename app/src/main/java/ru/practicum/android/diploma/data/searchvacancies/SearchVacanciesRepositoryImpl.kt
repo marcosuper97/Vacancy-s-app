@@ -34,15 +34,33 @@ class SearchVacanciesRepositoryImpl(
     }
 
     override fun createRequest(textRequest: String, page: Int): Map<String, String> {
-        return VacancySearchRequest(
+        val requestWithoutFilters = VacancySearchRequest(
             page = page,
             text = textRequest,
             area = null,
             industry = null,
             salary = null,
             onlyWithSalary = null
-        ).run {
-            toQueryMap()
+        )
+        return toQueryMap(requestWithoutFilters)
+    }
+
+    // Пока не реализован фильтр
+    private fun toQueryMap(vacancySearchRequest: VacancySearchRequest): Map<String, String> = buildMap {
+        put("page", vacancySearchRequest.page.toString())
+        put("per_page", vacancySearchRequest.perPage)
+        put("text", vacancySearchRequest.text)
+        vacancySearchRequest.area?.let {
+            put("area", vacancySearchRequest.area)
+        }
+        vacancySearchRequest.industry?.let {
+            put("industry", vacancySearchRequest.industry)
+        }
+        vacancySearchRequest.salary?.let {
+            put("salary", vacancySearchRequest.salary.toString())
+        }
+        if (vacancySearchRequest.onlyWithSalary == true) {
+            put("only_with_salary", "true")
         }
     }
 
