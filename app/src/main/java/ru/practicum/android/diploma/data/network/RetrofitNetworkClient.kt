@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.data.network
 
 import android.content.Context
+import retrofit2.HttpException
 import ru.practicum.android.diploma.data.dto.Response
 import ru.practicum.android.diploma.data.dto.search.VacancySearchResponseDto
 import ru.practicum.android.diploma.util.AppException
@@ -25,8 +26,12 @@ class RetrofitNetworkClient(
             return Result.success(response)
         } catch (e: IOException) {
             Result.failure(AppException.NoInternetConnection())
-        } catch (e: Exception) {
-            Result.failure(AppException.UnknownException())
+        } catch (e: HttpException) {
+            return when(e.code()){
+                404 -> Result.failure(AppException.NotFound())
+                in 500..599 -> Result.failure(AppException.ServerError())
+                else -> Result.failure(AppException.UnknownException())
+            }
         }
     }
 
