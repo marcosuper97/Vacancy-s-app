@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.data.network
 
 import android.content.Context
+import android.util.Log
 import retrofit2.HttpException
 import ru.practicum.android.diploma.data.dto.Response
 import ru.practicum.android.diploma.data.dto.search.VacancySearchResponseDto
@@ -25,10 +26,14 @@ class RetrofitNetworkClient(
             val response = apiService.searchVacancies(requestQuery)
             return Result.success(response)
         } catch (e: IOException) {
+            Log.d("Exception", e.cause.toString())
             Result.failure(AppException.NoInternetConnection())
         } catch (e: HttpException) {
+            Log.d("Exception", e.cause.toString())
             return when (e.code()) {
-                404 -> Result.failure(AppException.NotFound())
+                404 -> {
+                    Result.failure(AppException.NotFound())
+                }
                 in 500..599 -> Result.failure(AppException.ServerError())
                 else -> Result.failure(AppException.UnknownException())
             }
