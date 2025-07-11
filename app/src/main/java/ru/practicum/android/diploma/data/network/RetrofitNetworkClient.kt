@@ -27,7 +27,7 @@ class RetrofitNetworkClient(
         } catch (e: IOException) {
             Result.failure(AppException.NoInternetConnection())
         } catch (e: HttpException) {
-            return when(e.code()){
+            return when (e.code()) {
                 404 -> Result.failure(AppException.NotFound())
                 in 500..599 -> Result.failure(AppException.ServerError())
                 else -> Result.failure(AppException.UnknownException())
