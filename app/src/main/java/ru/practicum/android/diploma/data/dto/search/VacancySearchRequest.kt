@@ -2,7 +2,7 @@ package ru.practicum.android.diploma.data.dto.search
 
 data class VacancySearchRequest(
     val page: Int,
-    val perPage: Int = 20,
+    val perPage: String = "20",
     val text: String,
     val area: String?,
     val industry: String?,
@@ -11,7 +11,7 @@ data class VacancySearchRequest(
 ) {
     fun toQueryMap(): Map<String, String> = buildMap {
         put("page", page.toString())
-        put("per_page", perPage.toString())
+        put("per_page", perPage)
         put("text", text)
         area?.let { put("area", area) }
         industry?.let { put("industry", industry) }
