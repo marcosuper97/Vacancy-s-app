@@ -7,6 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainFragment">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/dp_16" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/dp_16" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarMain"
         android:layout_width="match_parent"
@@ -18,6 +32,15 @@
         app:title="@string/vacancy_search"
         app:titleTextAppearance="@style/appearance_medium_22" />
 
+    <EditText
+        android:id="@+id/inputEditText"
+        style="@style/EditTextStyle"
+        android:drawableEnd="@drawable/ic_search_24"
+        android:hint="@string/enter_a_request"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/toolbarMain" />
+
     <TextView
         android:id="@+id/text_view"
         android:layout_width="wrap_content"
@@ -27,4 +50,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_44"
+        android:clipToPadding="false"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/inputEditText"
+        tools:itemCount="5"
+        tools:listitem=""
+        tools:visibility="gone" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
