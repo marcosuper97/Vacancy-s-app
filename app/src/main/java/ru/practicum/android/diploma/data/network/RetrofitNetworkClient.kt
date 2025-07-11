@@ -3,7 +3,7 @@ package ru.practicum.android.diploma.data.network
 import android.content.Context
 import android.util.Log
 import retrofit2.HttpException
-import ru.practicum.android.diploma.data.dto.Response
+import ru.practicum.android.diploma.data.dto.VacancyDetailsResponse
 import ru.practicum.android.diploma.data.dto.search.VacancySearchResponseDto
 import ru.practicum.android.diploma.util.AppException
 import ru.practicum.android.diploma.util.isInternetAvailable
@@ -14,8 +14,8 @@ class RetrofitNetworkClient(
     private val apiService: HhApiService
 ) : NetworkClient {
 
-    override suspend fun doRequest(dto: Any): Response {
-        return Response() // На время
+    override suspend fun doRequest(dto: Any): Result<VacancyDetailsResponse> {
+        return Result.success(VacancyDetailsResponse("ВОТ ЭТО ДАААА")) // На время
     }
 
     override suspend fun vacanciesSearchRequest(requestQuery: Map<String, String>): Result<VacancySearchResponseDto> {
