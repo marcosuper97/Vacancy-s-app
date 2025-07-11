@@ -5,9 +5,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.data.dto.search.VacancySearchRequest
+import ru.practicum.android.diploma.data.dto.search.VacancySearchResponseDto
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.models.VacanciesList
+import ru.practicum.android.diploma.domain.models.VacanciesPreview
 import ru.practicum.android.diploma.domain.searchvacancies.SearchVacanciesRepository
+import ru.practicum.android.diploma.util.AppException
 
 class SearchVacanciesRepositoryImpl(
     private val networkClient: NetworkClient
@@ -16,17 +19,18 @@ class SearchVacanciesRepositoryImpl(
 
     override fun doRequest(textRequest: String, page: Int): Flow<Result<VacanciesList>> = flow {
         withContext(Dispatchers.IO) {
-            val response = networkClient.vacanciesSearchRequest(createRequest(textRequest,page))
-
-            when{
-                response.isSuccess ->{
-                    val data = response.getOrNull()
-                    data?.let {  }
+            val response = networkClient.vacanciesSearchRequest(createRequest(textRequest, page))
+            response
+                .onSuccess { data ->
+                    if (data.vacancies.isEmpty()) {
+                        emit(Result.failure(AppException.EmptyResult()))
+                    } else {
+                        emit(Result.success(mapResponse(data)))
+                    }
                 }
-                response.isFailure -> {
-
+                .onFailure { error ->
+                    emit(Result.failure(error))
                 }
-            }
         }
     }
 
@@ -41,5 +45,24 @@ class SearchVacanciesRepositoryImpl(
         ).run {
             toQueryMap()
         }
+    }
+
+    private fun mapResponse(dto: VacancySearchResponseDto): VacanciesList {
+        return VacanciesList(
+            page = dto.page,
+            pages = dto.pages,
+            found = dto.found,
+            vacanciesList = dto.vacancies.map { vacancy ->
+                VacanciesPreview(
+                    vacancyId = vacancy.id,
+                    vacancyName = vacancy.name,
+                    employerName = vacancy.employer.name,
+                    city = vacancy.address?.city,
+                    salaryFrom = vacancy.salary?.from?.toString(),
+                    salaryTo = vacancy.salary?.to?.toString(),
+                    currency = vacancy.salary?.currency
+                )
+            }
+        )
     }
 }
