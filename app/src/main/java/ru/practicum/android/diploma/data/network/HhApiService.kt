@@ -11,13 +11,14 @@ import ru.practicum.android.diploma.data.dto.VacancyDetailsResponse
 import ru.practicum.android.diploma.data.dto.search.VacancySearchResponseDto
 
 interface HhApiService {
-//https://api.hh.ru/vacancies?page=1&per_page=20&text=Лабубу
+    //https://api.hh.ru/vacancies?page=1&per_page=20&text=Лабубу
     @Headers(
         "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
         "HH-User-Agent: Vacancy's app/1.0 anannat@yandex.ru"
     )
     @GET("vacancies")
-    suspend fun searchVacancies(@QueryMap options: Map<String,String>
+    suspend fun searchVacancies(
+        @QueryMap options: Map<String, String>
     ): VacancySearchResponseDto
 
     @GET("vacancies/{vacancy_id}")

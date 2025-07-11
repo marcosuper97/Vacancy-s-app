@@ -16,7 +16,6 @@ class SearchVacanciesRepositoryImpl(
     private val networkClient: NetworkClient
 ) : SearchVacanciesRepository {
 
-
     override fun doRequest(textRequest: String, page: Int): Flow<Result<VacanciesList>> = flow {
         withContext(Dispatchers.IO) {
             val response = networkClient.vacanciesSearchRequest(createRequest(textRequest, page))

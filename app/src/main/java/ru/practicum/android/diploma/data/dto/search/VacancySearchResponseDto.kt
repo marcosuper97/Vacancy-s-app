@@ -23,9 +23,9 @@ data class VacancyPreviewDto(
 
 @Serializable
 data class SalaryDto(
-    val from : Long?,
-    val to : Long?,
-    val currency : String
+    val from: Long?,
+    val to: Long?,
+    val currency: String
 )
 
 @Serializable

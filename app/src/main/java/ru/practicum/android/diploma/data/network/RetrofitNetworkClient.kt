@@ -16,7 +16,7 @@ class RetrofitNetworkClient(
         return Response() // На время
     }
 
-    override suspend fun vacanciesSearchRequest(requestQuery: Map<String,String>): Result<VacancySearchResponseDto> {
+    override suspend fun vacanciesSearchRequest(requestQuery: Map<String, String>): Result<VacancySearchResponseDto> {
         return try {
             if (!isInternetAvailable(context)) {
                 return Result.failure(AppException.NoInternetConnection())
