@@ -12,6 +12,8 @@ import ru.practicum.android.diploma.domain.models.Currency
 import ru.practicum.android.diploma.domain.models.Employer
 import ru.practicum.android.diploma.domain.models.SalaryRange
 import ru.practicum.android.diploma.domain.models.VacancyDetails
+import ru.practicum.android.diploma.ui.common.CommandChannel
+import ru.practicum.android.diploma.ui.common.UiModel
 import kotlin.time.Duration.Companion.seconds
 
 data class VacancyUiState(
@@ -31,7 +33,14 @@ data class VacancyUiState(
     }
 }
 
-sealed class VacancyDetailsItemUiModel {
+sealed class VacancyDetailsCommand {
+    data object NavigateBack : VacancyDetailsCommand()
+    data class NavigateToShare(
+        val url: String
+    ) : VacancyDetailsCommand()
+}
+
+sealed class VacancyDetailsItemUiModel : UiModel<VacancyDetailsItemUiModel> {
     data class VacancyName(
         private val vacancyDetails: VacancyDetails
     ) : VacancyDetailsItemUiModel() {
@@ -39,6 +48,9 @@ sealed class VacancyDetailsItemUiModel {
         val from = vacancyDetails.salaryRange.from
         val to = vacancyDetails.salaryRange.to
         val currency = vacancyDetails.salaryRange.currency
+
+        override fun areItemsTheSame(other: VacancyDetailsItemUiModel) = other is VacancyName
+        override fun areContentsTheSame(other: VacancyDetailsItemUiModel) = other is VacancyName
     }
 
     data class VacancyCompany(
@@ -47,6 +59,9 @@ sealed class VacancyDetailsItemUiModel {
         val logoUrl = vacancyDetails.employer.logoUrl
         val name = vacancyDetails.employer.name
         val region = vacancyDetails.area.name
+
+        override fun areItemsTheSame(other: VacancyDetailsItemUiModel) = other is VacancyCompany
+        override fun areContentsTheSame(other: VacancyDetailsItemUiModel) = other is VacancyCompany
     }
 
     data class VacancyExperience(
@@ -54,18 +69,27 @@ sealed class VacancyDetailsItemUiModel {
     ) : VacancyDetailsItemUiModel() {
         val experience = vacancyDetails.experience
         val schedule = "${vacancyDetails.schedule}, ${vacancyDetails.employment}"
+
+        override fun areItemsTheSame(other: VacancyDetailsItemUiModel) = other is VacancyExperience
+        override fun areContentsTheSame(other: VacancyDetailsItemUiModel) = other is VacancyExperience
     }
 
     data class VacancyDescription(
         private val vacancyDetails: VacancyDetails
     ) : VacancyDetailsItemUiModel() {
         val description = vacancyDetails.description
+
+        override fun areItemsTheSame(other: VacancyDetailsItemUiModel) = other is VacancyDescription
+        override fun areContentsTheSame(other: VacancyDetailsItemUiModel) = other is VacancyDescription
     }
 
     data class VacancyKeySkills(
         private val vacancyDetails: VacancyDetails
     ) : VacancyDetailsItemUiModel() {
         val keySkills = vacancyDetails.keySkills
+
+        override fun areItemsTheSame(other: VacancyDetailsItemUiModel) = other is VacancyKeySkills
+        override fun areContentsTheSame(other: VacancyDetailsItemUiModel) = other is VacancyKeySkills
     }
 }
 
@@ -118,8 +142,22 @@ class VacancyViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(VacancyUiState())
     val uiState = _uiState.asStateFlow()
 
+    private val _commands = CommandChannel<VacancyDetailsCommand>()
+    val commands = _commands.receiveAsFlow()
 
     fun onBackClicked() {
+        viewModelScope.launch {
+            _commands.send(VacancyDetailsCommand.NavigateBack)
+        }
+    }
 
+    fun onShareClick() {
+        viewModelScope.launch {
+            val vacancyDetails = uiState.value.vacancyDetails
+            if (vacancyDetails != null) {
+                val url = "https://hh.ru/vacancy/${vacancyDetails.id}"
+                _commands.send(VacancyDetailsCommand.NavigateToShare(url))
+            }
+        }
     }
 }

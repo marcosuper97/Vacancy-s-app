@@ -42,7 +42,7 @@ class MainFragment : Fragment() {
 
         binding.textView.setOnClickListener {
             val navController = findNavController()
-            navController.navigate(R.id.action_to_vacancy_fragment)
+            navController.navigate(R.id.action_to_vacancy_details_fragment)
         }
     }
 

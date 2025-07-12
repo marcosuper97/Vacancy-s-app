@@ -58,8 +58,8 @@
             android:id="@+id/action_to_filtering_fragment"
             app:destination="@id/filtering_fragment" />
         <action
-            android:id="@+id/action_to_vacancy_fragment"
-            app:destination="@id/vacancy_fragment" />
+            android:id="@+id/action_to_vacancy_details_fragment"
+            app:destination="@id/vacancy_details_fragment" />
     </fragment>
 
     <fragment
@@ -69,8 +69,8 @@
         tools:layout="@layout/fragment_sector_work" />
 
     <fragment
-        android:id="@+id/vacancy_fragment"
-        android:name="ru.practicum.android.diploma.ui.vacancy.VacancyFragment"
+        android:id="@+id/vacancy_details_fragment"
+        android:name="ru.practicum.android.diploma.ui.vacancy.VacancyDetailsFragment"
         android:label="fragment_vacancy"
         tools:layout="@layout/fragment_vacancy" />
 

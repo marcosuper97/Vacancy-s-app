@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.ui.vacancy
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
@@ -14,14 +15,13 @@ import ru.practicum.android.diploma.databinding.VacancyDetailsKeySlillsBinding
 import ru.practicum.android.diploma.databinding.VacancyDetailsNameItemBinding
 import ru.practicum.android.diploma.databinding.VacancyDeteilsKeySkillsItemBinding
 import ru.practicum.android.diploma.presentation.vacancy.VacancyDetailsItemUiModel
+import ru.practicum.android.diploma.ui.common.UiModelDiffCallback
 
-class VacancyDetailsAdapter :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var data: List<VacancyDetailsItemUiModel> = emptyList()
+class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
+    RecyclerView.ViewHolder>(UiModelDiffCallback<VacancyDetailsItemUiModel>()) {
 
     override fun getItemViewType(position: Int): Int {
-        val item = data[position]
-        return when (item) {
+        return when (getItem(position)) {
             is VacancyDetailsItemUiModel.VacancyName -> R.layout.vacancy_details_name_item
             is VacancyDetailsItemUiModel.VacancyCompany -> R.layout.vacancy_details_company
             is VacancyDetailsItemUiModel.VacancyExperience -> R.layout.vacancy_details_experience
@@ -61,17 +61,13 @@ class VacancyDetailsAdapter :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (val item = data[position]) {
+        when (val item = getItem(position)) {
             is VacancyDetailsItemUiModel.VacancyName -> (holder as VacancyDetailsNameItemViewHolder).bind(item)
             is VacancyDetailsItemUiModel.VacancyCompany -> (holder as VacancyDetailsCompanyViewHolder).bind(item)
             is VacancyDetailsItemUiModel.VacancyExperience -> (holder as VacancyDetailsExperienceViewHolder).bind(item)
             is VacancyDetailsItemUiModel.VacancyDescription -> (holder as VacancyDetailsDescriptionViewHolder).bind(item)
             is VacancyDetailsItemUiModel.VacancyKeySkills -> (holder as VacancyDetailsKeySkillsViewHolder).bind(item)
         }
-    }
-
-    override fun getItemCount(): Int {
-        return data.size
     }
 
     inner class VacancyDetailsNameItemViewHolder(val binding: VacancyDetailsNameItemBinding) :

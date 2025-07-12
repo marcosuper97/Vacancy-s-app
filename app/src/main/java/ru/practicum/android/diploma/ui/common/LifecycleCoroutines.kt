@@ -6,7 +6,11 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 inline fun LifecycleOwner.launchAndRepeatOnLifecycle(
@@ -25,4 +29,16 @@ inline fun Fragment.launchAndRepeatOnLifecycle(
     crossinline block: suspend CoroutineScope.() -> Unit
 ) {
     viewLifecycleOwner.launchAndRepeatOnLifecycle(minActiveState, block)
+}
+
+class CommandChannel<T> {
+    private val channel = Channel<T>(Channel.UNLIMITED)
+
+    fun receiveAsFlow() = channel.receiveAsFlow()
+
+    suspend fun send(command: T) {
+        withContext(Dispatchers.Main.immediate) {
+            channel.send(command)
+        }
+    }
 }
