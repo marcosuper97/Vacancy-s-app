@@ -62,11 +62,25 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
-            is VacancyDetailsItemUiModel.VacancyName -> (holder as VacancyDetailsNameItemViewHolder).bind(item)
-            is VacancyDetailsItemUiModel.VacancyCompany -> (holder as VacancyDetailsCompanyViewHolder).bind(item)
-            is VacancyDetailsItemUiModel.VacancyExperience -> (holder as VacancyDetailsExperienceViewHolder).bind(item)
-            is VacancyDetailsItemUiModel.VacancyDescription -> (holder as VacancyDetailsDescriptionViewHolder).bind(item)
-            is VacancyDetailsItemUiModel.VacancyKeySkills -> (holder as VacancyDetailsKeySkillsViewHolder).bind(item)
+            is VacancyDetailsItemUiModel.VacancyName -> {
+                (holder as VacancyDetailsNameItemViewHolder).bind(item)
+            }
+
+            is VacancyDetailsItemUiModel.VacancyCompany -> {
+                (holder as VacancyDetailsCompanyViewHolder).bind(item)
+            }
+
+            is VacancyDetailsItemUiModel.VacancyExperience -> {
+                (holder as VacancyDetailsExperienceViewHolder).bind(item)
+            }
+
+            is VacancyDetailsItemUiModel.VacancyDescription -> {
+                (holder as VacancyDetailsDescriptionViewHolder).bind(item)
+            }
+
+            is VacancyDetailsItemUiModel.VacancyKeySkills -> {
+                (holder as VacancyDetailsKeySkillsViewHolder).bind(item)
+            }
         }
     }
 

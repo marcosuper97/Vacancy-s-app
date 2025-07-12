@@ -24,7 +24,7 @@ class VacancyDetailsFragment : Fragment() {
     private val binding: FragmentVacancyDetailsBinding get() = _binding!!
     private val viewModel: VacancyViewModel by viewModels()
 
-    private lateinit var adapter: VacancyDetailsAdapter
+    private val adapter = VacancyDetailsAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +48,6 @@ class VacancyDetailsFragment : Fragment() {
     private fun configureUi() {
         binding.imSharing.setOnClickListener { viewModel.onShareClick() }
 
-        adapter = VacancyDetailsAdapter()
         binding.contentList.adapter = adapter
         binding.contentList.addItemDecoration(
             PaddingItemDecoration(
