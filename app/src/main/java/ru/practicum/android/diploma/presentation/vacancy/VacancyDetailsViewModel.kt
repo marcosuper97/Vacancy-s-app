@@ -115,7 +115,7 @@ class VacancyViewModel : ViewModel() {
             name = "Барнаул"
         ),
         salaryRange = SalaryRange(
-            currency = Currency.USD,
+            currency = Currency.UZS,
             from = 45000,
             gross = false,
             to = 55000

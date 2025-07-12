@@ -32,5 +32,13 @@ data class SalaryRange(
 
 enum class Currency(val label: String) {
     USD("$"),
-    RUB("₽")
+    EUR("€"),
+    RUB("₽"),
+    AZN("₼"),
+    BYR("br"),
+    GEL("₾"),
+    KGS("с"),
+    KZT("₸"),
+    UAH("₴"),
+    UZS("so\'m")
 }
