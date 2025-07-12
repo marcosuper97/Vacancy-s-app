@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
+import ru.practicum.android.diploma.databinding.FragmentVacancyDetailsBinding
 import ru.practicum.android.diploma.presentation.vacancy.VacancyDetailsCommand
 import ru.practicum.android.diploma.presentation.vacancy.VacancyUiState
 import ru.practicum.android.diploma.presentation.vacancy.VacancyViewModel
@@ -20,8 +20,8 @@ import ru.practicum.android.diploma.ui.common.launchAndRepeatOnLifecycle
 
 class VacancyDetailsFragment : Fragment() {
 
-    private var _binding: FragmentVacancyBinding? = null
-    private val binding: FragmentVacancyBinding get() = _binding!!
+    private var _binding: FragmentVacancyDetailsBinding? = null
+    private val binding: FragmentVacancyDetailsBinding get() = _binding!!
     private val viewModel: VacancyViewModel by viewModels()
 
     private lateinit var adapter: VacancyDetailsAdapter
@@ -31,7 +31,7 @@ class VacancyDetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentVacancyBinding.inflate(inflater, container, false)
+        _binding = FragmentVacancyDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -65,7 +65,8 @@ class VacancyDetailsFragment : Fragment() {
     private fun handleUiState(uiState: VacancyUiState) {
         println("myTag $uiState")
         binding.progressBar.isVisible = uiState.isFetching
-        binding.contentList.isVisible = !uiState.isFetching
+        binding.contentList.isVisible = uiState.isContentVisible
+        binding.vacancyNotFound.root.isVisible = uiState.isEmptyVisible
         adapter.submitList(uiState.items)
     }
 

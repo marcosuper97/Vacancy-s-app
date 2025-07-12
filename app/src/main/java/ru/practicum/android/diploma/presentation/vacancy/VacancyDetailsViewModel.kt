@@ -18,7 +18,8 @@ import kotlin.time.Duration.Companion.seconds
 
 data class VacancyUiState(
     val isFetching: Boolean = false,
-    val vacancyDetails: VacancyDetails? = null
+    val vacancyDetails: VacancyDetails? = null,
+    val isError: Boolean = false
 ) {
     val items = buildList {
         if (vacancyDetails != null) {
@@ -30,6 +31,14 @@ data class VacancyUiState(
                 add(VacancyDetailsItemUiModel.VacancyKeySkills(vacancyDetails))
             }
         }
+    }
+
+    val isContentVisible by lazy {
+        !isFetching && !isError && items.isNotEmpty()
+    }
+
+    val isEmptyVisible by lazy {
+        !isFetching && isError
     }
 }
 
@@ -133,6 +142,7 @@ class VacancyViewModel : ViewModel() {
             _uiState.update { prefState ->
                 prefState.copy(
                     isFetching = false,
+//                    isError = true,
                     vacancyDetails = vacancyDetails
                 )
             }
