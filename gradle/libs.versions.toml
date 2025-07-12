@@ -16,6 +16,7 @@ navigationFragmentKtx = "2.9.1"
 retrofit = "3.0.0"
 roomRuntime = "2.7.2"
 targetSdk = "35"
+lifecycle-runtime-ktx = "2.8.7"
 
 # Detekt
 detekt = "1.23.3"
@@ -45,6 +46,9 @@ staticAnalysis-detektTest = { module = "io.gitlab.arturbosch.detekt:detekt-test"
 staticAnalysis-detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 staticAnalysis-detektLibraries = { module = "io.gitlab.arturbosch.detekt:detekt-rules-libraries", version.ref = "detekt" }
 staticAnalysis-detektTwitterComposeRules = { module = "com.twitter.compose.rules:detekt", version.ref = "detektTwitterComposeRules" }
+lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle-runtime-ktx" }
+lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle-runtime-ktx" }
 
 # AndroidX
 androidX-core = "androidx.core:core-ktx:1.16.0"

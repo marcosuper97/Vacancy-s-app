@@ -17,12 +17,45 @@
         app:title="@string/the_vacancy"
         app:titleTextAppearance="@style/appearance_medium_22" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/the_vacancy"
+    <ImageView
+        android:id="@+id/im_sharing"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginEnd="32dp"
+        android:src="@drawable/ic_sharing_24"
+        app:layout_constraintBottom_toBottomOf="@id/im_favorites"
+        app:layout_constraintEnd_toStartOf="@id/im_favorites"
+        app:layout_constraintTop_toTopOf="@id/im_favorites" />
+
+    <ImageView
+        android:id="@+id/im_favorites"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginVertical="20dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/ic_favorites_off_24"
+        app:layout_constraintEnd_toEndOf="@id/toolbarVacancy"
+        app:layout_constraintTop_toTopOf="@id/toolbarVacancy" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/content_list"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbarVacancy" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarVacancy" />
 </androidx.constraintlayout.widget.ConstraintLayout>

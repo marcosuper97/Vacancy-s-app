@@ -47,6 +47,9 @@ dependencies {
     implementation(libs.androidX.appCompat)
     implementation(libs.fragment.ktx)
     implementation(libs.kotlin.stdlib)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.livedata.ktx)
 
     // UI layer libraries
     implementation(libs.ui.material)
