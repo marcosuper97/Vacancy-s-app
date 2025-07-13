@@ -14,30 +14,51 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : 
 
 ) {
     private var latestQueryText: String? = null
+    private var currentPage = 0
 
     private val _uiState = MutableStateFlow<SearchVacanciesState>(SearchVacanciesState.Default)
-    val uiState = _uiState.asStateFlow()
+    val uiState = _uiState.asStateFlow() // на этот стейт подписываемся в фрагменте для отображения
+    // состояния экрана
 
     private val vacanciesSearchDebounce = debounce<String>(
         SEARCH_DEBOUNCE_DELAY,
         viewModelScope,
         true
-    ) { request -> searchVacancies(request) }
+    ) { request -> searchVacancies(request, currentPage) }
 
-    fun searchDebounce(changedText: String) {
+    private fun searchDebounce(changedText: String) {
         if (latestQueryText == changedText) return
         latestQueryText = changedText
+        currentPage = 0
         vacanciesSearchDebounce(changedText)
     }
 
-    private fun searchVacancies(queryText: String) {
+    fun searchNextPage() { //вызываем когда долистали до последнего элемента recycler
+        currentPage++
+        latestQueryText?.let { searchVacancies(it, currentPage) }
+    }
+
+    fun onSearchTextChanged(queryText: String) { //вызываем, когда поменялся текст в поле поиска
+        if (queryText.isEmpty())
+            onClearSearchClicked()
+        else {
+            searchDebounce(queryText)
+        }
+    }
+
+    fun onClearSearchClicked() { //вызываем когда нажали крестик в поле поиска
+        latestQueryText = ""
+        _uiState.value = SearchVacanciesState.Default
+    }
+
+    private fun searchVacancies(queryText: String, page: Int) {
+
         if (queryText.isNotEmpty()) {
             _uiState.value = SearchVacanciesState.Loading
 
             viewModelScope.launch {
-                searchInteractor?.searchVacancies(queryText, 0)?.collect { result ->
+                searchInteractor?.searchVacancies(queryText, page)?.collect { result ->
                     if (result.isSuccess) {
-
                         val content = result.getOrNull()
 
                         if (content == null)
