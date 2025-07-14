@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.di
 
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -22,7 +23,7 @@ val dataModule = module {
     }
 
     factory<NetworkClient> {
-        RetrofitNetworkClient(get(), get())
+        RetrofitNetworkClient(androidContext(), get())
     }
 }
 
