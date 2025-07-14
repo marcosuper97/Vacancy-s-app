@@ -11,6 +11,7 @@ import ru.practicum.android.diploma.domain.models.VacanciesList
 import ru.practicum.android.diploma.domain.models.VacanciesPreview
 import ru.practicum.android.diploma.domain.searchvacancies.SearchVacanciesRepository
 import ru.practicum.android.diploma.util.AppException
+import ru.practicum.android.diploma.util.toCurrencySymbol
 
 class SearchVacanciesRepositoryImpl(
     private val networkClient: NetworkClient
@@ -83,7 +84,7 @@ class SearchVacanciesRepositoryImpl(
                     },
                     salaryFrom = vacancy.salary?.from?.toString(),
                     salaryTo = vacancy.salary?.to?.toString(),
-                    currency = vacancy.salary?.currency,
+                    currency = vacancy.salary?.currency.toCurrencySymbol(),
                 )
             }
         )

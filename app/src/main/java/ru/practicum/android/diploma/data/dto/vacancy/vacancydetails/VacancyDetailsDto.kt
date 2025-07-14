@@ -15,7 +15,7 @@ import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.WorkFormatD
 data class VacancyDetailsDto(
     val id: String,
     val name: String,
-    val employer: EmployerDto,
+    val employer: EmployerDto?,
     val area: VacancyAreaDto,
     val address: AddressDto?,
     @SerialName("salary_range")
@@ -29,5 +29,5 @@ data class VacancyDetailsDto(
     val linkUrl: String,
     val experience: ExperienceDto?,
     @SerialName("key_skills")
-    val keySkills: List<VacancyKeySkillsDto>?
+    val keySkills: List<VacancyKeySkillsDto>
 )

@@ -13,8 +13,10 @@ enum class Currency(val label: String) {
     UZS("so\'m")
 }
 
-fun String?.toCurrencySymbol(): String? {
+fun String?.toCurrencySymbol(): String {
     return this?.let { code ->
         enumValues<Currency>().find { it.name == code }?.label
-    }
+    } ?: NOTHING
 }
+
+const val NOTHING: String = ""

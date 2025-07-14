@@ -30,8 +30,8 @@ class DetailsVacancyRepositoryImpl(
         return VacancyDetails(
             vacancyId = dto.id,
             vacancyName = dto.name,
-            employerName = dto.employer.name,
-            employerLogo = dto.employer.employerLogo?.path,
+            employerName = dto.employer?.name,
+            employerLogo = dto.employer?.employerLogo?.path,
             address = when (dto.address) {
                 null -> dto.area.name
                 else -> dto.address.raw
@@ -43,7 +43,7 @@ class DetailsVacancyRepositoryImpl(
             experience = dto.experience?.name,
             linkUrl = dto.linkUrl,
             description = dto.description,
-            keySkills = dto.keySkills?.map { it.name }
+            keySkills = dto.keySkills.map { it.name }
         )
     }
 }
