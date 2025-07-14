@@ -27,5 +27,5 @@ val dataModule = module {
 }
 
 object ApiConfig {
-    const val BASE_URL = "https://hh.api.ru/"
+    const val BASE_URL = "https://api.hh.ru/"
 }
