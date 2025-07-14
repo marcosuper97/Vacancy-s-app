@@ -10,7 +10,6 @@ import ru.practicum.android.diploma.util.AppException
 import ru.practicum.android.diploma.util.debounce
 import ru.practicum.android.diploma.util.SearchVacanciesState
 
-
 class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : ViewModel() {
     private var latestQueryText: String? = null
     private var currentPage = 0
