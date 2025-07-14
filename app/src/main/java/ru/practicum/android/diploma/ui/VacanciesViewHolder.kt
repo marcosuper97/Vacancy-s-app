@@ -17,7 +17,7 @@ class VacanciesViewHolder(
         Glide.with(context)
             .load(item.employerLogo)
             .centerCrop()
-            .transform(RoundedCorners(dpToPx(12f, context)))
+            .transform(RoundedCorners(dpToPx(CORNERS, context)))
             .placeholder(R.drawable.employer_logo_placeholder)
             .into(binding.logo)
 
@@ -26,4 +26,7 @@ class VacanciesViewHolder(
 
         binding.salary.text = formatSalary(context, item.salaryFrom, item.salaryTo, item.currency)
     }
+companion object {
+    const val CORNERS = 12f
+}
 }
