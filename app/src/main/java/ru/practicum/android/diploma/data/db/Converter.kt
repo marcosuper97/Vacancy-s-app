@@ -1,51 +1,68 @@
 package ru.practicum.android.diploma.data.db
 
-import ru.practicum.android.diploma.domain.entity.Vacancy
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.json.Json
+import ru.practicum.android.diploma.domain.models.VacanciesPreview
+import ru.practicum.android.diploma.domain.models.VacancyDetails
 
-object Converter {
 
-    fun map(vacancyEntity: VacancyEntity): Vacancy {
-        return Vacancy(
-            id = vacancyEntity.id,
-            url = vacancyEntity.url,
-            name = vacancyEntity.name,
-            currency = vacancyEntity.currency,
-            salaryFrom = vacancyEntity.salaryFrom,
-            salaryTo = vacancyEntity.salaryTo,
-            employer = vacancyEntity.employer,
-            employerLogo = vacancyEntity.employerLogo,
-            area = vacancyEntity.area,
-            experience = vacancyEntity.experience,
-            workFormat = vacancyEntity.workFormat,
-            employmentForm = vacancyEntity.employmentForm,
-            description = vacancyEntity.description,
-            city = vacancyEntity.city,
-            street = vacancyEntity.street,
-            building = vacancyEntity.building,
-            addressDescription = vacancyEntity.addressDescription,
-            keySkills = vacancyEntity.keySkills,
-            additionTime = vacancyEntity.additionTime,
-            isFavorite = true
-        )
-    }
+fun mapToDetails(entity: VacancyEntity): VacancyDetails {
+    return VacancyDetails(
+        vacancyId = entity.id,
+        linkUrl = entity.url,
+        vacancyName = entity.name,
+        currency = entity.currency,
+        salaryFrom = entity.salaryFrom,
+        salaryTo = entity.salaryTo,
+        employerName = entity.employer,
+        employerLogo = entity.employerLogo,
+        address = entity.address,
+        experience = entity.experience,
+        workFormat = entity.workFormat?.let {
+            Json.decodeFromString(ListSerializer(String.serializer()), it)
+        },
+        employmentForm = entity.employmentForm,
+        description = entity.description,
+        keySkills = Json.decodeFromString(ListSerializer(String.serializer()), entity.keySkills),
+        additionTime = entity.additionTime,
+        isFavorite = true
+    )
+}
 
-    fun map (vacancy: Vacancy): VacancyEntity {
-        return VacancyEntity(
-            id = vacancy.id,
-            url = vacancy.url,
-            name = vacancy.name,
-            currency = vacancy.currency,
-            salaryFrom = vacancy.salaryFrom,
-            salaryTo = vacancy.salaryTo,
-            employer = vacancy.employer,
-            employerLogo = vacancy.employerLogo,
-            experience = vacancy.experience,
-            workFormat = vacancy.workFormat,
-            employmentForm = vacancy.employmentForm,
-            description = vacancy.description,
-            address = vacancy.ad,
-            keySkills = vacancy.keySkills,
-            additionTime = System.currentTimeMillis()
-        )
-    }
+
+fun mapToEntity(vacancy: VacancyDetails): VacancyEntity {
+    return VacancyEntity(
+        id = vacancy.vacancyId,
+        url = vacancy.linkUrl,
+        name = vacancy.vacancyName,
+        currency = vacancy.currency,
+        salaryFrom = vacancy.salaryFrom,
+        salaryTo = vacancy.salaryTo,
+        employer = vacancy.employerName,
+        employerLogo = vacancy.employerLogo,
+        experience = vacancy.experience,
+        workFormat = vacancy.workFormat?.let {
+            Json.encodeToString(ListSerializer(String.serializer()), it)
+        },
+        employmentForm = vacancy.employmentForm,
+        description = vacancy.description,
+        address = vacancy.address,
+        keySkills = Json.encodeToString(ListSerializer(String.serializer()), vacancy.keySkills),
+        additionTime = System.currentTimeMillis()
+    )
+}
+
+
+fun mapToPreview(entity: VacancyEntity): VacanciesPreview {
+    return VacanciesPreview(
+        vacancyId = entity.id,
+        vacancyName = entity.name,
+        employerName = entity.employer,
+        employerLogo = entity.employerLogo,
+        address = entity.address,
+        salaryFrom = entity.salaryFrom,
+        salaryTo = entity.salaryTo,
+        currency = entity.currency
+    )
 }

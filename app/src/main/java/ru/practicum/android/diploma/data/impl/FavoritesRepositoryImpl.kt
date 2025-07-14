@@ -3,9 +3,11 @@ package ru.practicum.android.diploma.data.impl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ru.practicum.android.diploma.data.db.DataBase
-import ru.practicum.android.diploma.data.db.Converter
 import ru.practicum.android.diploma.data.db.VacancyEntity
-import ru.practicum.android.diploma.domain.entity.Vacancy
+import ru.practicum.android.diploma.data.db.mapToDetails
+import ru.practicum.android.diploma.data.db.mapToPreview
+import ru.practicum.android.diploma.domain.models.VacanciesPreview
+import ru.practicum.android.diploma.domain.models.VacancyDetails
 import ru.practicum.android.diploma.domain.repositories.FavoritesRepository
 
 class FavoritesRepositoryImpl(private val dataBase: DataBase) : FavoritesRepository {
@@ -18,16 +20,15 @@ class FavoritesRepositoryImpl(private val dataBase: DataBase) : FavoritesReposit
         dataBase.vacanciesDao().deleteVacancy(id)
     }
 
-    override fun getAllVacancies(): Flow<List<Vacancy>> =
+    override fun getAllVacancies(): Flow<List<VacanciesPreview>> =
         dataBase.vacanciesDao()
             .getAllVacancies()
-            .map { entitiesList -> entitiesList.map { entity -> Converter.map(entity) } }
+            .map { entitiesList -> entitiesList.map { entity -> mapToPreview(entity) } }
 
 
-    override fun getOneVacancy(id: String): Flow<Vacancy> =
-        dataBase.vacanciesDao()
-            .getOneVacancy(id)
-            .map { vacancy -> Converter.map(vacancy) }
+    override suspend fun getOneVacancy(id: String): VacancyDetails =
+        mapToDetails(dataBase.vacanciesDao().getOneVacancy(id))
+
 
     override suspend fun isFavorite(id: String): Boolean =
         dataBase.vacanciesDao().isFavorite(id)
