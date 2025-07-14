@@ -76,10 +76,14 @@ class SearchVacanciesRepositoryImpl(
                     vacancyId = vacancy.id,
                     vacancyName = vacancy.name,
                     employerName = vacancy.employer.name,
-                    city = vacancy.address?.city,
+                    employerLogo = vacancy.employer.employerLogo?.path,
+                    address = when (vacancy.address) {
+                        null -> vacancy.area.name
+                        else -> vacancy.address.raw
+                    },
                     salaryFrom = vacancy.salary?.from?.toString(),
                     salaryTo = vacancy.salary?.to?.toString(),
-                    currency = vacancy.salary?.currency
+                    currency = vacancy.salary?.currency,
                 )
             }
         )

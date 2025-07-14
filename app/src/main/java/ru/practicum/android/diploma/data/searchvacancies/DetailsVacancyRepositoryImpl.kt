@@ -27,18 +27,22 @@ class DetailsVacancyRepositoryImpl(
 
     private fun mapResponse(dto: VacancyDetailsDto): VacancyDetails {
         return VacancyDetails(
+            vacancyId = dto.id,
             vacancyName = dto.name,
             employerName = dto.employer.name,
-            city = dto.address?.city,
+            employerLogo = dto.employer.employerLogo?.path,
+            address = when (dto.address) {
+                null -> dto.area.name
+                else -> dto.address.raw
+            },
             salaryFrom = dto.salary?.from.toString(),
             salaryTo = dto.salary?.to.toString(),
             currency = dto.salary?.currency,
-            workFormat = dto.workFormat?.map {
-                workFormatDto -> workFormatDto.name
-            },
+            workFormat = dto.workFormat?.map { it.name },
             experience = dto.experience?.name,
             linkUrl = dto.linkUrl,
-            description = dto.description
+            description = dto.description,
+            keySkills = dto.keySkills?.map { it.name }
         )
     }
 }

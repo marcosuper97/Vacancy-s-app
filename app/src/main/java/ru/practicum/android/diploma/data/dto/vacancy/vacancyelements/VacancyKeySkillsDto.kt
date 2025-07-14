@@ -3,6 +3,6 @@ package ru.practicum.android.diploma.data.dto.vacancy.vacancyelements
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AddressDto(
-    val raw: String
+data class VacancyKeySkillsDto(
+    val name: String
 )

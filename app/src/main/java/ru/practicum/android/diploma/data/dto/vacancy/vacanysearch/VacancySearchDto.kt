@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.AddressDto
 import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.EmployerDto
 import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.SalaryDto
+import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.VacancyAreaDto
 
 @Serializable
 data class VacancySearchResponseDto(
@@ -20,6 +21,7 @@ data class VacancyPreviewDto(
     val id: String,
     val name: String,
     val employer: EmployerDto,
+    val area: VacancyAreaDto,
     val address: AddressDto?,
     @SerialName("salary_range")
     val salary: SalaryDto?
