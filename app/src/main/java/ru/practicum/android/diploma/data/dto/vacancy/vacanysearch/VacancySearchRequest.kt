@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.data.dto.vacancy.vacanysearch
 
+
 data class VacancySearchRequest(
     val page: Int,
     val perPage: String = "20",
