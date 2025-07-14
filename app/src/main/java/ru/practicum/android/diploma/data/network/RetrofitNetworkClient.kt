@@ -29,10 +29,10 @@ class RetrofitNetworkClient(
         return try {
             Result.success(block())
         } catch (e: IOException) {
-            Log.e("Network", "IO error", e)
+            Log.e(NETWORK_TAG, "IO error", e)
             Result.failure(AppException.NoInternetConnection())
         } catch (e: HttpException) {
-            Log.e("Network", "HTTP error ${e.code()}", e)
+            Log.e(NETWORK_TAG, "HTTP error ${e.code()}", e)
             Result.failure(
                 when (e.code()) {
                     NOT_FOUND_CODE -> AppException.NotFound()
@@ -40,17 +40,16 @@ class RetrofitNetworkClient(
                     else -> AppException.UnknownException()
                 }
             )
-        } catch (e: Exception) {
-            Log.e("Network", "Unexpected error", e)
+        } catch (a: AppException.UnknownException) {
+            Log.e(NETWORK_TAG, "Unexpected error", a)
             Result.failure(AppException.UnknownException())
         }
     }
 
     companion object {
+        private const val NETWORK_TAG = "Network"
         private const val NOT_FOUND_CODE = 404
         private const val SERVER_ERROR_CODE_MIN = 500
         private const val SERVER_ERROR_CODE_MAX = 599
     }
 }
-
-
