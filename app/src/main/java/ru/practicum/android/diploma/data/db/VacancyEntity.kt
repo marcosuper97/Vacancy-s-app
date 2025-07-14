@@ -16,15 +16,11 @@ data class VacancyEntity(
     val salaryTo: Int?,
     val employer: String?,
     val employerLogo: String?,
-    val area: String,
     val experience: String?,
     val workFormat: String?,
     val employmentForm: String?,
     val description: String,
-    val city: String?,
-    val street: String?,
-    val building: String?,
-    val addressDescription: String?,
+    val address: String,
     val keySkills: String,
     val additionTime: Long
 )

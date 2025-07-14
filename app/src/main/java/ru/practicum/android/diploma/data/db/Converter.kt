@@ -39,15 +39,11 @@ object Converter {
             salaryTo = vacancy.salaryTo,
             employer = vacancy.employer,
             employerLogo = vacancy.employerLogo,
-            area = vacancy.area,
             experience = vacancy.experience,
             workFormat = vacancy.workFormat,
             employmentForm = vacancy.employmentForm,
             description = vacancy.description,
-            city = vacancy.city,
-            street = vacancy.street,
-            building = vacancy.building,
-            addressDescription = vacancy.addressDescription,
+            address = vacancy.ad,
             keySkills = vacancy.keySkills,
             additionTime = System.currentTimeMillis()
         )
