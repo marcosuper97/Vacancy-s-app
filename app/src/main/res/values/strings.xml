@@ -70,4 +70,5 @@
     <string name="binding_not_initialized">Binding wasn\'t initialized</string>
     <string name="vacancy_name_area">%1$s, %2$s</string>
     <string name="point">•</string>
+    <string name="vacancy_name_area">%1$s, %2$s</string>
 </resources>
