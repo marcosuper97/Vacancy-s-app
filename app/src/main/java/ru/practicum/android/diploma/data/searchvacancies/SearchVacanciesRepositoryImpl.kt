@@ -4,8 +4,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
-import ru.practicum.android.diploma.data.dto.search.VacancySearchRequest
-import ru.practicum.android.diploma.data.dto.search.VacancySearchResponseDto
+import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchRequest
+import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchResponseDto
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.models.VacanciesList
 import ru.practicum.android.diploma.domain.models.VacanciesPreview
@@ -33,6 +33,7 @@ class SearchVacanciesRepositoryImpl(
         }
     }
 
+    // Пока работает на запрос без фильтров
     override fun createRequest(textRequest: String, page: Int): Map<String, String> {
         val requestWithoutFilters = VacancySearchRequest(
             page = page,
@@ -45,24 +46,25 @@ class SearchVacanciesRepositoryImpl(
         return toQueryMap(requestWithoutFilters)
     }
 
-    // Пока не реализован фильтр
-    private fun toQueryMap(vacancySearchRequest: VacancySearchRequest): Map<String, String> = buildMap {
-        put("page", vacancySearchRequest.page.toString())
-        put("per_page", vacancySearchRequest.perPage)
-        put("text", vacancySearchRequest.text)
-        vacancySearchRequest.area?.let {
-            put("area", vacancySearchRequest.area)
+    // Пока работает на запрос без фильтров
+    private fun toQueryMap(vacancySearchRequest: VacancySearchRequest): Map<String, String> =
+        buildMap {
+            put("page", vacancySearchRequest.page.toString())
+            put("per_page", vacancySearchRequest.perPage)
+            put("text", vacancySearchRequest.text)
+            vacancySearchRequest.area?.let {
+                put("area", vacancySearchRequest.area)
+            }
+            vacancySearchRequest.industry?.let {
+                put("industry", vacancySearchRequest.industry)
+            }
+            vacancySearchRequest.salary?.let {
+                put("salary", vacancySearchRequest.salary.toString())
+            }
+            if (vacancySearchRequest.onlyWithSalary == true) {
+                put("only_with_salary", "true")
+            }
         }
-        vacancySearchRequest.industry?.let {
-            put("industry", vacancySearchRequest.industry)
-        }
-        vacancySearchRequest.salary?.let {
-            put("salary", vacancySearchRequest.salary.toString())
-        }
-        if (vacancySearchRequest.onlyWithSalary == true) {
-            put("only_with_salary", "true")
-        }
-    }
 
     private fun mapResponse(dto: VacancySearchResponseDto): VacanciesList {
         return VacanciesList(

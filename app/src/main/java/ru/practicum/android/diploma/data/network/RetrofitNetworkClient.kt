@@ -3,8 +3,8 @@ package ru.practicum.android.diploma.data.network
 import android.content.Context
 import android.util.Log
 import retrofit2.HttpException
-import ru.practicum.android.diploma.data.dto.VacancyDetailsResponse
-import ru.practicum.android.diploma.data.dto.search.VacancySearchResponseDto
+import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.VacancyDetailsDto
+import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchResponseDto
 import ru.practicum.android.diploma.util.AppException
 import ru.practicum.android.diploma.util.isInternetAvailable
 import java.io.IOException
@@ -14,33 +14,35 @@ class RetrofitNetworkClient(
     private val apiService: HhApiService
 ) : NetworkClient {
 
-    override suspend fun doRequest(dto: Any): Result<VacancyDetailsResponse> {
-        return Result.success(VacancyDetailsResponse("ВОТ ЭТО ДАААА")) // На время
+    override suspend fun detailsVacancyRequest(requestId: String): Result<VacancyDetailsDto> {
+        return executeRequest { apiService.getVacancyDetails(requestId) }
     }
 
     override suspend fun vacanciesSearchRequest(requestQuery: Map<String, String>): Result<VacancySearchResponseDto> {
+        return executeRequest { apiService.searchVacancies(requestQuery) }
+    }
+
+    private suspend fun <T> executeRequest(block: suspend () -> T): Result<T> {
+        if (!isInternetAvailable(context)) {
+            return Result.failure(AppException.NoInternetConnection())
+        }
         return try {
-            if (!isInternetAvailable(context)) {
-                return Result.failure(AppException.NoInternetConnection())
-            }
-            val response = apiService.searchVacancies(requestQuery)
-            Result.success(response)
+            Result.success(block())
         } catch (e: IOException) {
-            Log.d("Exception", e.cause.toString())
+            Log.e("Network", "IO error", e)
             Result.failure(AppException.NoInternetConnection())
         } catch (e: HttpException) {
-            Log.d("Exception", e.cause.toString())
-            when (e.code()) {
-                NOT_FOUND_CODE -> {
-                    Result.failure(AppException.NotFound())
+            Log.e("Network", "HTTP error ${e.code()}", e)
+            Result.failure(
+                when (e.code()) {
+                    NOT_FOUND_CODE -> AppException.NotFound()
+                    in SERVER_ERROR_CODE_MIN..SERVER_ERROR_CODE_MAX -> AppException.ServerError()
+                    else -> AppException.UnknownException()
                 }
-
-                in SERVER_ERROR_CODE_MIN..SERVER_ERROR_CODE_MAX -> {
-                    Result.failure(AppException.ServerError())
-                }
-
-                else -> Result.failure(AppException.UnknownException())
-            }
+            )
+        } catch (e: Exception) {
+            Log.e("Network", "Unexpected error", e)
+            Result.failure(AppException.UnknownException())
         }
     }
 
@@ -49,6 +51,6 @@ class RetrofitNetworkClient(
         private const val SERVER_ERROR_CODE_MIN = 500
         private const val SERVER_ERROR_CODE_MAX = 599
     }
-
 }
+
 
