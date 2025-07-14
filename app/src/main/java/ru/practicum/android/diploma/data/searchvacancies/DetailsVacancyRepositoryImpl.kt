@@ -8,6 +8,7 @@ import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.VacancyDetai
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.detailsvacancy.DetailsVacancyRepository
 import ru.practicum.android.diploma.domain.models.VacancyDetails
+import ru.practicum.android.diploma.util.toCurrencySymbol
 
 class DetailsVacancyRepositoryImpl(
     private val networkClient: NetworkClient
@@ -37,7 +38,7 @@ class DetailsVacancyRepositoryImpl(
             },
             salaryFrom = dto.salary?.from.toString(),
             salaryTo = dto.salary?.to.toString(),
-            currency = dto.salary?.currency,
+            currency = dto.salary?.currency.toCurrencySymbol(),
             workFormat = dto.workFormat?.map { it.name },
             experience = dto.experience?.name,
             linkUrl = dto.linkUrl,
