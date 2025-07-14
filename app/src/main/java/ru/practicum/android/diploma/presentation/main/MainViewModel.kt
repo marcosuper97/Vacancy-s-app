@@ -10,15 +10,12 @@ import ru.practicum.android.diploma.util.AppException
 import ru.practicum.android.diploma.util.SearchVacanciesState
 import ru.practicum.android.diploma.util.debounce
 
-class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : ViewModel(
-
-) {
+class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : ViewModel() {
     private var latestQueryText: String? = null
     private var currentPage = 0
 
     private val _uiState = MutableStateFlow<SearchVacanciesState>(SearchVacanciesState.Default)
-    val uiState = _uiState.asStateFlow() // на этот стейт подписываемся в фрагменте для отображения
-    // состояния экрана
+    val uiState = _uiState.asStateFlow()
 
     private val vacanciesSearchDebounce = debounce<String>(
         SEARCH_DEBOUNCE_DELAY,
@@ -33,50 +30,43 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : 
         vacanciesSearchDebounce(changedText)
     }
 
-    fun searchNextPage() { //вызываем когда долистали до последнего элемента recycler
+    fun searchNextPage() {
         currentPage++
         latestQueryText?.let { searchVacancies(it, currentPage) }
     }
 
-    fun onSearchTextChanged(queryText: String) { //вызываем, когда поменялся текст в поле поиска
+    fun onSearchTextChanged(queryText: String) {
         if (queryText.isEmpty())
             onClearSearchClicked()
-        else {
+        else
             searchDebounce(queryText)
-        }
     }
 
-    fun onClearSearchClicked() { //вызываем когда нажали крестик в поле поиска
+    fun onClearSearchClicked() {
         latestQueryText = ""
         _uiState.value = SearchVacanciesState.Default
     }
 
     private fun searchVacancies(queryText: String, page: Int) {
+        if (queryText.isEmpty()) return
 
-        if (queryText.isNotEmpty()) {
-            _uiState.value = SearchVacanciesState.Loading
+        _uiState.value = SearchVacanciesState.Loading
 
-            viewModelScope.launch {
-                searchInteractor?.searchVacancies(queryText, page)?.collect { result ->
-                    if (result.isSuccess) {
-                        val content = result.getOrNull()
+        viewModelScope.launch {
+            searchInteractor?.searchVacancies(queryText, page)?.collect { result ->
+                _uiState.value = when {
+                    result.isSuccess && result.getOrNull() != null ->
+                        SearchVacanciesState.ShowContent(result.getOrNull()!!)
 
-                        if (content == null)
-                            _uiState.value = SearchVacanciesState.NothingFound
-                        else
-                            _uiState.value = SearchVacanciesState.ShowContent(content)
+                    result.isSuccess || result.exceptionOrNull() is AppException.EmptyResult ->
+                        SearchVacanciesState.NothingFound
 
-                    } else {
-                        when (result.exceptionOrNull()) {
-                            is AppException.EmptyResult -> _uiState.value = SearchVacanciesState.NothingFound
-                            else -> _uiState.value = SearchVacanciesState.NetworkError
-                        }
-                    }
+                    else ->
+                        SearchVacanciesState.NetworkError
                 }
             }
         }
     }
-
 
     override fun onCleared() {
         super.onCleared()
@@ -86,5 +76,4 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
-
 }
