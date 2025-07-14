@@ -6,7 +6,6 @@ import kotlinx.serialization.json.Json
 import ru.practicum.android.diploma.domain.models.VacanciesPreview
 import ru.practicum.android.diploma.domain.models.VacancyDetails
 
-
 fun mapToDetails(entity: VacancyEntity): VacancyDetails {
     return VacancyDetails(
         vacancyId = entity.id,
@@ -30,7 +29,6 @@ fun mapToDetails(entity: VacancyEntity): VacancyDetails {
     )
 }
 
-
 fun mapToEntity(vacancy: VacancyDetails): VacancyEntity {
     return VacancyEntity(
         id = vacancy.vacancyId,
@@ -52,7 +50,6 @@ fun mapToEntity(vacancy: VacancyDetails): VacancyEntity {
         additionTime = System.currentTimeMillis()
     )
 }
-
 
 fun mapToPreview(entity: VacancyEntity): VacanciesPreview {
     return VacanciesPreview(

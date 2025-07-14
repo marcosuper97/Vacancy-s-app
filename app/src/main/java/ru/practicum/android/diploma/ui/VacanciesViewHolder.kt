@@ -26,7 +26,8 @@ class VacanciesViewHolder(
 
         binding.salary.text = formatSalary(context, item.salaryFrom, item.salaryTo, item.currency)
     }
-companion object {
-    const val CORNERS = 12f
-}
+
+    companion object {
+        const val CORNERS = 12f
+    }
 }
