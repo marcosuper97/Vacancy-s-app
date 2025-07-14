@@ -8,7 +8,7 @@ data class VacancyDetails(
     val salaryTo: String?,
     val currency: String?,
     val workFormat: List<String>?,
-    val experience: String,
+    val experience: String?,
     val linkUrl: String,
     val description: String
 )

@@ -1,4 +1,44 @@
 package ru.practicum.android.diploma.data.searchvacancies
 
-class DetailsVacancyRepositoryImpl {
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
+import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.VacancyDetailsDto
+import ru.practicum.android.diploma.data.network.NetworkClient
+import ru.practicum.android.diploma.domain.detailsvacancy.DetailsVacancyRepository
+import ru.practicum.android.diploma.domain.models.VacancyDetails
+
+class DetailsVacancyRepositoryImpl(
+    private val networkClient: NetworkClient
+) : DetailsVacancyRepository {
+    override fun doRequest(vacancyId: String): Flow<Result<VacancyDetails>> = flow {
+        withContext(Dispatchers.IO) {
+            val response = networkClient.detailsVacancyRequest(vacancyId)
+            response
+                .onSuccess { data ->
+                    emit(Result.success(mapResponse(data)))
+                }
+                .onFailure { error ->
+                    emit(Result.failure(error))
+                }
+        }
+    }
+
+    private fun mapResponse(dto: VacancyDetailsDto): VacancyDetails {
+        return VacancyDetails(
+            vacancyName = dto.name,
+            employerName = dto.employer.name,
+            city = dto.address?.city,
+            salaryFrom = dto.salary?.from.toString(),
+            salaryTo = dto.salary?.to.toString(),
+            currency = dto.salary?.currency,
+            workFormat = dto.workFormat?.map {
+                workFormatDto -> workFormatDto.name
+            },
+            experience = dto.experience?.name,
+            linkUrl = dto.linkUrl,
+            description = dto.description
+        )
+    }
 }

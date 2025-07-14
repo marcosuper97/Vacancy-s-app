@@ -4,9 +4,10 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.AddressDto
 import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.EmployerDto
-import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.EmploymentForm
+import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.EmploymentFormDto
+import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.ExperienceDto
 import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.SalaryDto
-import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.WorkFormat
+import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.WorkFormatDto
 
 @Serializable
 data class VacancyDetailsDto(
@@ -17,9 +18,10 @@ data class VacancyDetailsDto(
     val salary: SalaryDto?,
     val description: String,
     @SerialName("employment_form")
-    val employmentForm: EmploymentForm?,
+    val employmentForm: EmploymentFormDto?,
     @SerialName("work_format")
-    val workFormat: List<WorkFormat>?,
+    val workFormat: List<WorkFormatDto>?,
     @SerialName("alternate_url")
-    val linkUrl: String
+    val linkUrl: String,
+    val experience: ExperienceDto?
 )
