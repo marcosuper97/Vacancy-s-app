@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.ui.vacancy
 
 import android.text.Html
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
