@@ -9,6 +9,6 @@ interface FavoritesRepository {
     suspend fun insertVacancy(vacancy: VacancyEntity)
     suspend fun deleteVacancy(id: String)
     fun getAllVacancies(): Flow<List<VacanciesPreview>>
-    suspend fun getOneVacancy(id: String): VacancyDetails
+    suspend fun getVacancy(id: String): VacancyDetails
     suspend fun isFavorite(id: String): Boolean
 }

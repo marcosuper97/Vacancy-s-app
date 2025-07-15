@@ -25,8 +25,8 @@ class FavoritesRepositoryImpl(private val dataBase: DataBase) : FavoritesReposit
             .getAllVacancies()
             .map { entitiesList -> entitiesList.map { entity -> mapToPreview(entity) } }
 
-    override suspend fun getOneVacancy(id: String): VacancyDetails =
-        mapToDetails(dataBase.vacanciesDao().getOneVacancy(id))
+    override suspend fun getVacancy(id: String): VacancyDetails =
+        mapToDetails(dataBase.vacanciesDao().getVacancy(id))
 
     override suspend fun isFavorite(id: String): Boolean =
         dataBase.vacanciesDao().isFavorite(id)
