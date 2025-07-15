@@ -8,5 +8,5 @@ import kotlinx.serialization.json.JsonIgnoreUnknownKeys
 @Serializable
 @JsonIgnoreUnknownKeys
 data class AddressDto(
-    val raw: String
+    val raw: String?
 )

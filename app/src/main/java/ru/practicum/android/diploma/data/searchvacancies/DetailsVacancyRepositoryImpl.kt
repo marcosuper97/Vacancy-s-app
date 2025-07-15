@@ -14,16 +14,17 @@ class DetailsVacancyRepositoryImpl(
     private val networkClient: NetworkClient
 ) : DetailsVacancyRepository {
     override fun doRequest(vacancyId: String): Flow<Result<VacancyDetails>> = flow {
-        withContext(Dispatchers.IO) {
-            val response = networkClient.detailsVacancyRequest(vacancyId)
-            response
-                .onSuccess { data ->
-                    emit(Result.success(mapResponse(data)))
-                }
-                .onFailure { error ->
-                    emit(Result.failure(error))
-                }
+        val response = withContext(Dispatchers.IO) {
+            networkClient.detailsVacancyRequest(vacancyId)
         }
+
+        response
+            .onSuccess { data ->
+                emit(Result.success(mapResponse(data)))
+            }
+            .onFailure { error ->
+                emit(Result.failure(error))
+            }
     }
 
     private fun mapResponse(dto: VacancyDetailsDto): VacancyDetails {
@@ -32,7 +33,7 @@ class DetailsVacancyRepositoryImpl(
             vacancyName = dto.name,
             employerName = dto.employer?.name,
             employerLogo = dto.employer?.employerLogo?.path,
-            address = when (dto.address) {
+            address = when (dto.address?.raw) {
                 null -> dto.area.name
                 else -> dto.address.raw
             },

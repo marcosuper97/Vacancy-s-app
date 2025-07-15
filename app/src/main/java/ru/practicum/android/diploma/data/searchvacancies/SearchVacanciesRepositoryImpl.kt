@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.data.searchvacancies
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchRequest
 import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchResponseDto
@@ -18,20 +19,21 @@ class SearchVacanciesRepositoryImpl(
 ) : SearchVacanciesRepository {
 
     override fun doRequest(textRequest: String, page: Int): Flow<Result<VacanciesList>> = flow {
-        withContext(Dispatchers.IO) {
-            val response = networkClient.vacanciesSearchRequest(createRequest(textRequest, page))
-            response
-                .onSuccess { data ->
-                    if (data.vacancies.isEmpty()) {
-                        emit(Result.failure(AppException.EmptyResult()))
-                    } else {
-                        emit(Result.success(mapResponse(data)))
-                    }
-                }
-                .onFailure { error ->
-                    emit(Result.failure(error))
-                }
+        val response = withContext(Dispatchers.IO) {
+            networkClient.vacanciesSearchRequest(createRequest(textRequest, page))
         }
+
+        response
+            .onSuccess { data ->
+                if (data.vacancies.isEmpty()) {
+                    emit(Result.failure(AppException.EmptyResult()))
+                } else {
+                    emit(Result.success(mapResponse(data)))
+                }
+            }
+            .onFailure { error ->
+                emit(Result.failure(error))
+            }
     }
 
     // Пока работает на запрос без фильтров
@@ -78,7 +80,7 @@ class SearchVacanciesRepositoryImpl(
                     vacancyName = vacancy.name,
                     employerName = vacancy.employer.name,
                     employerLogo = vacancy.employer.employerLogo?.path,
-                    address = when (vacancy.address) {
+                    address = when (vacancy.address?.raw) {
                         null -> vacancy.area.name
                         else -> vacancy.address.raw
                     },
