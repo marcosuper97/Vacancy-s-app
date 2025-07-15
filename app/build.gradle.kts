@@ -4,6 +4,7 @@ plugins {
     id("ru.practicum.android.diploma.plugins.developproperties")
     id("com.google.devtools.ksp") version "2.2.0-2.0.2"
     id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0"
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {

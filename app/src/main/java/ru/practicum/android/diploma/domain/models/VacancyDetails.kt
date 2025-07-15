@@ -5,12 +5,12 @@ data class VacancyDetails(
     val name: String,
     val employer: Employer,
     val area: Area,
-    val salaryRange: SalaryRange,
+    val salaryRange: SalaryRange?,
     val experience: String,
     val schedule: String,
     val employment: String,
     val description: String,
-    val keySkills: List<String>
+    val keySkills: List<KeySkill>
 )
 
 data class Employer(
@@ -26,7 +26,7 @@ data class Area(
 data class SalaryRange(
     val currency: Currency,
     val from: Int? = 0,
-    val gross: Boolean,
+    val gross: Boolean?,
     val to: Int? = 0
 )
 
@@ -42,3 +42,7 @@ enum class Currency(val label: String) {
     UAH("₴"),
     UZS("so\'m")
 }
+
+data class KeySkill(
+    val name: String
+)

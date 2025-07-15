@@ -7,22 +7,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentVacancyDetailsBinding
 import ru.practicum.android.diploma.presentation.vacancy.VacancyDetailsCommand
+import ru.practicum.android.diploma.presentation.vacancy.VacancyDetailsViewModel
 import ru.practicum.android.diploma.presentation.vacancy.VacancyUiState
-import ru.practicum.android.diploma.presentation.vacancy.VacancyViewModel
 import ru.practicum.android.diploma.ui.common.PaddingItemDecoration
 import ru.practicum.android.diploma.ui.common.dp
 import ru.practicum.android.diploma.ui.common.launchAndRepeatOnLifecycle
 
 class VacancyDetailsFragment : Fragment() {
 
+    private val args by navArgs<VacancyDetailsFragmentArgs>()
+
     private var _binding: FragmentVacancyDetailsBinding? = null
     private val binding: FragmentVacancyDetailsBinding get() = _binding!!
-    private val viewModel: VacancyViewModel by viewModels()
+    private val viewModel: VacancyDetailsViewModel by viewModel { parametersOf(args.vacancyId) }
 
     private val adapter = VacancyDetailsAdapter()
 

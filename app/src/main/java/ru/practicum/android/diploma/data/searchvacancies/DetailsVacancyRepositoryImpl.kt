@@ -1,11 +1,8 @@
 package ru.practicum.android.diploma.data.searchvacancies
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.CurrencyDto
 import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.EmployerDto
+import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.KeySkillDto
 import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.SalaryRangeDto
 import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.VacancyAreaDto
 import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.VacancyDetailsDto
@@ -14,6 +11,7 @@ import ru.practicum.android.diploma.domain.detailsvacancy.DetailsVacancyReposito
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Currency
 import ru.practicum.android.diploma.domain.models.Employer
+import ru.practicum.android.diploma.domain.models.KeySkill
 import ru.practicum.android.diploma.domain.models.SalaryRange
 import ru.practicum.android.diploma.domain.models.VacancyDetails
 
@@ -22,12 +20,12 @@ private fun VacancyDetailsDto.toVacancyDetails() = VacancyDetails(
     name = name,
     employer = employer.toEmployer(),
     area = area.toArea(),
-    salaryRange = salaryRange.toSalaryRange(),
+    salaryRange = salaryRange?.toSalaryRange(),
     experience = experience.name,
     schedule = schedule.name,
     employment = employment.name,
     description = description,
-    keySkills = keySkills
+    keySkills = keySkills.map { it.toKeySkill() }
 )
 
 private fun EmployerDto.toEmployer() = Employer(
@@ -62,20 +60,14 @@ fun CurrencyDto.toCurrency(): Currency {
     }
 }
 
+private fun KeySkillDto.toKeySkill() = KeySkill(
+    name = name
+)
+
 class DetailsVacancyRepositoryImpl(
     private val networkClient: NetworkClient
 ) : DetailsVacancyRepository {
-    override fun doRequest(vacancyId: String): Flow<Result<VacancyDetails>> = flow {
-        val response = withContext(Dispatchers.IO) {
-            networkClient.detailsVacancyRequest(vacancyId)
-        }
-
-        response
-            .onSuccess { data ->
-                emit(Result.success(data.toVacancyDetails()))
-            }
-            .onFailure { error ->
-                emit(Result.failure(error))
-            }
+    override suspend fun doRequest(vacancyId: String): VacancyDetails {
+        return networkClient.detailsVacancyRequest(vacancyId).toVacancyDetails()
     }
 }
