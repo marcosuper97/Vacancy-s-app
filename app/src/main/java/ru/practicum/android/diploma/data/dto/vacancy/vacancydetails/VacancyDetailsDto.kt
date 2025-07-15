@@ -10,7 +10,7 @@ data class VacancyDetailsDto(
     val employer: EmployerDto,
     val area: VacancyAreaDto,
     @SerialName("salary_range")
-    val salaryRange: SalaryRangeDto,
+    val salaryRange: SalaryRangeDto?,
     @SerialName("experience")
     val experience: ExperienceDto,
     @SerialName("schedule")
@@ -18,7 +18,8 @@ data class VacancyDetailsDto(
     @SerialName("employment")
     val employment: EmploymentDto,
     val description: String,
-    val keySkills: List<String>
+    @SerialName("key_skills")
+    val keySkills: List<KeySkillDto>
 )
 
 @Serializable
@@ -44,7 +45,7 @@ data class VacancyAreaDto(
 data class SalaryRangeDto(
     val currency: CurrencyDto,
     val from: Int? = 0,
-    val gross: Boolean,
+    val gross: Boolean?,
     val to: Int? = 0
 )
 
@@ -93,5 +94,10 @@ data class ScheduleDto(
 
 @Serializable
 data class EmploymentDto(
+    val name: String
+)
+
+@Serializable
+data class KeySkillDto(
     val name: String
 )
