@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.data.dto
+package ru.practicum.android.diploma.data.dto.area
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
