@@ -4,6 +4,7 @@ enum class Currency(val label: String) {
     USD("$"),
     EUR("€"),
     RUB("₽"),
+    RUR("₽"),
     AZN("₼"),
     BYR("br"),
     GEL("₾"),

@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.ui.vacancy
 
 import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -94,14 +95,18 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
                 val salaryText = StringBuilder().apply {
                     if (item.from != null) {
                         append(
-                            context.getString(R.string.from, item.from)
+                            context.getString(R.string.from)
                         )
+                        append(" ")
+                        append(item.from)
                     }
                     if (item.to != null) {
                         append(" ")
                         append(
-                            context.getString(R.string.to, item.to)
+                            context.getString(R.string.to)
                         )
+                        append(" ")
+                        append(item.to)
                     }
                     append(" ")
                     append(

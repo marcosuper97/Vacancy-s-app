@@ -2,14 +2,15 @@ package ru.practicum.android.diploma.presentation.vacancy
 
 import ru.practicum.android.diploma.domain.models.VacancyDetails
 import ru.practicum.android.diploma.ui.common.UiModel
+import ru.practicum.android.diploma.util.formatWithThousandsSeparator
 
 sealed class VacancyDetailsItemUiModel : UiModel<VacancyDetailsItemUiModel> {
     data class VacancyName(
         private val vacancyDetails: VacancyDetails
     ) : VacancyDetailsItemUiModel() {
         val name = vacancyDetails.vacancyName
-        val from = vacancyDetails.salaryFrom
-        val to = vacancyDetails.salaryTo
+        val from = vacancyDetails.salaryFrom?.formatWithThousandsSeparator()
+        val to = vacancyDetails.salaryTo?.formatWithThousandsSeparator()
         val currency = vacancyDetails.currency
 
         override fun areItemsTheSame(other: VacancyDetailsItemUiModel) = other is VacancyName
