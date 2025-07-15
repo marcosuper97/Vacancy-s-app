@@ -1,8 +1,6 @@
 package ru.practicum.android.diploma.data.searchvacancies
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.VacancyDetailsDto
 import ru.practicum.android.diploma.data.network.NetworkClient
@@ -14,17 +12,10 @@ class DetailsVacancyRepositoryImpl(
     private val networkClient: NetworkClient
 ) : DetailsVacancyRepository {
     override suspend fun doRequest(vacancyId: String): Result<VacancyDetails> {
-        val response = withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.IO) {
             networkClient.detailsVacancyRequest(vacancyId)
+                .map { dto -> mapResponse(dto) }
         }
-
-        response
-            .onSuccess { data ->
-                return Result.success(mapResponse(data))
-            }
-            .onFailure { error ->
-                emit(Result.failure(error))
-            }
     }
 
     private fun mapResponse(dto: VacancyDetailsDto): VacancyDetails {
