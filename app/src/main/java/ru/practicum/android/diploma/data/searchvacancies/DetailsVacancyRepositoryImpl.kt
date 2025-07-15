@@ -31,6 +31,7 @@ class DetailsVacancyRepositoryImpl(
             salaryFrom = dto.salary?.from.toString(),
             salaryTo = dto.salary?.to.toString(),
             currency = dto.salary?.currency.toCurrencySymbol(),
+            employmentForm = dto.employmentForm?.name,
             workFormat = dto.workFormat?.map { it.name },
             experience = dto.experience?.name,
             linkUrl = dto.linkUrl,
