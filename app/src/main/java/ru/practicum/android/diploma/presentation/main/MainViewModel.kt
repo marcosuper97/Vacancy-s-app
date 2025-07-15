@@ -18,9 +18,7 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : 
     val uiState = _uiState.asStateFlow()
 
     private val vacanciesSearchDebounce = debounce<String>(
-        SEARCH_DEBOUNCE_DELAY,
-        viewModelScope,
-        true
+        SEARCH_DEBOUNCE_DELAY, viewModelScope, true
     ) { request -> searchVacancies(request, currentPage) }
 
     private fun searchDebounce(changedText: String) {
@@ -55,21 +53,16 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : 
 
         viewModelScope.launch {
             searchInteractor?.searchVacancies(queryText, page)?.collect { result ->
-                _uiState.value = when {
-                    result.isSuccess && result.getOrNull() != null ->
-                        SearchVacanciesState.ShowContent(result.getOrNull()!!)
+                result.onSuccess {
+                    _uiState.value = SearchVacanciesState.ShowContent(result.getOrNull()!!)
+                }
 
-                    result.isFailure || result.exceptionOrNull() is AppException.EmptyResult ->
-                        SearchVacanciesState.NothingFound
-
-                    result.isFailure || result.exceptionOrNull() is AppException.NotFound ->
-                        SearchVacanciesState.NothingFound
-
-                    result.isFailure || result.exceptionOrNull() is AppException.NoInternetConnection ->
-                        SearchVacanciesState.NoInternet
-
-                    else ->
-                        SearchVacanciesState.NetworkError
+                result.onFailure {
+                    _uiState.value = when (result.exceptionOrNull()) {
+                        is AppException.EmptyResult, is AppException.NotFound -> SearchVacanciesState.NothingFound
+                        is AppException.NoInternetConnection -> SearchVacanciesState.NoInternet
+                        else -> SearchVacanciesState.NetworkError
+                    }
                 }
             }
         }
