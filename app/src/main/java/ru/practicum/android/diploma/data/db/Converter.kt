@@ -24,7 +24,6 @@ fun mapToDetails(entity: VacancyEntity): VacancyDetails {
         employmentForm = entity.employmentForm,
         description = entity.description,
         keySkills = Json.decodeFromString(ListSerializer(String.serializer()), entity.keySkills),
-        additionTime = entity.additionTime,
         isFavorite = true
     )
 }
