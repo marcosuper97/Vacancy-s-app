@@ -18,7 +18,7 @@ import ru.practicum.android.diploma.presentation.vacancy.VacancyDetailsItemUiMod
 import ru.practicum.android.diploma.ui.common.UiModelDiffCallback
 
 class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
-        RecyclerView.ViewHolder>(UiModelDiffCallback<VacancyDetailsItemUiModel>()) {
+    RecyclerView.ViewHolder>(UiModelDiffCallback<VacancyDetailsItemUiModel>()) {
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
