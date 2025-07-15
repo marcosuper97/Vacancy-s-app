@@ -3,7 +3,6 @@ package ru.practicum.android.diploma.data.searchvacancies
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchRequest
 import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchResponseDto
