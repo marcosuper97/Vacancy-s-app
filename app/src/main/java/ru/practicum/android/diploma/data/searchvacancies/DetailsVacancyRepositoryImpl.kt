@@ -44,7 +44,9 @@ class DetailsVacancyRepositoryImpl(
             experience = dto.experience?.name,
             linkUrl = dto.linkUrl,
             description = dto.description,
-            keySkills = dto.keySkills.map { it.name }
+            keySkills = dto.keySkills.map { it.name },
+            isFavorite = false,
+            employmentForm = dto.employmentForm?.name
         )
     }
 }
