@@ -14,8 +14,8 @@ class RetrofitNetworkClient(
     private val apiService: HhApiService
 ) : NetworkClient {
 
-    override suspend fun detailsVacancyRequest(requestId: String): VacancyDetailsDto {
-        return executeRequest { apiService.getVacancyDetails(requestId) }.getOrThrow()
+    override suspend fun detailsVacancyRequest(requestId: String): Result<VacancyDetailsDto> {
+        return executeRequest { apiService.getVacancyDetails(requestId) }
     }
 
     override suspend fun vacanciesSearchRequest(requestQuery: Map<String, String>): Result<VacancySearchResponseDto> {

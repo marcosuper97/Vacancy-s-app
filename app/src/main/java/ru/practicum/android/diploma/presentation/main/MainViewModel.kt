@@ -2,13 +2,13 @@ package ru.practicum.android.diploma.presentation.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.searchvacancies.SearchVacanciesInteractor
 import ru.practicum.android.diploma.util.AppException
-import ru.practicum.android.diploma.util.debounce
 import ru.practicum.android.diploma.util.SearchVacanciesState
+import ru.practicum.android.diploma.util.debounce
 
 class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : ViewModel() {
     private var latestQueryText: String? = null

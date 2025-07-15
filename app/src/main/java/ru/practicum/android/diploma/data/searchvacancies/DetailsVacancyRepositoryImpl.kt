@@ -1,73 +1,42 @@
 package ru.practicum.android.diploma.data.searchvacancies
 
-import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.CurrencyDto
-import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.EmployerDto
-import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.KeySkillDto
-import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.SalaryRangeDto
-import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.VacancyAreaDto
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.VacancyDetailsDto
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.detailsvacancy.DetailsVacancyRepository
-import ru.practicum.android.diploma.domain.models.Area
-import ru.practicum.android.diploma.domain.models.Currency
-import ru.practicum.android.diploma.domain.models.Employer
-import ru.practicum.android.diploma.domain.models.KeySkill
-import ru.practicum.android.diploma.domain.models.SalaryRange
 import ru.practicum.android.diploma.domain.models.VacancyDetails
-
-private fun VacancyDetailsDto.toVacancyDetails() = VacancyDetails(
-    id = id,
-    name = name,
-    employer = employer.toEmployer(),
-    area = area.toArea(),
-    salaryRange = salaryRange?.toSalaryRange(),
-    experience = experience.name,
-    schedule = schedule.name,
-    employment = employment.name,
-    description = description,
-    keySkills = keySkills.map { it.toKeySkill() }
-)
-
-private fun EmployerDto.toEmployer() = Employer(
-    logoUrl = logoUrls.size90,
-    name = name
-)
-
-private fun VacancyAreaDto.toArea() = Area(
-    id = id,
-    name = name
-)
-
-private fun SalaryRangeDto.toSalaryRange() = SalaryRange(
-    currency = currency.toCurrency(),
-    from = from,
-    gross = gross,
-    to = to
-)
-
-fun CurrencyDto.toCurrency(): Currency {
-    return when (this) {
-        CurrencyDto.USD -> Currency.USD
-        CurrencyDto.EUR -> Currency.EUR
-        CurrencyDto.RUB -> Currency.RUB
-        CurrencyDto.AZN -> Currency.AZN
-        CurrencyDto.BYR -> Currency.BYR
-        CurrencyDto.GEL -> Currency.GEL
-        CurrencyDto.KGS -> Currency.KGS
-        CurrencyDto.KZT -> Currency.KZT
-        CurrencyDto.UAH -> Currency.UAH
-        CurrencyDto.UZS -> Currency.UZS
-    }
-}
-
-private fun KeySkillDto.toKeySkill() = KeySkill(
-    name = name
-)
+import ru.practicum.android.diploma.util.toCurrencySymbol
 
 class DetailsVacancyRepositoryImpl(
     private val networkClient: NetworkClient
 ) : DetailsVacancyRepository {
-    override suspend fun doRequest(vacancyId: String): VacancyDetails {
-        return networkClient.detailsVacancyRequest(vacancyId).toVacancyDetails()
+    override suspend fun doRequest(vacancyId: String): Result<VacancyDetails> {
+        return withContext(Dispatchers.IO) {
+            networkClient.detailsVacancyRequest(vacancyId)
+                .map { dto -> mapResponse(dto) }
+        }
+    }
+
+    private fun mapResponse(dto: VacancyDetailsDto): VacancyDetails {
+        return VacancyDetails(
+            vacancyId = dto.id,
+            vacancyName = dto.name,
+            employerName = dto.employer?.name,
+            employerLogo = dto.employer?.employerLogo?.path,
+            address = when (dto.address?.raw) {
+                null -> dto.area.name
+                else -> dto.address.raw
+            },
+            salaryFrom = dto.salary?.from,
+            salaryTo = dto.salary?.to,
+            currency = dto.salary?.currency.toCurrencySymbol(),
+            employmentForm = dto.employmentForm?.name,
+            workFormat = dto.workFormat?.map { it.name },
+            experience = dto.experience?.name,
+            linkUrl = dto.linkUrl,
+            description = dto.description,
+            keySkills = dto.keySkills.map { it.name }
+        )
     }
 }

@@ -37,23 +37,53 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             R.layout.vacancy_details_name_item -> {
-                VacancyDetailsNameItemViewHolder(VacancyDetailsNameItemBinding.inflate(inflater, parent, false))
+                VacancyDetailsNameItemViewHolder(
+                    VacancyDetailsNameItemBinding.inflate(
+                        inflater,
+                        parent,
+                        false
+                    )
+                )
             }
 
             R.layout.vacancy_details_company -> {
-                VacancyDetailsCompanyViewHolder(VacancyDetailsCompanyBinding.inflate(inflater, parent, false))
+                VacancyDetailsCompanyViewHolder(
+                    VacancyDetailsCompanyBinding.inflate(
+                        inflater,
+                        parent,
+                        false
+                    )
+                )
             }
 
             R.layout.vacancy_details_experience -> {
-                VacancyDetailsExperienceViewHolder(VacancyDetailsExperienceBinding.inflate(inflater, parent, false))
+                VacancyDetailsExperienceViewHolder(
+                    VacancyDetailsExperienceBinding.inflate(
+                        inflater,
+                        parent,
+                        false
+                    )
+                )
             }
 
             R.layout.vacancy_details_description -> {
-                VacancyDetailsDescriptionViewHolder(VacancyDetailsDescriptionBinding.inflate(inflater, parent, false))
+                VacancyDetailsDescriptionViewHolder(
+                    VacancyDetailsDescriptionBinding.inflate(
+                        inflater,
+                        parent,
+                        false
+                    )
+                )
             }
 
             R.layout.vacancy_details_key_slills -> {
-                VacancyDetailsKeySkillsViewHolder(VacancyDetailsKeySlillsBinding.inflate(inflater, parent, false))
+                VacancyDetailsKeySkillsViewHolder(
+                    VacancyDetailsKeySlillsBinding.inflate(
+                        inflater,
+                        parent,
+                        false
+                    )
+                )
             }
 
             else -> throw IllegalArgumentException("Неожиданный viewType")
@@ -92,21 +122,23 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
             with(binding) {
                 nameVacancyTv.text = item.name
                 val salaryText = StringBuilder().apply {
-                    if (item.from != null) {
-                        append(
-                            context.getString(R.string.from, item.from)
-                        )
-                    }
-                    if (item.to != null) {
+                    if (item.from != null || item.to != null) {
+                        if (item.from != null) {
+                            append(context.getString(R.string.from))
+                            append(" ")
+                            append(item.from)
+                        }
+                        if (item.to != null) {
+                            append(" ")
+                            append(context.getString(R.string.to))
+                            append(" ")
+                            append(item.to)
+                        }
                         append(" ")
-                        append(
-                            context.getString(R.string.to, item.to)
-                        )
+                        append(item.currency)
+                    } else {
+                        append(context.getString(R.string.salary_not_specified))
                     }
-                    append(" ")
-                    append(
-                        item.currency?.label
-                    )
                 }.toString()
                 salaryTv.text = salaryText
             }
@@ -124,8 +156,8 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
                     .load(item.logoUrl)
                     .fitCenter()
                     .transition(withCrossFade())
-                    .placeholder(R.drawable.ic_logo_placeholder_32)
-                    .into(logoIm)
+                    .placeholder(R.drawable.employer_logo_placeholder)
+                    .into(logoCard)
                 nameTv.text = item.name
                 regionTv.text = item.region
             }
@@ -166,7 +198,7 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
                         binding.keySkillsLayout,
                         false
                     )
-                    skillItem.keySkillsTv.text = skill.name
+                    skillItem.keySkillsTv.text = skill
                     keySkillsLayout.addView(skillItem.root)
                 }
             }
