@@ -1,9 +1,7 @@
 package ru.practicum.android.diploma.data.dto.vacancy.vacancydetails
 
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonIgnoreUnknownKeys
 import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.AddressDto
 import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.EmployerDto
 import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.EmploymentFormDto
@@ -13,9 +11,7 @@ import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.VacancyArea
 import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.VacancyKeySkillsDto
 import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.WorkFormatDto
 
-@OptIn(ExperimentalSerializationApi::class)
 @Serializable
-@JsonIgnoreUnknownKeys
 data class VacancyDetailsDto(
     val id: String,
     val name: String,

@@ -10,13 +10,17 @@ import ru.practicum.android.diploma.data.network.HhApiService
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
 
+private val json = Json {
+    ignoreUnknownKeys = true
+}
+
 val dataModule = module {
 
     single<HhApiService> {
         Retrofit.Builder()
             .baseUrl(ApiConfig.BASE_URL)
             .addConverterFactory(
-                Json.asConverterFactory("application/json".toMediaType())
+                json.asConverterFactory("application/json".toMediaType())
             )
             .build()
             .create(HhApiService::class.java)
