@@ -9,11 +9,6 @@ import ru.practicum.android.diploma.data.dto.area.AreaDto
 import ru.practicum.android.diploma.data.dto.industry.IndustryDto
 import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.VacancyDetailsDto
 import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchResponseDto
-import retrofit2.http.Query
-import ru.practicum.android.diploma.data.dto.VacancyAreaDto
-import ru.practicum.android.diploma.data.dto.IndustryDto
-import ru.practicum.android.diploma.data.dto.VacancyDetailsResponse
-import ru.practicum.android.diploma.data.dto.VacancySearchResponse
 
 interface HhApiService {
     @Headers(
@@ -38,5 +33,5 @@ interface HhApiService {
     suspend fun getIndustries(): List<IndustryDto>
 
     @GET("areas")
-    suspend fun getAreas(): List<VacancyAreaDto>
+    suspend fun getAreas(): List<AreaDto>
 }
