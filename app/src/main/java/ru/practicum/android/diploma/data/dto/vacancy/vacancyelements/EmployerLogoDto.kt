@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class EmployerLogoDto(
-    @SerialName("90")
+    @SerialName("240")
     val path: String,
 )

@@ -18,7 +18,7 @@ import ru.practicum.android.diploma.presentation.vacancy.VacancyDetailsItemUiMod
 import ru.practicum.android.diploma.ui.common.UiModelDiffCallback
 
 class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
-    RecyclerView.ViewHolder>(UiModelDiffCallback<VacancyDetailsItemUiModel>()) {
+        RecyclerView.ViewHolder>(UiModelDiffCallback<VacancyDetailsItemUiModel>()) {
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
@@ -37,23 +37,53 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             R.layout.vacancy_details_name_item -> {
-                VacancyDetailsNameItemViewHolder(VacancyDetailsNameItemBinding.inflate(inflater, parent, false))
+                VacancyDetailsNameItemViewHolder(
+                    VacancyDetailsNameItemBinding.inflate(
+                        inflater,
+                        parent,
+                        false
+                    )
+                )
             }
 
             R.layout.vacancy_details_company -> {
-                VacancyDetailsCompanyViewHolder(VacancyDetailsCompanyBinding.inflate(inflater, parent, false))
+                VacancyDetailsCompanyViewHolder(
+                    VacancyDetailsCompanyBinding.inflate(
+                        inflater,
+                        parent,
+                        false
+                    )
+                )
             }
 
             R.layout.vacancy_details_experience -> {
-                VacancyDetailsExperienceViewHolder(VacancyDetailsExperienceBinding.inflate(inflater, parent, false))
+                VacancyDetailsExperienceViewHolder(
+                    VacancyDetailsExperienceBinding.inflate(
+                        inflater,
+                        parent,
+                        false
+                    )
+                )
             }
 
             R.layout.vacancy_details_description -> {
-                VacancyDetailsDescriptionViewHolder(VacancyDetailsDescriptionBinding.inflate(inflater, parent, false))
+                VacancyDetailsDescriptionViewHolder(
+                    VacancyDetailsDescriptionBinding.inflate(
+                        inflater,
+                        parent,
+                        false
+                    )
+                )
             }
 
             R.layout.vacancy_details_key_slills -> {
-                VacancyDetailsKeySkillsViewHolder(VacancyDetailsKeySlillsBinding.inflate(inflater, parent, false))
+                VacancyDetailsKeySkillsViewHolder(
+                    VacancyDetailsKeySlillsBinding.inflate(
+                        inflater,
+                        parent,
+                        false
+                    )
+                )
             }
 
             else -> throw IllegalArgumentException("Неожиданный viewType")
@@ -127,7 +157,7 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
                     .fitCenter()
                     .transition(withCrossFade())
                     .placeholder(R.drawable.employer_logo_placeholder)
-                    .into(logoIm)
+                    .into(logoCard)
                 nameTv.text = item.name
                 regionTv.text = item.region
             }
