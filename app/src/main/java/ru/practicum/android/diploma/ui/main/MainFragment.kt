@@ -27,6 +27,7 @@ import ru.practicum.android.diploma.databinding.FragmentMainBinding
 import ru.practicum.android.diploma.domain.models.VacanciesList
 import ru.practicum.android.diploma.presentation.main.MainViewModel
 import ru.practicum.android.diploma.ui.vacancy.VacanciesAdapter
+import ru.practicum.android.diploma.util.LoadingItem
 import ru.practicum.android.diploma.util.SearchVacanciesState
 
 class MainFragment : Fragment() {
@@ -77,6 +78,14 @@ class MainFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collectLatest { state ->
                     render(state)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isLoadingNextPage.collectLatest { isLoading ->
+                    vacanciesAdapter.isLoadingNextPage = isLoading // передаем состояние загрузки в адаптер
                 }
             }
         }
@@ -165,7 +174,7 @@ class MainFragment : Fragment() {
             SearchVacanciesState.Loading -> showLoading()
             SearchVacanciesState.NetworkError -> showNetworkError()
             SearchVacanciesState.NothingFound -> showNothingFound()
-            is SearchVacanciesState.ShowContent -> showContent(state.content)
+            is SearchVacanciesState.ShowContent -> showContent(state)
             SearchVacanciesState.NoInternet -> showNoInternet()
         }
     }
@@ -218,9 +227,9 @@ class MainFragment : Fragment() {
         binding.errorImageAndMessageLl.isVisible = true
     }
 
-    fun showContent(vacanciesList: VacanciesList) {
+    fun showContent(state: SearchVacanciesState.ShowContent) {
         binding.countVacancyTv.isVisible = true
-        binding.countVacancyTv.text = getString(R.string.found, vacanciesList.found)
+        binding.countVacancyTv.text = getString(R.string.found, state.content.found)
         binding.mainRv.isVisible = true
         binding.mainPb.isVisible = false
         binding.mainDefaultIv.isVisible = false
@@ -232,4 +241,14 @@ class MainFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+}
+
+fun MutableList<Any>.addLoadingItem() {
+    if (!this.any { it is LoadingItem }) {
+        this.add(LoadingItem)
+    }
+}
+
+fun MutableList<Any>.removeLoadingItem() {
+    this.removeAll { it is LoadingItem }
 }

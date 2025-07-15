@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.searchvacancies.SearchVacanciesInteractor
+import ru.practicum.android.diploma.ui.main.addLoadingItem
+import ru.practicum.android.diploma.ui.main.removeLoadingItem
 import ru.practicum.android.diploma.util.AppException
 import ru.practicum.android.diploma.util.LoadingItem
 import ru.practicum.android.diploma.util.debounce
@@ -24,6 +26,10 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : 
     private val _vacancies = MutableStateFlow<MutableList<Any>>(mutableListOf())
     val vacancies: StateFlow<MutableList<Any>> = _vacancies
 
+    // добавим новое состояние для отслеживания загрузки пагинации
+    private val _isLoadingNextPage = MutableStateFlow(false)
+    val isLoadingNextPage: StateFlow<Boolean> = _isLoadingNextPage
+
     private val vacanciesSearchDebounce = debounce<String>(
         SEARCH_DEBOUNCE_DELAY,
         viewModelScope,
@@ -39,8 +45,13 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : 
     }
 
     fun searchNextPage() {
+        if (_isLoadingNextPage.value) return //  если true, это означает, что загрузка следующей страницы уже запущена.
+        // В этом случае функция searchNextPage() просто завершается (return), чтобы избежать одновременного запуска нескольких запросов на загрузку данных.
+        // Это предотвращает возникновение race condition
         currentPage++
-        latestQueryText?.let { searchVacancies(it, currentPage) }
+        latestQueryText?.let {
+            _isLoadingNextPage.value = true  //  устанавливаем состояние загрузки (прогресс бар внизу списка)
+            searchVacancies(it, currentPage) }
     }
 
     fun onSearchTextChanged(queryText: String) {
@@ -60,31 +71,37 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : 
     private fun searchVacancies(queryText: String, page: Int) {
         if (queryText.isEmpty()) return
 
-        _uiState.value = SearchVacanciesState.Loading
-        val currentList = _vacancies.value.toMutableList()
-        currentList.add(LoadingItem) //  добавляем LoadingItem перед запросом
-        _vacancies.value = currentList
+        if (page == 0) { //  первая загрузка
+            _uiState.value = SearchVacanciesState.Loading // показываем центральный прогресс бар
+        } else {
+            _isLoadingNextPage.value = true //  показываем прогресс бар внизу списка
+            _vacancies.value.addLoadingItem()
+        }
 
         viewModelScope.launch {
             searchInteractor?.searchVacancies(queryText, page)?.collect { result ->
                 result.onSuccess {vacanciesList ->
-                    val currentList = _vacancies.value.toMutableList()
-                    currentList.removeAll { it is LoadingItem } //  удаляем LoadingItem
-                    currentList.addAll(vacanciesList.vacanciesList) // добавляем новые вакансии
-                    _vacancies.value = currentList
+                    val newList = _vacancies.value.toMutableList()
+                    if (page == 0) {
+                        newList.clear() // очищаем начальный LoadingItem
+                    }
+                    newList.removeLoadingItem()  // удаляем loading item (индикатор загрузки) из списка, если он там есть
+
+                    newList.addAll(vacanciesList.vacanciesList)
+                    _vacancies.value = newList
+
                     _uiState.value = SearchVacanciesState.ShowContent(vacanciesList)
+                    _isLoadingNextPage.value = false // состояние загрузки устанавливается в false, чтобы разрешить загрузку следующей страницы
                 }
 
                 result.onFailure {
-                    //  удаляем LoadingItem при ошибке
-                    val currentList = _vacancies.value.toMutableList()
-                    currentList.removeAll { it is LoadingItem }
-                    _vacancies.value = currentList
+                    _vacancies.value.removeLoadingItem()
                     _uiState.value = when (result.exceptionOrNull()) {
                         is AppException.EmptyResult, is AppException.NotFound -> SearchVacanciesState.NothingFound
                         is AppException.NoInternetConnection -> SearchVacanciesState.NoInternet
                         else -> SearchVacanciesState.NetworkError
                     }
+                    _isLoadingNextPage.value = false
                 }
             }
         }

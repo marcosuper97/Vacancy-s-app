@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.ui.vacancy
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,8 @@ import ru.practicum.android.diploma.util.RecyclerViewConstants
 
 class VacanciesAdapter(private val onVacancyClicked: (String) -> Unit) :
     ListAdapter<Any, RecyclerView.ViewHolder>(VacancyDiffCallback()) {
+
+    var isLoadingNextPage: Boolean = false
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
@@ -47,12 +50,16 @@ class VacanciesAdapter(private val onVacancyClicked: (String) -> Unit) :
                 }
             }
             is LoadingViewHolder -> {
-                //  ничего не делаем, прогресс бар сам по себе
+                holder.bind(isLoadingNextPage)
             }
         }
     }
 
-    class LoadingViewHolder(binding: LoadingItemBinding) : RecyclerView.ViewHolder(binding.root)
+    class LoadingViewHolder(val binding: LoadingItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(isLoading: Boolean) {
+            binding.loadingProgressBar.isVisible = isLoading
+        }
+    }
 
     class VacancyDiffCallback : DiffUtil.ItemCallback<Any>() {
         override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
