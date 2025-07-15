@@ -8,12 +8,11 @@
     android:paddingHorizontal="16dp"
     android:paddingVertical="9dp">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="0dp"
-        android:paddingEnd="12dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        style="@style/vacancyLogoItemStyle"
         android:src="@drawable/employer_logo_placeholder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -23,7 +22,7 @@
         style="@style/appearance_medium_22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:layout_marginStart="12dp"
         app:layout_constraintStart_toEndOf="@id/logo"
         app:layout_constraintTop_toTopOf="@id/logo"
         tools:text="Android-разработчик, Москва"/>
@@ -32,7 +31,6 @@
         android:id="@+id/employer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
         app:layout_constraintStart_toStartOf="@id/name"
         app:layout_constraintTop_toBottomOf="@id/name"
         tools:text="Еда"/>
@@ -41,7 +39,6 @@
         android:id="@+id/salary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
         app:layout_constraintStart_toStartOf="@id/employer"
         app:layout_constraintTop_toBottomOf="@id/employer"
         tools:text="от 100 000 ₽"/>
