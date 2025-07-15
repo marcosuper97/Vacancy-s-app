@@ -9,6 +9,6 @@ data class AreaDto(
     val name: String,
     @SerialName("parent_id")
     val parentId: String?,
-    val areas: List<VacancyAreaDto>
+    val areas: List<AreaDto>
 )
 
