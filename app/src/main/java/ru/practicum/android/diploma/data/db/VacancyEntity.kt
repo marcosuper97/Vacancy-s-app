@@ -8,18 +8,20 @@ import androidx.room.PrimaryKey
 )
 data class VacancyEntity(
     @PrimaryKey
-    val id: Long,
+    val id: String,
+    val url: String,
     val name: String,
     val currency: String,
-    val salaryFrom: Int?,
-    val salaryTo: Int?,
+    val salaryFrom: String?,
+    val salaryTo: String?,
     val employer: String?,
     val employerLogo: String?,
-    val area: String,
     val experience: String?,
     val workFormat: String?,
     val employmentForm: String?,
     val description: String,
-    val additionTime: Long = System.currentTimeMillis(),
+    val address: String,
+    val keySkills: String,
+    val additionTime: Long
 )
 
