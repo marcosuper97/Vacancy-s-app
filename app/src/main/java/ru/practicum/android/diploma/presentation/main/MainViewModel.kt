@@ -59,8 +59,14 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : 
                     result.isSuccess && result.getOrNull() != null ->
                         SearchVacanciesState.ShowContent(result.getOrNull()!!)
 
-                    result.isSuccess || result.exceptionOrNull() is AppException.EmptyResult ->
+                    result.isFailure || result.exceptionOrNull() is AppException.EmptyResult ->
                         SearchVacanciesState.NothingFound
+
+                    result.isFailure || result.exceptionOrNull() is AppException.NotFound ->
+                        SearchVacanciesState.NothingFound
+
+                    result.isFailure || result.exceptionOrNull() is AppException.NoInternetConnection ->
+                        SearchVacanciesState.NoInternet
 
                     else ->
                         SearchVacanciesState.NetworkError

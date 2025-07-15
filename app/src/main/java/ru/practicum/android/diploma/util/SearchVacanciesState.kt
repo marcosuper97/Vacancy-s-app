@@ -7,5 +7,6 @@ sealed class SearchVacanciesState {
     data object Loading : SearchVacanciesState()
     data object NothingFound : SearchVacanciesState()
     data object NetworkError : SearchVacanciesState()
+    data object NoInternet : SearchVacanciesState()
     data object Default : SearchVacanciesState()
 }
