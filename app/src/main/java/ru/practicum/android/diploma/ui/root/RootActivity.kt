@@ -63,7 +63,10 @@ class RootActivity : AppCompatActivity() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(
-                systemBars.left, systemBars.top, systemBars.right, if (boolean) systemBars.bottom else 0
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                if (boolean) systemBars.bottom else 0
             )
             insets
         }
@@ -74,6 +77,3 @@ class RootActivity : AppCompatActivity() {
         private const val REMOVE_BOTTOM_PADDING = false
     }
 }
-
-
-
