@@ -1,28 +1,30 @@
 package ru.practicum.android.diploma.ui.main
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
+import ru.practicum.android.diploma.domain.models.VacanciesList
 import ru.practicum.android.diploma.presentation.main.MainViewModel
 import ru.practicum.android.diploma.ui.vacancy.VacanciesAdapter
 import ru.practicum.android.diploma.util.SearchVacanciesState
@@ -32,7 +34,7 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = _binding!!
     private val viewModel: MainViewModel by viewModel()
-    private lateinit var adapter: VacanciesAdapter
+    private lateinit var vacanciesAdapter: VacanciesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,11 +45,13 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = VacanciesAdapter(::onVacancyClicked)
-        binding.mainRv.adapter = adapter
+        vacanciesAdapter = VacanciesAdapter(::onVacancyClicked)
+        binding.mainRv.layoutManager = LinearLayoutManager(context)
+        binding.mainRv.adapter = vacanciesAdapter
 
         binding.toolbarMain.setOnMenuItemClickListener {
             when (it.itemId) {
@@ -60,16 +64,25 @@ class MainFragment : Fragment() {
             }
         }
 
-        /*viewLifecycleOwner.lifecycleScope.launch {
+        //  подписка на vacancies
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.vacancies.collectLatest { vacancies ->
+                    vacanciesAdapter.submitList(vacancies)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collectLatest { state ->
                     render(state)
                 }
             }
-        }*/
+        }
 
         // обработчик изменения текста в поисковой строке
-        /*binding.mainInputEt.addTextChangedListener(object : TextWatcher {
+        binding.mainInputEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -92,13 +105,13 @@ class MainFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {}
-        })*/
+        })
 
         binding.mainInputEt.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE ||
                 (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)){ // добавляет обработку для кнопки Enter
                 val queryText = binding.mainInputEt.text.toString() // получаем текст из EditText
-                //viewModel.onSearchTextChanged(queryText)  // вызываем метод ViewModel, который уже содержит дебаунс
+                viewModel.onSearchTextChanged(queryText)  // вызываем метод ViewModel, который уже содержит дебаунс
                 true
             } else {
                 false
@@ -110,7 +123,7 @@ class MainFragment : Fragment() {
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= (binding.mainInputEt.right - binding.mainInputEt.compoundPaddingEnd)) { // проверка клика по иконке
                     //  клик по иконке (крестик)
-                    //viewModel.onClearSearchClicked()
+                    viewModel.onClearSearchClicked()
                     binding.mainInputEt.text.clear()
                     return@setOnTouchListener true //  Возвращаем true, чтобы обработать клик
                 }
@@ -135,7 +148,7 @@ class MainFragment : Fragment() {
                     firstVisibleItemPosition >= 0
                 ) {
                     // Загружаем следующую страницу
-                    //viewModel.searchNextPage()
+                    viewModel.searchNextPage()
                 }
             }
         })
@@ -150,11 +163,10 @@ class MainFragment : Fragment() {
         when(state) {
             SearchVacanciesState.Default -> showDefault()
             SearchVacanciesState.Loading -> showLoading()
-            SearchVacanciesState.NetworkError -> showNetworkError(
-                errorMessage = TODO()
-            )
+            SearchVacanciesState.NetworkError -> showNetworkError()
             SearchVacanciesState.NothingFound -> showNothingFound()
-            is SearchVacanciesState.ShowContent -> showContent()
+            is SearchVacanciesState.ShowContent -> showContent(state.content)
+            SearchVacanciesState.NoInternet -> showNoInternet()
         }
     }
 
@@ -164,6 +176,7 @@ class MainFragment : Fragment() {
         binding.mainPb.isVisible = false
         binding.mainDefaultIv.isVisible = true
         binding.errorImageAndMessageLl.isVisible = false
+
     }
 
     fun showLoading(){
@@ -172,50 +185,48 @@ class MainFragment : Fragment() {
         binding.mainPb.isVisible = true
         binding.mainDefaultIv.isVisible = false
         binding.errorImageAndMessageLl.isVisible = false
-
-        binding.textView.setOnClickListener {
-            val navController = findNavController()
-            navController.navigate(MainFragmentDirections.actionToVacancyDetailsFragment("1225277"))
-        }
     }
 
-    fun showNetworkError(errorMessage: String){
+    fun showNoInternet(){
         binding.countVacancyTv.isVisible = false
         binding.mainRv.isVisible = false
         binding.mainPb.isVisible = false
         binding.mainDefaultIv.isVisible = false
+
         binding.errorImageAndMessageLl.isVisible = true
+        binding.errorImageIv.setImageResource(R.drawable.image_no_internet)
+        binding.errorTextTv.setText(R.string.there_is_no_internet_connection)
+    }
 
-        val (imageRes, errorMessage) = when (errorMessage){
-            getString(R.string.there_is_no_internet_connection) ->
-                Pair(R.drawable.image_no_internet, errorMessage)
-            getString(R.string.server_error) ->
-                Pair(R.drawable.image_error_server, errorMessage)
+    fun showNetworkError() {
+        binding.countVacancyTv.isVisible = false
+        binding.mainRv.isVisible = false
+        binding.mainPb.isVisible = false
+        binding.mainDefaultIv.isVisible = false
 
-            else -> Pair(R.drawable.image_error_cat, errorMessage)
-        }
-
-        binding.errorImageIv.setImageResource(imageRes)
-        binding.errorTextTv.text = errorMessage
+        binding.errorImageAndMessageLl.isVisible = true
+        binding.errorImageIv.setImageResource(R.drawable.image_error_server)
+        binding.errorTextTv.setText(R.string.server_error)
     }
 
     fun showNothingFound(){
         binding.countVacancyTv.isVisible = true
+        binding.countVacancyTv.setText(R.string.no_such_vacancies)
         binding.mainRv.isVisible = false
         binding.mainPb.isVisible = false
         binding.mainDefaultIv.isVisible = false
         binding.errorImageAndMessageLl.isVisible = true
     }
 
-    fun showContent(){
+    fun showContent(vacanciesList: VacanciesList) {
         binding.countVacancyTv.isVisible = true
+        binding.countVacancyTv.text = getString(R.string.found, vacanciesList.found)
         binding.mainRv.isVisible = true
         binding.mainPb.isVisible = false
         binding.mainDefaultIv.isVisible = false
         binding.errorImageAndMessageLl.isVisible = false
+
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

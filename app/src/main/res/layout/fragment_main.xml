@@ -59,26 +59,16 @@
         android:elevation="1dp"
         />
 
-    <TextView
-        android:id="@+id/text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/vacancy_search"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-40dp"
+        android:paddingTop="@dimen/dp_48"
         android:clipToPadding="false"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/count_vacancy_tv"
+        app:layout_constraintTop_toBottomOf="@id/main_input_et"
         tools:itemCount="5"
         tools:listitem="@layout/vacancy_item" />
 
@@ -91,7 +81,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_rv" />
+        app:layout_constraintTop_toBottomOf="@id/main_input_et"/>
 
     <ImageView
         android:id="@+id/main_default_iv"
