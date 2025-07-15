@@ -105,7 +105,7 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
                     }
                     append(" ")
                     append(
-                        item.currency?.label
+                        item.currency
                     )
                 }.toString()
                 salaryTv.text = salaryText
@@ -166,7 +166,7 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
                         binding.keySkillsLayout,
                         false
                     )
-                    skillItem.keySkillsTv.text = skill.name
+                    skillItem.keySkillsTv.text = skill
                     keySkillsLayout.addView(skillItem.root)
                 }
             }

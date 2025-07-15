@@ -28,8 +28,8 @@ class DetailsVacancyRepositoryImpl(
                 null -> dto.area.name
                 else -> dto.address.raw
             },
-            salaryFrom = dto.salary?.from.toString(),
-            salaryTo = dto.salary?.to.toString(),
+            salaryFrom = dto.salary?.from,
+            salaryTo = dto.salary?.to,
             currency = dto.salary?.currency.toCurrencySymbol(),
             employmentForm = dto.employmentForm?.name,
             workFormat = dto.workFormat?.map { it.name },

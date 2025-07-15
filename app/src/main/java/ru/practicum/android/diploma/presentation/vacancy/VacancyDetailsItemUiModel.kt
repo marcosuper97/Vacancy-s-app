@@ -31,7 +31,13 @@ sealed class VacancyDetailsItemUiModel : UiModel<VacancyDetailsItemUiModel> {
         private val vacancyDetails: VacancyDetails
     ) : VacancyDetailsItemUiModel() {
         val experience = vacancyDetails.experience
-        val schedule = "${vacancyDetails.employmentForm}, ${vacancyDetails.workFormat}"
+        val schedule = buildString {
+            append(vacancyDetails.employmentForm)
+            if (!vacancyDetails.workFormat.isNullOrEmpty()) {
+                append(", ")
+                append(vacancyDetails.workFormat.joinToString(", "))
+            }
+        }
 
         override fun areItemsTheSame(other: VacancyDetailsItemUiModel) = other is VacancyExperience
         override fun areContentsTheSame(other: VacancyDetailsItemUiModel) =

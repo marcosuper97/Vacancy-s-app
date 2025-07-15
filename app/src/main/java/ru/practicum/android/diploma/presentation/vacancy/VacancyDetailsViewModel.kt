@@ -27,7 +27,7 @@ class VacancyDetailsViewModel(
                     prefState.copy(
                         isFetching = false,
                         isError = false,
-                        vacancyDetails = vacancyDetails
+                        vacancyDetails = vacancyDetails.getOrNull()
                     )
                 }
             } catch (e: CancellationException) {
