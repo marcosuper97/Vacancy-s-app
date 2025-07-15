@@ -126,7 +126,7 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
                     .load(item.logoUrl)
                     .fitCenter()
                     .transition(withCrossFade())
-                    .placeholder(R.drawable.ic_logo_placeholder_32)
+                    .placeholder(R.drawable.employer_logo_placeholder)
                     .into(logoIm)
                 nameTv.text = item.name
                 regionTv.text = item.region
