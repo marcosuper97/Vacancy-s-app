@@ -39,6 +39,11 @@ class MainFragment : Fragment() {
                 else -> false
             }
         }
+
+        binding.textView.setOnClickListener {
+            val navController = findNavController()
+            navController.navigate(R.id.action_to_vacancy_details_fragment)
+        }
     }
 
     override fun onDestroyView() {

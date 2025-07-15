@@ -47,8 +47,8 @@
     <string name="requirements">Требования</string>
     <string name="core_skills">Ключевые навыки</string>
     <string name="conditions">Условия</string>
-    <string name="from">от</string>
-    <string name="to">до</string>
+    <string name="from">от %1$d</string>
+    <string name="to">до %1$d</string>
     <string name="server_error">Ошибка сервера</string>
     <string name="creators">Над приложением работали</string>
     <string name="gorpishin">Евгений Горпишин</string>
@@ -68,4 +68,5 @@
     <string name="uzs">so\'m</string>
     <string name="salary_not_specified">Зарплата не указана</string>
     <string name="binding_not_initialized">Binding wasn\'t initialized</string>
+    <string name="point">•</string>
 </resources>

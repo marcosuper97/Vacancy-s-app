@@ -3,26 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.vacancy.VacancyFragment">
+    android:layout_height="wrap_content"
+    android:paddingVertical="8dp">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarVacancy"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/name_vacancy_tv"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="start"
+        android:textAppearance="@style/appearance_bold_32"
+        android:textColor="@color/text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_arrow_back"
-        app:title="@string/the_vacancy"
-        app:titleTextAppearance="@style/appearance_medium_22" />
+        tools:text="Android-разработчик" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/salary_tv"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/the_vacancy"
+        android:layout_marginTop="4dp"
+        android:textAppearance="@style/appearance_medium_22"
+        android:textColor="@color/text_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/name_vacancy_tv"
+        tools:text="от 100 000 ₽" />
 </androidx.constraintlayout.widget.ConstraintLayout>
