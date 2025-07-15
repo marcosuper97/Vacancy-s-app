@@ -93,25 +93,23 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
             with(binding) {
                 nameVacancyTv.text = item.name
                 val salaryText = StringBuilder().apply {
-                    if (item.from != null) {
-                        append(
-                            context.getString(R.string.from)
-                        )
+                    if (item.from != null || item.to != null) {
+                        if (item.from != null) {
+                            append(context.getString(R.string.from))
+                            append(" ")
+                            append(item.from)
+                        }
+                        if (item.to != null) {
+                            append(" ")
+                            append(context.getString(R.string.to))
+                            append(" ")
+                            append(item.to)
+                        }
                         append(" ")
-                        append(item.from)
+                        append(item.currency)
+                    } else {
+                        append(context.getString(R.string.salary_not_specified))
                     }
-                    if (item.to != null) {
-                        append(" ")
-                        append(
-                            context.getString(R.string.to)
-                        )
-                        append(" ")
-                        append(item.to)
-                    }
-                    append(" ")
-                    append(
-                        item.currency
-                    )
                 }.toString()
                 salaryTv.text = salaryText
             }
