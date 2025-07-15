@@ -36,7 +36,7 @@ class SearchVacanciesRepositoryImpl(
     }
 
     // Пока работает на запрос без фильтров
-    private fun createRequest(textRequest: String, page: Int): Map<String, String> {
+    override fun createRequest(textRequest: String, page: Int): Map<String, String> {
         val requestWithoutFilters = VacancySearchRequest(
             page = page,
             text = textRequest,
