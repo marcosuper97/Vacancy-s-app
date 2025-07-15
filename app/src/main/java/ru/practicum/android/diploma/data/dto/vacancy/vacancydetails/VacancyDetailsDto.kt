@@ -2,102 +2,32 @@ package ru.practicum.android.diploma.data.dto.vacancy.vacancydetails
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.AddressDto
+import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.EmployerDto
+import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.EmploymentFormDto
+import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.ExperienceDto
+import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.SalaryDto
+import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.VacancyAreaDto
+import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.VacancyKeySkillsDto
+import ru.practicum.android.diploma.data.dto.vacancy.vacancyelements.WorkFormatDto
 
 @Serializable
 data class VacancyDetailsDto(
     val id: String,
     val name: String,
-    val employer: EmployerDto,
+    val employer: EmployerDto?,
     val area: VacancyAreaDto,
+    val address: AddressDto?,
     @SerialName("salary_range")
-    val salaryRange: SalaryRangeDto?,
-    @SerialName("experience")
-    val experience: ExperienceDto,
-    @SerialName("schedule")
-    val schedule: ScheduleDto,
-    @SerialName("employment")
-    val employment: EmploymentDto,
+    val salary: SalaryDto?,
     val description: String,
+    @SerialName("employment_form")
+    val employmentForm: EmploymentFormDto?,
+    @SerialName("work_format")
+    val workFormat: List<WorkFormatDto>?,
+    @SerialName("alternate_url")
+    val linkUrl: String,
+    val experience: ExperienceDto?,
     @SerialName("key_skills")
-    val keySkills: List<KeySkillDto>
-)
-
-@Serializable
-data class EmployerDto(
-    @SerialName("logo_urls")
-    val logoUrls: LogoUrlDto,
-    val name: String,
-)
-
-@Serializable
-data class LogoUrlDto(
-    @SerialName("90")
-    val size90: String,
-)
-
-@Serializable
-data class VacancyAreaDto(
-    val id: String,
-    val name: String,
-)
-
-@Serializable
-data class SalaryRangeDto(
-    val currency: CurrencyDto,
-    val from: Int? = 0,
-    val gross: Boolean?,
-    val to: Int? = 0
-)
-
-@Serializable
-enum class CurrencyDto {
-    @SerialName("USD")
-    USD,
-
-    @SerialName("EUR")
-    EUR,
-
-    @SerialName("RUR")
-    RUB,
-
-    @SerialName("AZN")
-    AZN,
-
-    @SerialName("BYR")
-    BYR(),
-
-    @SerialName("GEL")
-    GEL,
-
-    @SerialName("KGS")
-    KGS,
-
-    @SerialName("KZT")
-    KZT,
-
-    @SerialName("UAH")
-    UAH,
-
-    @SerialName("UZS")
-    UZS
-}
-
-@Serializable
-data class ExperienceDto(
-    val name: String
-)
-
-@Serializable
-data class ScheduleDto(
-    val name: String
-)
-
-@Serializable
-data class EmploymentDto(
-    val name: String
-)
-
-@Serializable
-data class KeySkillDto(
-    val name: String
+    val keySkills: List<VacancyKeySkillsDto>
 )
