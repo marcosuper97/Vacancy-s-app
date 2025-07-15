@@ -18,7 +18,9 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : 
     val uiState = _uiState.asStateFlow()
 
     private val vacanciesSearchDebounce = debounce<String>(
-        SEARCH_DEBOUNCE_DELAY, viewModelScope, true
+        SEARCH_DEBOUNCE_DELAY,
+        viewModelScope,
+        true
     ) { request -> searchVacancies(request, currentPage) }
 
     private fun searchDebounce(changedText: String) {
