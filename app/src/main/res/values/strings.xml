@@ -48,6 +48,7 @@
     <string name="conditions">Условия</string>
     <string name="from">от</string>
     <string name="to">до</string>
+    <string name="currency">%1$s</string>
     <string name="server_error">Ошибка сервера</string>
     <string name="creators">Над приложением работали</string>
     <string name="gorpishin">Евгений Горпишин</string>
