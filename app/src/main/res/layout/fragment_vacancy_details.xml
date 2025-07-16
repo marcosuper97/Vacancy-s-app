@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIcon="@drawable/arrow_back"
         app:title="@string/the_vacancy"
         app:titleTextAppearance="@style/appearance_medium_22" />
 
@@ -22,7 +22,7 @@
         android:layout_width="@dimen/dp_24"
         android:layout_height="@dimen/dp_24"
         android:layout_marginEnd="32dp"
-        android:src="@drawable/ic_sharing_24"
+        android:src="@drawable/sharing_24"
         app:layout_constraintBottom_toBottomOf="@id/im_favorites"
         app:layout_constraintEnd_toStartOf="@id/im_favorites"
         app:layout_constraintTop_toTopOf="@id/im_favorites" />
@@ -33,7 +33,7 @@
         android:layout_height="@dimen/dp_24"
         android:layout_marginVertical="20dp"
         android:layout_marginEnd="20dp"
-        android:src="@drawable/ic_favorites_off_24"
+        tools:src="@drawable/favorites_off_24"
         app:layout_constraintEnd_toEndOf="@id/toolbarVacancy"
         app:layout_constraintTop_toTopOf="@id/toolbarVacancy" />
 

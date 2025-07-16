@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/filtering"
-        android:icon="@drawable/ic_filtering_24"
+        android:icon="@drawable/filtering_24"
         android:title="@string/the_vacancy"
         app:showAsAction="ifRoom" />
 </menu>

@@ -5,7 +5,8 @@ import ru.practicum.android.diploma.domain.models.VacancyDetails
 data class VacancyUiState(
     val isFetching: Boolean = false,
     val vacancyDetails: VacancyDetails? = null,
-    val isError: Boolean = false
+    val isError: Boolean = false,
+    val isFavorite: Boolean = false
 ) {
     val items = buildList {
         if (vacancyDetails != null) {

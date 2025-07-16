@@ -39,7 +39,7 @@ class VacancyFavoriteViewHolder(
                     append(item.salaryTo.formatWithThousandsSeparator())
                 }
                 append(" ")
-                append(item.currency.toCurrencySymbol())
+                append(item.currency)
             } else {
                 append(context.getString(R.string.salary_not_specified))
             }
