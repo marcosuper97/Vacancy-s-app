@@ -5,7 +5,6 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -80,9 +79,10 @@ class MainFragment : Fragment() {
                 }
             }
         }
-
         binding.mainInputEt.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                println(s)
+            }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.isNullOrEmpty()) {
@@ -103,7 +103,9 @@ class MainFragment : Fragment() {
                 }
             }
 
-            override fun afterTextChanged(s: Editable?) {}
+            override fun afterTextChanged(s: Editable?) {
+                println(s)
+            }
         })
 
         binding.mainInputEt.setOnEditorActionListener { _, actionId, event ->
@@ -131,10 +133,9 @@ class MainFragment : Fragment() {
 
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
                     firstVisibleItemPosition >= 0 && !viewModel.isLoadingNextPage.value
-                )
-                {
-                    viewModel.searchNextPage()
-                }
+                    ) {
+                        viewModel.searchNextPage()
+                      }
             }
         })
     }
@@ -222,7 +223,8 @@ class MainFragment : Fragment() {
 
     private fun handleTouchEvent(v: View, event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_UP &&
-            event.rawX >= (binding.mainInputEt.right - binding.mainInputEt.compoundPaddingEnd)) {
+            event.rawX >= (binding.mainInputEt.right - binding.mainInputEt.compoundPaddingEnd)
+        ) {
             viewModel.onClearSearchClicked()
             binding.mainInputEt.text.clear()
             return true
