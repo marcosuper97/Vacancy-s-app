@@ -21,6 +21,7 @@
         android:id="@+id/experience_tv"
         android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:gravity="start"
         android:textAppearance="@style/appearance_regular_16"
         app:layout_constraintEnd_toEndOf="parent"

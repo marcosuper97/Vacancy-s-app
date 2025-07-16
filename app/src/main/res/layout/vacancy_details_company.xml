@@ -2,6 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="?attr/materialCardViewFilledStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"
@@ -20,9 +21,9 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/logo_card"
+            style="@style/vacancyLogoItemStyle"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            style="@style/vacancyLogoItemStyle"
             android:src="@drawable/employer_logo_placeholder"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

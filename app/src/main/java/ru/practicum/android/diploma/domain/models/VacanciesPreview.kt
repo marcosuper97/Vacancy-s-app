@@ -6,7 +6,7 @@ data class VacanciesPreview(
     val employerName: String?,
     val employerLogo: String?,
     val address: String,
-    val salaryFrom: String?,
-    val salaryTo: String?,
+    val salaryFrom: Int?,
+    val salaryTo: Int?,
     val currency: String?
 )
