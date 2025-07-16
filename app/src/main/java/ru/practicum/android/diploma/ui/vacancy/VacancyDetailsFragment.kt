@@ -49,8 +49,13 @@ class VacancyDetailsFragment : Fragment() {
             it.setNavigationOnClickListener { viewModel.onBackClicked() }
         }
 
-        binding.imFavorites.setOnClickListener{
-            launchAndRepeatOnLifecycle{ viewModel.favoriteControl(viewModel.uiState.first().vacancyDetails!!) }
+        binding.imFavorites.setOnClickListener {
+            launchAndRepeatOnLifecycle {
+                viewModel
+                    .favoriteControl(
+                        viewModel.uiState.first().vacancyDetails!!
+                    )
+            }
         }
     }
 

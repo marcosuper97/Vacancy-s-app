@@ -8,7 +8,7 @@ class DetailsVacancyInteractorImpl(
     private val favoritesRepository: FavoritesRepository
 ) : DetailsVacancyInteractor {
     override suspend fun doRequest(vacancyId: String): Result<VacancyDetails> {
-        return when(favoritesRepository.isFavorite(vacancyId)) {
+        return when (favoritesRepository.isFavorite(vacancyId)) {
             true -> Result.success(favoritesRepository.getVacancy(vacancyId))
             false -> detailsVacancyRepository.doRequest(vacancyId)
         }

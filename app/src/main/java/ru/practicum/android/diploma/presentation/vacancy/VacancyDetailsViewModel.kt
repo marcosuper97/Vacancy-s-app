@@ -71,7 +71,7 @@ class VacancyDetailsViewModel(
         }
     }
 
-    fun favoriteControl(vacancy: VacancyDetails){
+    fun favoriteControl(vacancy: VacancyDetails) {
         viewModelScope.launch {
             when (favoritesInteractor.isFavorite(vacancyId)) {
                 true -> {
@@ -82,6 +82,7 @@ class VacancyDetailsViewModel(
                         )
                     }
                 }
+
                 false -> {
                     favoritesInteractor.insertVacancy(vacancy)
                     _uiState.update { prefState ->

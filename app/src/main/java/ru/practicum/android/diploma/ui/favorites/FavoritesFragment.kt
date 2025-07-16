@@ -18,7 +18,6 @@ import ru.practicum.android.diploma.databinding.FragmentFavoritesBinding
 import ru.practicum.android.diploma.domain.models.VacanciesPreview
 import ru.practicum.android.diploma.presentation.favorites.FavoritesScreenState
 import ru.practicum.android.diploma.presentation.favorites.FavoritesViewModel
-import ru.practicum.android.diploma.ui.main.MainFragmentDirections
 import ru.practicum.android.diploma.ui.vacancy.VacancyFavoriteAdapter
 import ru.practicum.android.diploma.util.debounce
 

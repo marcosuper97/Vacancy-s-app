@@ -8,7 +8,6 @@ import ru.practicum.android.diploma.databinding.VacancyItemBinding
 import ru.practicum.android.diploma.domain.models.VacanciesPreview
 import ru.practicum.android.diploma.util.dpToPx
 import ru.practicum.android.diploma.util.formatWithThousandsSeparator
-import ru.practicum.android.diploma.util.toCurrencySymbol
 
 class VacancyFavoriteViewHolder(
     private val binding: VacancyItemBinding,
