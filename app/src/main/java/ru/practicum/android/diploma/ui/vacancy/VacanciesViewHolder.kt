@@ -16,13 +16,17 @@ class VacanciesViewHolder(
         val context = itemView.context
         Glide.with(context)
             .load(item.employerLogo)
-            .fitCenter()
+            .centerCrop()
             .transform(RoundedCorners(dpToPx(CORNERS, context)))
             .placeholder(R.drawable.employer_logo_placeholder)
             .into(binding.logo)
 
         binding.name.text =
-            context.getString(R.string.vacancy_name_area, item.vacancyName, item.address)
+            context.getString(
+                R.string.vacancy_name_area,
+                item.vacancyName,
+                item.address.substringBefore(",")
+            )
 
         binding.employer.text = item.employerName
 
@@ -46,6 +50,7 @@ class VacanciesViewHolder(
             }
         }.toString()
     }
+
     companion object {
         const val CORNERS = 12f
     }

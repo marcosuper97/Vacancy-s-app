@@ -81,7 +81,7 @@ class SearchVacanciesRepositoryImpl(
                     employerLogo = vacancy.employer.employerLogo?.path,
                     address = when (vacancy.address?.raw) {
                         null -> vacancy.area.name
-                        else -> vacancy.address.raw.substringBefore(",")
+                        else -> vacancy.address.raw
                     },
                     salaryFrom = vacancy.salary?.from,
                     salaryTo = vacancy.salary?.to,

@@ -100,11 +100,12 @@ class FavoritesFragment : Fragment() {
             CLICK_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
             false
-        ) { id -> lifecycleScope.launch {
-            val direction = FavoritesFragmentDirections
-                .actionFavoritesFragmentToVacancyDetailsFragment(vacancyId = id)
-            findNavController().navigate(direction)
-        }
+        ) { id ->
+            lifecycleScope.launch {
+                val direction = FavoritesFragmentDirections
+                    .actionFavoritesFragmentToVacancyDetailsFragment(vacancyId = id)
+                findNavController().navigate(direction)
+            }
         }
     }
 

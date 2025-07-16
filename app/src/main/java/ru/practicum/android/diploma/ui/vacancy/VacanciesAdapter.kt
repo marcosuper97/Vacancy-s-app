@@ -3,7 +3,6 @@ package ru.practicum.android.diploma.ui.vacancy
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -25,13 +24,17 @@ class VacanciesAdapter(private val onVacancyClicked: (String) -> Unit) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             ITEM_TYPE_VACANCY -> {
-                val binding = VacancyItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding =
+                    VacancyItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 VacanciesViewHolder(binding)
             }
+
             ITEM_TYPE_LOADING -> {
-                val binding = LoadingItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding =
+                    LoadingItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 LoadingViewHolder(binding)
             }
+
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -45,29 +48,38 @@ class VacanciesAdapter(private val onVacancyClicked: (String) -> Unit) :
                     onVacancyClicked(vacancyItem.vacancy.vacancyId)
                 }
             }
+
             is LoadingViewHolder -> {
                 holder.bind()
             }
         }
     }
 
-    class LoadingViewHolder(val binding: LoadingItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class LoadingViewHolder(val binding: LoadingItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind() {}
     }
 
 
     class VacancyDiffCallback : DiffUtil.ItemCallback<RecyclerViewItem>() {
-        override fun areItemsTheSame(oldItem: RecyclerViewItem, newItem: RecyclerViewItem): Boolean {
+        override fun areItemsTheSame(
+            oldItem: RecyclerViewItem,
+            newItem: RecyclerViewItem
+        ): Boolean {
             return when {
                 oldItem is RecyclerViewItem.VacancyItem && newItem is RecyclerViewItem.VacancyItem ->
                     oldItem.vacancy.vacancyId == newItem.vacancy.vacancyId
+
                 oldItem is RecyclerViewItem.LoadingItem && newItem is RecyclerViewItem.LoadingItem -> true
                 else -> false
             }
         }
 
         @SuppressLint("DiffUtilEquals")
-        override fun areContentsTheSame(oldItem: RecyclerViewItem, newItem: RecyclerViewItem): Boolean {
+        override fun areContentsTheSame(
+            oldItem: RecyclerViewItem,
+            newItem: RecyclerViewItem
+        ): Boolean {
             return oldItem == newItem
         }
     }

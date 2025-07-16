@@ -1,12 +1,10 @@
 package ru.practicum.android.diploma.ui.main
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -110,7 +108,8 @@ class MainFragment : Fragment() {
 
         binding.mainInputEt.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE ||
-                (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
+                (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)
+            ) {
                 val queryText = binding.mainInputEt.text.toString()
                 viewModel.performSearch(queryText)
                 val inputMethodManager =
@@ -158,8 +157,8 @@ class MainFragment : Fragment() {
     }
 
 
-    private fun render(state: SearchVacanciesState){
-        when(state) {
+    private fun render(state: SearchVacanciesState) {
+        when (state) {
             SearchVacanciesState.Default -> showDefault()
             SearchVacanciesState.Loading -> showLoading()
             SearchVacanciesState.NetworkError -> showNetworkError()
@@ -169,7 +168,7 @@ class MainFragment : Fragment() {
         }
     }
 
-    fun showDefault(){
+    fun showDefault() {
         binding.countVacancyTv.isVisible = false
         binding.mainRv.isVisible = false
         binding.mainPb.isVisible = false
@@ -178,7 +177,7 @@ class MainFragment : Fragment() {
 
     }
 
-    fun showLoading(){
+    fun showLoading() {
         binding.countVacancyTv.isVisible = false
         binding.mainRv.isVisible = false
         binding.mainPb.isVisible = true
@@ -186,7 +185,7 @@ class MainFragment : Fragment() {
         binding.errorImageAndMessageLl.isVisible = false
     }
 
-    fun showNoInternet(){
+    fun showNoInternet() {
         binding.countVacancyTv.isVisible = false
         binding.mainRv.isVisible = false
         binding.mainPb.isVisible = false
@@ -208,7 +207,7 @@ class MainFragment : Fragment() {
         binding.errorTextTv.setText(R.string.server_error)
     }
 
-    fun showNothingFound(){
+    fun showNothingFound() {
         binding.countVacancyTv.isVisible = true
         binding.countVacancyTv.setText(R.string.no_such_vacancies)
         binding.mainRv.isVisible = false
