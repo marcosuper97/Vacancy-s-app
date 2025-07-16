@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.data.searchvacancies
+package ru.practicum.android.diploma.data.impl
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

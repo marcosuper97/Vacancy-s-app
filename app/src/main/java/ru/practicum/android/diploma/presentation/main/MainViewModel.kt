@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.domain.searchvacancies.SearchVacanciesInteractor
+import ru.practicum.android.diploma.domain.repositories.SearchVacanciesInteractor
 import ru.practicum.android.diploma.util.AppException
 import ru.practicum.android.diploma.util.RecyclerViewItem
 import ru.practicum.android.diploma.util.SearchVacanciesState

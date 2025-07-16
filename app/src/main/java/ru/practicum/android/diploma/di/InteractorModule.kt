@@ -6,7 +6,7 @@ import ru.practicum.android.diploma.domain.detailsvacancy.DetailsVacancyInteract
 import ru.practicum.android.diploma.domain.impl.FavoritesInteractorImpl
 import ru.practicum.android.diploma.domain.impl.SearchVacanciesInteractorImpl
 import ru.practicum.android.diploma.domain.interactors.FavoritesInteractor
-import ru.practicum.android.diploma.domain.searchvacancies.SearchVacanciesInteractor
+import ru.practicum.android.diploma.domain.repositories.SearchVacanciesInteractor
 
 val interactorModule = module {
 
