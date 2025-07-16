@@ -38,41 +38,31 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
         return when (viewType) {
             R.layout.vacancy_details_name_item -> {
                 VacancyDetailsNameItemViewHolder(
-                    VacancyDetailsNameItemBinding.inflate(
-                        inflater, parent, false
-                    )
+                    VacancyDetailsNameItemBinding.inflate(inflater, parent, false)
                 )
             }
 
             R.layout.vacancy_details_company -> {
                 VacancyDetailsCompanyViewHolder(
-                    VacancyDetailsCompanyBinding.inflate(
-                        inflater, parent, false
-                    )
+                    VacancyDetailsCompanyBinding.inflate(inflater, parent, false)
                 )
             }
 
             R.layout.vacancy_details_experience -> {
                 VacancyDetailsExperienceViewHolder(
-                    VacancyDetailsExperienceBinding.inflate(
-                        inflater, parent, false
-                    )
+                    VacancyDetailsExperienceBinding.inflate(inflater, parent, false)
                 )
             }
 
             R.layout.vacancy_details_description -> {
                 VacancyDetailsDescriptionViewHolder(
-                    VacancyDetailsDescriptionBinding.inflate(
-                        inflater, parent, false
-                    )
+                    VacancyDetailsDescriptionBinding.inflate(inflater, parent, false)
                 )
             }
 
             R.layout.vacancy_details_key_slills -> {
                 VacancyDetailsKeySkillsViewHolder(
-                    VacancyDetailsKeySlillsBinding.inflate(
-                        inflater, parent, false
-                    )
+                    VacancyDetailsKeySlillsBinding.inflate(inflater, parent, false)
                 )
             }
 
