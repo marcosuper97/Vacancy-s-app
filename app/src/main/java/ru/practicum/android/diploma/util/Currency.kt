@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.util
 
-
 enum class Currency(val label: String) {
     USD("$"),
     EUR("€"),

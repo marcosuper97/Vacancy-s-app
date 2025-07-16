@@ -107,9 +107,7 @@ class MainFragment : Fragment() {
         })
 
         binding.mainInputEt.setOnEditorActionListener { _, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE ||
-                (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)
-            ) {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val queryText = binding.mainInputEt.text.toString()
                 viewModel.performSearch(queryText)
                 val inputMethodManager =
@@ -121,17 +119,7 @@ class MainFragment : Fragment() {
             }
         }
 
-        binding.mainInputEt.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= (binding.mainInputEt.right - binding.mainInputEt.compoundPaddingEnd)) {
-                    viewModel.onClearSearchClicked()
-                    binding.mainInputEt.text.clear()
-                    return@setOnTouchListener true
-                }
-            }
-            false
-        }
-
+        binding.mainInputEt.setOnTouchListener(::handleTouchEvent)
 
         binding.mainRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -143,7 +131,8 @@ class MainFragment : Fragment() {
 
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
                     firstVisibleItemPosition >= 0 && !viewModel.isLoadingNextPage.value
-                ) {
+                )
+                {
                     viewModel.searchNextPage()
                 }
             }
@@ -229,5 +218,15 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun handleTouchEvent(v: View, event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_UP &&
+            event.rawX >= (binding.mainInputEt.right - binding.mainInputEt.compoundPaddingEnd)) {
+            viewModel.onClearSearchClicked()
+            binding.mainInputEt.text.clear()
+            return true
+        }
+        return false
     }
 }

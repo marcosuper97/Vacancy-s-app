@@ -47,8 +47,8 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : 
     }
 
     fun searchNextPage() {
-        if (_isLoadingNextPage.value || isSearchActive) {
-            println("searchNextPage skipped: isLoadingNextPage=${_isLoadingNextPage.value}, isSearchActive=$isSearchActive")
+        if (_isLoadingNextPage.value || isSearchActive)
+        {
             return
         }
         currentPage++
