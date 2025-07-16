@@ -66,7 +66,6 @@ class VacancyDetailsFragment : Fragment() {
     }
 
     private fun handleUiState(uiState: VacancyUiState) {
-        println("myTag $uiState")
         binding.progressBar.isVisible = uiState.isFetching
         binding.contentList.isVisible = uiState.isContentVisible
         binding.vacancyNotFound.root.isVisible = uiState.isEmptyVisible

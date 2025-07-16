@@ -18,6 +18,7 @@ import ru.practicum.android.diploma.databinding.FragmentFavoritesBinding
 import ru.practicum.android.diploma.domain.models.VacanciesPreview
 import ru.practicum.android.diploma.presentation.favorites.FavoritesScreenState
 import ru.practicum.android.diploma.presentation.favorites.FavoritesViewModel
+import ru.practicum.android.diploma.ui.main.MainFragmentDirections
 import ru.practicum.android.diploma.ui.vacancy.VacancyFavoriteAdapter
 import ru.practicum.android.diploma.util.debounce
 
@@ -101,10 +102,9 @@ class FavoritesFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope,
             false
         ) { id -> lifecycleScope.launch {
-            val bundle = Bundle().apply {
-                putString("VACANCY_DETAILS", id)
-            }
-            findNavController().navigate(R.id.vacancy_details_fragment, bundle)
+            val direction = FavoritesFragmentDirections
+                .actionFavoritesFragmentToVacancyDetailsFragment(vacancyId = id)
+            findNavController().navigate(direction)
         }
         }
     }
