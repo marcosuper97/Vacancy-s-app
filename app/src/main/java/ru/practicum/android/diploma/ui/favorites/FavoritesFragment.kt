@@ -100,8 +100,7 @@ class FavoritesFragment : Fragment() {
             CLICK_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
             false
-        ) { id ->
-            lifecycleScope.launch {
+        ) { id -> lifecycleScope.launch {
 
                 val bundle = Bundle().apply {
                     putString("VACANCY_DETAILS", id)
