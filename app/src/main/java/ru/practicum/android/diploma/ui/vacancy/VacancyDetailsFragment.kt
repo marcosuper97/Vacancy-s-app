@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import kotlinx.coroutines.flow.first
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import ru.practicum.android.diploma.R
@@ -19,6 +20,7 @@ import ru.practicum.android.diploma.presentation.vacancy.VacancyUiState
 import ru.practicum.android.diploma.ui.common.PaddingItemDecoration
 import ru.practicum.android.diploma.ui.common.dp
 import ru.practicum.android.diploma.ui.common.launchAndRepeatOnLifecycle
+import ru.practicum.android.diploma.util.toFavoriteIcon
 
 class VacancyDetailsFragment : Fragment() {
 
@@ -42,10 +44,18 @@ class VacancyDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configureUi()
-
         binding.toolbarVacancy.let {
-            it.setNavigationIcon(R.drawable.ic_arrow_back)
+            it.setNavigationIcon(R.drawable.arrow_back)
             it.setNavigationOnClickListener { viewModel.onBackClicked() }
+        }
+
+        binding.imFavorites.setOnClickListener {
+            launchAndRepeatOnLifecycle {
+                viewModel
+                    .favoriteControl(
+                        viewModel.uiState.first().vacancyDetails!!
+                    )
+            }
         }
     }
 
@@ -66,7 +76,8 @@ class VacancyDetailsFragment : Fragment() {
     }
 
     private fun handleUiState(uiState: VacancyUiState) {
-        println("myTag $uiState")
+        binding.imFavorites.isClickable = !uiState.isError
+        binding.imFavorites.setImageResource(uiState.isFavorite.toFavoriteIcon())
         binding.progressBar.isVisible = uiState.isFetching
         binding.contentList.isVisible = uiState.isContentVisible
         binding.vacancyNotFound.root.isVisible = uiState.isEmptyVisible

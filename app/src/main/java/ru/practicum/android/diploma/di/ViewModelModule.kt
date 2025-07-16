@@ -9,7 +9,7 @@ import ru.practicum.android.diploma.presentation.vacancy.VacancyDetailsViewModel
 val viewModelModule = module {
     viewModel<MainViewModel> { MainViewModel(get()) }
     viewModel {
-        VacancyDetailsViewModel(get(), get())
+        VacancyDetailsViewModel(get(), get(), get())
     }
     viewModel {
         FavoritesViewModel(get())
