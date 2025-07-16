@@ -9,30 +9,26 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.databinding.LoadingItemBinding
 import ru.practicum.android.diploma.databinding.VacancyItemBinding
-import ru.practicum.android.diploma.domain.models.VacanciesPreview
-import ru.practicum.android.diploma.util.LoadingItem
-import ru.practicum.android.diploma.util.RecyclerViewConstants
+import ru.practicum.android.diploma.util.RecyclerViewItem
 
 class VacanciesAdapter(private val onVacancyClicked: (String) -> Unit) :
-    ListAdapter<Any, RecyclerView.ViewHolder>(VacancyDiffCallback()) {
-
-    var isLoadingNextPage: Boolean = false
+    ListAdapter<RecyclerViewItem, RecyclerView.ViewHolder>(VacancyDiffCallback()) {
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is VacanciesPreview -> RecyclerViewConstants.ITEM_TYPE_VACANCY
-            is LoadingItem -> RecyclerViewConstants.ITEM_TYPE_LOADING
+            is RecyclerViewItem.VacancyItem -> ITEM_TYPE_VACANCY
+            is RecyclerViewItem.LoadingItem -> ITEM_TYPE_LOADING
             else -> throw IllegalArgumentException("Invalid item type")
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            RecyclerViewConstants.ITEM_TYPE_VACANCY -> {
+            ITEM_TYPE_VACANCY -> {
                 val binding = VacancyItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 VacanciesViewHolder(binding)
             }
-            RecyclerViewConstants.ITEM_TYPE_LOADING -> {
+            ITEM_TYPE_LOADING -> {
                 val binding = LoadingItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 LoadingViewHolder(binding)
             }
@@ -43,36 +39,41 @@ class VacanciesAdapter(private val onVacancyClicked: (String) -> Unit) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is VacanciesViewHolder -> {
-                val vacancy = getItem(position) as? VacanciesPreview ?: return //  безопасное приведение и проверка
-                holder.bind(vacancy)
-                holder.itemView.setOnClickListener {
-                    onVacancyClicked(vacancy.vacancyId)
-                }
+                val vacancyItem = getItem(position) as RecyclerViewItem.VacancyItem
+                holder.bind(vacancyItem.vacancy)
             }
             is LoadingViewHolder -> {
-                holder.bind(isLoadingNextPage)
+                // тут ничего не нужно, ProgressBar виден по умолчанию
+                holder.bind()
             }
         }
     }
 
     class LoadingViewHolder(val binding: LoadingItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(isLoading: Boolean) {
-            binding.loadingProgressBar.isVisible = isLoading
+        fun bind() {
+            // тут ничего не нужно, ProgressBar виден по умолчанию
         }
     }
 
-    class VacancyDiffCallback : DiffUtil.ItemCallback<Any>() {
-        override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
+
+    class VacancyDiffCallback : DiffUtil.ItemCallback<RecyclerViewItem>() {
+        override fun areItemsTheSame(oldItem: RecyclerViewItem, newItem: RecyclerViewItem): Boolean {
             return when {
-                oldItem is VacanciesPreview && newItem is VacanciesPreview -> oldItem.vacancyId == newItem.vacancyId
-                oldItem is LoadingItem && newItem is LoadingItem -> true
+                oldItem is RecyclerViewItem.VacancyItem && newItem is RecyclerViewItem.VacancyItem ->
+                    oldItem.vacancy.vacancyId == newItem.vacancy.vacancyId
+                oldItem is RecyclerViewItem.LoadingItem && newItem is RecyclerViewItem.LoadingItem -> true
                 else -> false
             }
         }
 
         @SuppressLint("DiffUtilEquals")
-        override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
+        override fun areContentsTheSame(oldItem: RecyclerViewItem, newItem: RecyclerViewItem): Boolean {
             return oldItem == newItem
         }
+    }
+
+    companion object {
+        private const val ITEM_TYPE_VACANCY = 0
+        private const val ITEM_TYPE_LOADING = 1
     }
 }

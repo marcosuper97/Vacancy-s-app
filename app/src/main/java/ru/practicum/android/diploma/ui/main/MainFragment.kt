@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -68,6 +69,7 @@ class MainFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.vacancies.collectLatest { vacancies ->
                     vacanciesAdapter.submitList(vacancies)
+                    Log.d("MainFragment", " submitList() мы взываем к тебе, сколько айтемов ты принёс? Голос submitList(): ${vacancies.size}")
                 }
             }
         }
@@ -80,13 +82,15 @@ class MainFragment : Fragment() {
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
+        /*viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.isLoadingNextPage.collectLatest { isLoading ->
-                    vacanciesAdapter.isLoadingNextPage = isLoading // передаем состояние загрузки в адаптер
+                    // Обновляем видимость progressBar на основе значения isLoading
+                    // В адаптере теперь нет логики по отображению прогресс бара
+                    Log.d("MainFragment", "isLoading = $isLoading")
                 }
             }
-        }
+        }*/
 
         // обработчик изменения текста в поисковой строке
         binding.mainInputEt.addTextChangedListener(object : TextWatcher {
@@ -139,22 +143,19 @@ class MainFragment : Fragment() {
         }
 
 
-        binding.mainRv.addOnScrollListener(object : RecyclerView.OnScrollListener() { // добавляем слушатель для прокрутки
-            // OnScrollListener() - это интерфейс, который предоставляет методы для реагирования на события прокрутки
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) { // метод вызывается каждый раз, когда происходит прокрутка RecyclerView
-                // dx - прокрутка по горизонтали (в нашем случае = 0), dy - прокрутка по вертикали (отрицательное - вверх, положительное - вниз)
-                super.onScrolled(recyclerView, dx, dy) // реализация onScrolled() из родительского класса (RecyclerView.OnScrollListener()), позволяет системе обработать стандартные события прокрутки
+        binding.mainRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                val visibleItemCount = layoutManager.childCount // количество видимых элементов видимых в RecyclerView в данный момент
-                val totalItemCount = layoutManager.itemCount // общее количество элементов в списке (всего, с учётом всех загруженных страниц)
-                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition() // позиция (индекс) первого видимого элемента в списке
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+                Log.d("MainFragment", "видноАйтемов: $visibleItemCount, всегоАйтемов: $totalItemCount, ПерваяВидимаяПозиция: $firstVisibleItemPosition")
 
-                // если пользователь достиг конца списка (складываем количество видимых эелментов и позицию первого видимого элемента),
-                // то загружаем следующие данные (следующую страницу)
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
-                    firstVisibleItemPosition >= 0
+                    firstVisibleItemPosition >= 0 && !viewModel.isLoadingNextPage.value
                 ) {
-                    // Загружаем следующую страницу
+                    Log.d("MainFragment", "Дно достигнуто, сэр! Вызываю searchNextPage()")
                     viewModel.searchNextPage()
                 }
             }

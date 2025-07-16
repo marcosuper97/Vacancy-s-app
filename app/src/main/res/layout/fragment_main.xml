@@ -48,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_12"
         android:background="@drawable/shape_corner_and_back_count_vacancy"
+        android:elevation="1dp"
         android:paddingHorizontal="@dimen/dp_12"
         android:paddingVertical="@dimen/dp_4"
         android:textColor="@color/white_universal"
@@ -55,16 +56,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/main_input_et"
-        tools:text="Найдено 286 вакансий"
-        android:elevation="1dp"
-        />
+        tools:text="Найдено 286 вакансий" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dp_48"
         android:clipToPadding="false"
+        android:paddingTop="@dimen/dp_48"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +80,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_input_et"/>
+        app:layout_constraintTop_toBottomOf="@id/main_input_et" />
 
     <ImageView
         android:id="@+id/main_default_iv"
