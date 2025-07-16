@@ -18,7 +18,7 @@ import ru.practicum.android.diploma.databinding.FragmentFavoritesBinding
 import ru.practicum.android.diploma.domain.models.VacanciesPreview
 import ru.practicum.android.diploma.presentation.favorites.FavoritesScreenState
 import ru.practicum.android.diploma.presentation.favorites.FavoritesViewModel
-import ru.practicum.android.diploma.ui.VacanciesAdapter
+import ru.practicum.android.diploma.ui.vacancy.VacancyFavoriteAdapter
 import ru.practicum.android.diploma.util.debounce
 
 class FavoritesFragment : Fragment() {
@@ -26,7 +26,7 @@ class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
     private val binding: FragmentFavoritesBinding get() = _binding!!
     private val viewModel: FavoritesViewModel by viewModel()
-    private var adapter: VacanciesAdapter? = null
+    private var adapter: VacancyFavoriteAdapter? = null
     private lateinit var onVacancyClickDebounce: (String) -> Unit
 
     override fun onCreateView(
@@ -52,7 +52,7 @@ class FavoritesFragment : Fragment() {
 
     private fun initAdapter() {
         initDebouncedVacancyClick()
-        adapter = VacanciesAdapter { id ->
+        adapter = VacancyFavoriteAdapter { id ->
             onVacancyClickDebounce(id)
         }
         binding.rvVacancies.adapter = adapter

@@ -7,7 +7,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.VacancyItemBinding
 import ru.practicum.android.diploma.domain.models.VacanciesPreview
 import ru.practicum.android.diploma.util.dpToPx
-import ru.practicum.android.diploma.util.formatSalary
+import ru.practicum.android.diploma.util.formatWithThousandsSeparator
 
 class VacanciesViewHolder(
     private val binding: VacancyItemBinding,
@@ -24,7 +24,25 @@ class VacanciesViewHolder(
         binding.name.text =
             context.getString(R.string.vacancy_name_area, item.vacancyName, item.address)
 
-        binding.salary.text = formatSalary(context, item.salaryFrom, item.salaryTo, item.currency)
+        binding.salary.text = StringBuilder().apply {
+            if (item.salaryFrom != null || item.salaryTo != null) {
+                if (item.salaryFrom != null) {
+                    append(context.getString(R.string.from))
+                    append(" ")
+                    append(item.salaryFrom.formatWithThousandsSeparator())
+                }
+                if (item.salaryTo != null) {
+                    append(" ")
+                    append(context.getString(R.string.to))
+                    append(" ")
+                    append(item.salaryTo.formatWithThousandsSeparator())
+                }
+                append(" ")
+                append(item.currency)
+            } else {
+                append(context.getString(R.string.salary_not_specified))
+            }
+        }.toString()
     }
 
     companion object {
