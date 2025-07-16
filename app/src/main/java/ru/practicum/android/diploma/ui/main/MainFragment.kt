@@ -178,7 +178,6 @@ class MainFragment : Fragment() {
         binding.mainRv.isVisible = false
         binding.mainPb.isVisible = false
         binding.mainDefaultIv.isVisible = false
-
         binding.errorImageAndMessageLl.isVisible = true
         binding.errorImageIv.setImageResource(R.drawable.image_no_internet)
         binding.errorTextTv.setText(R.string.there_is_no_internet_connection)
@@ -189,7 +188,6 @@ class MainFragment : Fragment() {
         binding.mainRv.isVisible = false
         binding.mainPb.isVisible = false
         binding.mainDefaultIv.isVisible = false
-
         binding.errorImageAndMessageLl.isVisible = true
         binding.errorImageIv.setImageResource(R.drawable.image_error_server)
         binding.errorTextTv.setText(R.string.server_error)
