@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.ui.vacancy
 
+import android.content.Context
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -38,9 +39,7 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
             R.layout.vacancy_details_name_item -> {
                 VacancyDetailsNameItemViewHolder(
                     VacancyDetailsNameItemBinding.inflate(
-                        inflater,
-                        parent,
-                        false
+                        inflater, parent, false
                     )
                 )
             }
@@ -48,9 +47,7 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
             R.layout.vacancy_details_company -> {
                 VacancyDetailsCompanyViewHolder(
                     VacancyDetailsCompanyBinding.inflate(
-                        inflater,
-                        parent,
-                        false
+                        inflater, parent, false
                     )
                 )
             }
@@ -58,9 +55,7 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
             R.layout.vacancy_details_experience -> {
                 VacancyDetailsExperienceViewHolder(
                     VacancyDetailsExperienceBinding.inflate(
-                        inflater,
-                        parent,
-                        false
+                        inflater, parent, false
                     )
                 )
             }
@@ -68,9 +63,7 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
             R.layout.vacancy_details_description -> {
                 VacancyDetailsDescriptionViewHolder(
                     VacancyDetailsDescriptionBinding.inflate(
-                        inflater,
-                        parent,
-                        false
+                        inflater, parent, false
                     )
                 )
             }
@@ -78,9 +71,7 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
             R.layout.vacancy_details_key_slills -> {
                 VacancyDetailsKeySkillsViewHolder(
                     VacancyDetailsKeySlillsBinding.inflate(
-                        inflater,
-                        parent,
-                        false
+                        inflater, parent, false
                     )
                 )
             }
@@ -120,25 +111,7 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
         fun bind(item: VacancyDetailsItemUiModel.VacancyName) {
             with(binding) {
                 nameVacancyTv.text = item.name
-                val salaryText = StringBuilder().apply {
-                    if (item.from != null || item.to != null) {
-                        if (item.from != null) {
-                            append(context.getString(R.string.from))
-                            append(" ")
-                            append(item.from)
-                        }
-                        if (item.to != null) {
-                            append(" ")
-                            append(context.getString(R.string.to))
-                            append(" ")
-                            append(item.to)
-                        }
-                        append(" ")
-                        append(item.currency)
-                    } else {
-                        append(context.getString(R.string.salary_not_specified))
-                    }
-                }.toString()
+                val salaryText = getSalaryText(item, context)
                 salaryTv.text = salaryText
             }
         }
@@ -201,5 +174,27 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
                 }
             }
         }
+    }
+
+    private fun getSalaryText(item: VacancyDetailsItemUiModel.VacancyName, context: Context): String {
+        return StringBuilder().apply {
+            if (item.from != null || item.to != null) {
+                if (item.from != null) {
+                    append(context.getString(R.string.from))
+                    append(" ")
+                    append(item.from)
+                }
+                if (item.to != null) {
+                    append(" ")
+                    append(context.getString(R.string.to))
+                    append(" ")
+                    append(item.to)
+                }
+                append(" ")
+                append(item.currency)
+            } else {
+                append(context.getString(R.string.salary_not_specified))
+            }
+        }.toString()
     }
 }

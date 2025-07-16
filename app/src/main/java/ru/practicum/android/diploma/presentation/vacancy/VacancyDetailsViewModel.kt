@@ -12,7 +12,6 @@ import ru.practicum.android.diploma.domain.interactors.FavoritesInteractor
 import ru.practicum.android.diploma.domain.models.VacancyDetails
 import ru.practicum.android.diploma.ui.common.CommandChannel
 
-
 class VacancyDetailsViewModel(
     private val detailsVacancyInteractor: DetailsVacancyInteractor,
     private val favoritesInteractor: FavoritesInteractor,
@@ -35,8 +34,6 @@ class VacancyDetailsViewModel(
                     )
                 }
             } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
                 println(e)
                 _uiState.update { prefState ->
                     prefState.copy(
