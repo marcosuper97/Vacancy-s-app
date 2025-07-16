@@ -22,7 +22,9 @@ class VacancyFavoriteViewHolder(
             .into(binding.logo)
 
         binding.name.text =
-            context.getString(R.string.vacancy_name_area, item.vacancyName, item.address)
+            context.getString(R.string.vacancy_name_area, item.vacancyName, item.address.substringBefore(","))
+
+        binding.employer.text = item.employerName
 
         binding.salary.text = StringBuilder().apply {
             if (item.salaryFrom != null || item.salaryTo != null) {

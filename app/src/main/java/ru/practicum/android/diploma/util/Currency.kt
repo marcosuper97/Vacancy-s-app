@@ -16,7 +16,7 @@ enum class Currency(val label: String) {
 
 fun String?.toCurrencySymbol(): String {
     return this?.let { code ->
-        enumValues<Currency>().find { it.name == code }?.label
+        enumValues<Currency>().find { it.name == code }?.label ?: NOTHING
     } ?: NOTHING
 }
 

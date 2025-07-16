@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.data.searchvacancies
+package ru.practicum.android.diploma.data.impl
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -9,7 +9,7 @@ import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchR
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.models.VacanciesList
 import ru.practicum.android.diploma.domain.models.VacanciesPreview
-import ru.practicum.android.diploma.domain.searchvacancies.SearchVacanciesRepository
+import ru.practicum.android.diploma.domain.repositories.SearchVacanciesRepository
 import ru.practicum.android.diploma.util.AppException
 import ru.practicum.android.diploma.util.toCurrencySymbol
 
