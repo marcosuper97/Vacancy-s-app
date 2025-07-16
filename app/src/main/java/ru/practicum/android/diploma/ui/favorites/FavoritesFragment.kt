@@ -104,7 +104,7 @@ class FavoritesFragment : Fragment() {
                         putString("VACANCY_DETAILS", id)
                     }
 
-                    findNavController().navigate(R.id.action_to_vacancy_fragment, bundle)
+                    findNavController().navigate(R.id.vacancy_details_fragment, bundle)
                 }
             }
     }
