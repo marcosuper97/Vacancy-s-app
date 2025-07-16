@@ -133,8 +133,8 @@ class MainFragment : Fragment() {
 
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
                     firstVisibleItemPosition >= 0 && !viewModel.isLoadingNextPage.value) {
-                        viewModel.searchNextPage()
-                    }
+                    viewModel.searchNextPage()
+                }
             }
         })
     }
