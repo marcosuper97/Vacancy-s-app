@@ -41,18 +41,18 @@ class VacanciesAdapter(private val onVacancyClicked: (String) -> Unit) :
             is VacanciesViewHolder -> {
                 val vacancyItem = getItem(position) as RecyclerViewItem.VacancyItem
                 holder.bind(vacancyItem.vacancy)
+                holder.itemView.setOnClickListener {
+                    onVacancyClicked(vacancyItem.vacancy.vacancyId)
+                }
             }
             is LoadingViewHolder -> {
-                // тут ничего не нужно, ProgressBar виден по умолчанию
                 holder.bind()
             }
         }
     }
 
     class LoadingViewHolder(val binding: LoadingItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind() {
-            // тут ничего не нужно, ProgressBar виден по умолчанию
-        }
+        fun bind() {}
     }
 
 

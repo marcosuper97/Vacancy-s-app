@@ -1,6 +1,8 @@
 package ru.practicum.android.diploma.ui.main
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +13,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -64,12 +67,10 @@ class MainFragment : Fragment() {
             }
         }
 
-        //  подписка на vacancies
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.vacancies.collectLatest { vacancies ->
                     vacanciesAdapter.submitList(vacancies)
-                    Log.d("MainFragment", " submitList() мы взываем к тебе, сколько айтемов ты принёс? Голос submitList(): ${vacancies.size}")
                 }
             }
         }
@@ -82,36 +83,25 @@ class MainFragment : Fragment() {
             }
         }
 
-        /*viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.isLoadingNextPage.collectLatest { isLoading ->
-                    // Обновляем видимость progressBar на основе значения isLoading
-                    // В адаптере теперь нет логики по отображению прогресс бара
-                    Log.d("MainFragment", "isLoading = $isLoading")
-                }
-            }
-        }*/
-
-        // обработчик изменения текста в поисковой строке
         binding.mainInputEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.isNullOrEmpty()) {
-                    binding.mainInputEt.setCompoundDrawablesRelativeWithIntrinsicBounds( //назначаем иконку "поиска"
+                    binding.mainInputEt.setCompoundDrawablesRelativeWithIntrinsicBounds(
                         0,
                         0,
                         R.drawable.ic_search_24,
                         0
                     )
                 } else {
-                    binding.mainInputEt.setCompoundDrawablesRelativeWithIntrinsicBounds( //назначаем иконку "удаления"
+                    binding.mainInputEt.setCompoundDrawablesRelativeWithIntrinsicBounds(
                         0,
                         0,
                         R.drawable.cross,
                         0
                     )
-                    viewModel.onSearchTextChanged(s.toString()) // вызываем метод ViewModel
+                    viewModel.onSearchTextChanged(s.toString())
                 }
             }
 
@@ -120,26 +110,27 @@ class MainFragment : Fragment() {
 
         binding.mainInputEt.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE ||
-                (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)){ // добавляет обработку для кнопки Enter
-                val queryText = binding.mainInputEt.text.toString() // получаем текст из EditText
-                viewModel.onSearchTextChanged(queryText)  // вызываем метод ViewModel, который уже содержит дебаунс
+                (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
+                val queryText = binding.mainInputEt.text.toString()
+                viewModel.performSearch(queryText)
+                val inputMethodManager =
+                    requireContext().getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager
+                inputMethodManager?.hideSoftInputFromWindow(binding.mainInputEt.windowToken, 0)
                 true
             } else {
                 false
             }
         }
 
-        // обработчик нажатия на иконку удаления.
         binding.mainInputEt.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= (binding.mainInputEt.right - binding.mainInputEt.compoundPaddingEnd)) { // проверка клика по иконке
-                    //  клик по иконке (крестик)
+                if (event.rawX >= (binding.mainInputEt.right - binding.mainInputEt.compoundPaddingEnd)) {
                     viewModel.onClearSearchClicked()
                     binding.mainInputEt.text.clear()
-                    return@setOnTouchListener true //  Возвращаем true, чтобы обработать клик
+                    return@setOnTouchListener true
                 }
             }
-            false //  возвращаем false, чтобы разрешить обработку других событий (например, ввод текста)
+            false
         }
 
 
@@ -150,12 +141,10 @@ class MainFragment : Fragment() {
                 val visibleItemCount = layoutManager.childCount
                 val totalItemCount = layoutManager.itemCount
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-                Log.d("MainFragment", "видноАйтемов: $visibleItemCount, всегоАйтемов: $totalItemCount, ПерваяВидимаяПозиция: $firstVisibleItemPosition")
 
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
                     firstVisibleItemPosition >= 0 && !viewModel.isLoadingNextPage.value
                 ) {
-                    Log.d("MainFragment", "Дно достигнуто, сэр! Вызываю searchNextPage()")
                     viewModel.searchNextPage()
                 }
             }
