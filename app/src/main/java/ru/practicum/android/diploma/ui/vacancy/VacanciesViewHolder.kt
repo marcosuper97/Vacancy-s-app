@@ -17,7 +17,7 @@ class VacanciesViewHolder(
         Glide.with(context)
             .load(item.employerLogo)
             .fitCenter()
-            .transform(RoundedCorners(dpToPx(12f, context)))
+            .transform(RoundedCorners(dpToPx(CORNERS, context)))
             .placeholder(R.drawable.employer_logo_placeholder)
             .into(binding.logo)
 
@@ -45,5 +45,8 @@ class VacanciesViewHolder(
                 append(context.getString(R.string.salary_not_specified))
             }
         }.toString()
+    }
+    companion object {
+        const val CORNERS = 12f
     }
 }
