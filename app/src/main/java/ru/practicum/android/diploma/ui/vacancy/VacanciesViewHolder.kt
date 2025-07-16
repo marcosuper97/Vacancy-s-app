@@ -16,13 +16,15 @@ class VacanciesViewHolder(
         val context = itemView.context
         Glide.with(context)
             .load(item.employerLogo)
-            .centerCrop()
+            .fitCenter()
             .transform(RoundedCorners(dpToPx(12f, context)))
             .placeholder(R.drawable.employer_logo_placeholder)
             .into(binding.logo)
 
         binding.name.text =
             context.getString(R.string.vacancy_name_area, item.vacancyName, item.address)
+
+        binding.employer.text = item.employerName
 
         binding.salary.text = StringBuilder().apply {
             if (item.salaryFrom != null || item.salaryTo != null) {
