@@ -101,11 +101,11 @@ class FavoritesFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope,
             false
         ) { id -> lifecycleScope.launch {
-                val bundle = Bundle().apply {
-                    putString("VACANCY_DETAILS", id)
-                }
-                findNavController().navigate(R.id.vacancy_details_fragment, bundle)
+            val bundle = Bundle().apply {
+                putString("VACANCY_DETAILS", id)
             }
+            findNavController().navigate(R.id.vacancy_details_fragment, bundle)
+        }
         }
     }
 
