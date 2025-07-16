@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.ui.vacancy
 
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -25,5 +26,6 @@ class VacanciesViewHolder(
             context.getString(R.string.vacancy_name_area, item.vacancyName, item.address)
 
         binding.salary.text = formatSalary(context, item.salaryFrom, item.salaryTo, item.currency)
+
     }
 }

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -24,11 +23,10 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
-import ru.practicum.android.diploma.domain.models.VacanciesList
 import ru.practicum.android.diploma.presentation.main.MainViewModel
 import ru.practicum.android.diploma.ui.vacancy.VacanciesAdapter
-import ru.practicum.android.diploma.util.LoadingItem
 import ru.practicum.android.diploma.util.SearchVacanciesState
+import ru.practicum.android.diploma.util.setVacanciesCountText
 
 class MainFragment : Fragment() {
 
@@ -229,7 +227,7 @@ class MainFragment : Fragment() {
 
     fun showContent(state: SearchVacanciesState.ShowContent) {
         binding.countVacancyTv.isVisible = true
-        binding.countVacancyTv.text = getString(R.string.found, state.content.found)
+        binding.countVacancyTv.setVacanciesCountText(state.content.found)
         binding.mainRv.isVisible = true
         binding.mainPb.isVisible = false
         binding.mainDefaultIv.isVisible = false
@@ -241,14 +239,4 @@ class MainFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-}
-
-fun MutableList<Any>.addLoadingItem() {
-    if (!this.any { it is LoadingItem }) {
-        this.add(LoadingItem)
-    }
-}
-
-fun MutableList<Any>.removeLoadingItem() {
-    this.removeAll { it is LoadingItem }
 }
