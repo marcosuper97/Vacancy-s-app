@@ -83,8 +83,8 @@ class SearchVacanciesRepositoryImpl(
                         null -> vacancy.area.name
                         else -> vacancy.address.raw
                     },
-                    salaryFrom = vacancy.salary?.from?.toString(),
-                    salaryTo = vacancy.salary?.to?.toString(),
+                    salaryFrom = vacancy.salary?.from,
+                    salaryTo = vacancy.salary?.to,
                     currency = vacancy.salary?.currency.toCurrencySymbol(),
                 )
             }
