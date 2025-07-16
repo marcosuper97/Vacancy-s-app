@@ -27,7 +27,7 @@ class FavoritesFragment : Fragment() {
     private val binding: FragmentFavoritesBinding get() = _binding!!
     private val viewModel: FavoritesViewModel by viewModel()
     private var adapter: VacancyFavoriteAdapter? = null
-    private lateinit var onVacancyClickDebounce: (String) -> Unit
+    private var onVacancyClickDebounce: (String) -> Unit = { _ -> }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -96,17 +96,20 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun initDebouncedVacancyClick() {
-        onVacancyClickDebounce =
-            debounce(CLICK_DEBOUNCE_DELAY, viewLifecycleOwner.lifecycleScope, false) { id ->
-                lifecycleScope.launch {
+        onVacancyClickDebounce = debounce(
+            CLICK_DEBOUNCE_DELAY,
+            viewLifecycleOwner.lifecycleScope,
+            false
+        ) { id ->
+            lifecycleScope.launch {
 
-                    val bundle = Bundle().apply {
-                        putString("VACANCY_DETAILS", id)
-                    }
-
-                    findNavController().navigate(R.id.vacancy_details_fragment, bundle)
+                val bundle = Bundle().apply {
+                    putString("VACANCY_DETAILS", id)
                 }
+
+                findNavController().navigate(R.id.vacancy_details_fragment, bundle)
             }
+        }
     }
 
     companion object {

@@ -6,7 +6,6 @@ import ru.practicum.android.diploma.presentation.favorites.FavoritesViewModel
 import ru.practicum.android.diploma.presentation.main.MainViewModel
 import ru.practicum.android.diploma.presentation.vacancy.VacancyDetailsViewModel
 
-
 val viewModelModule = module {
     viewModel<MainViewModel> { MainViewModel(get()) }
     viewModel {
