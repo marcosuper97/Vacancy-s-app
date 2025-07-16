@@ -14,7 +14,7 @@ val interactorModule = module {
         FavoritesInteractorImpl(get())
     }
     single<DetailsVacancyInteractor> {
-        DetailsVacancyInteractorImpl(get())
+        DetailsVacancyInteractorImpl(get(), get())
     }
     factory<SearchVacanciesInteractor> { SearchVacanciesInteractorImpl(get()) }
 }
