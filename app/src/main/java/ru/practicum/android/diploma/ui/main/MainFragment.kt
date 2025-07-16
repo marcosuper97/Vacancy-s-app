@@ -163,7 +163,9 @@ class MainFragment : Fragment() {
     }
 
     private fun onVacancyClicked(vacancyId: String) {
-        // переход на фрагмент вакансий
+        val direction = MainFragmentDirections
+            .actionToVacancyDetailsFragment(vacancyId = vacancyId)
+        findNavController().navigate(direction)
     }
 
 
