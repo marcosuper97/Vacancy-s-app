@@ -48,8 +48,8 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : 
 
     fun searchNextPage() {
         if (_isLoadingNextPage.value || isSearchActive) {
-                return
-            }
+            return
+        }
         currentPage++
         latestQueryText?.let {
             println("searchNextPage: text=$it, page=$currentPage")

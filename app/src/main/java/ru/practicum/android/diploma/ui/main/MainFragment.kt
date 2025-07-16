@@ -34,7 +34,7 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = _binding!!
     private val viewModel: MainViewModel by viewModel()
-    private lateinit var vacanciesAdapter: VacanciesAdapter
+    private var vacanciesAdapter: VacanciesAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,7 +67,7 @@ class MainFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.vacancies.collectLatest { vacancies ->
-                    vacanciesAdapter.submitList(vacancies)
+                    vacanciesAdapter?.submitList(vacancies)
                 }
             }
         }
@@ -132,10 +132,10 @@ class MainFragment : Fragment() {
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
-                    firstVisibleItemPosition >= 0 && !viewModel.isLoadingNextPage.value
-                    ) {
+                    firstVisibleItemPosition >= 0 && !viewModel.isLoadingNextPage.value)
+                    {
                         viewModel.searchNextPage()
-                      }
+                    }
             }
         })
     }
@@ -145,7 +145,6 @@ class MainFragment : Fragment() {
             .actionToVacancyDetailsFragment(vacancyId = vacancyId)
         findNavController().navigate(direction)
     }
-
 
     private fun render(state: SearchVacanciesState) {
         when (state) {
@@ -218,12 +217,13 @@ class MainFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        vacanciesAdapter = null
         _binding = null
     }
 
     private fun handleTouchEvent(v: View, event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_UP &&
-            event.rawX >= (binding.mainInputEt.right - binding.mainInputEt.compoundPaddingEnd)
+            event.rawX >= binding.mainInputEt.right - binding.mainInputEt.compoundPaddingEnd
         ) {
             viewModel.onClearSearchClicked()
             binding.mainInputEt.text.clear()

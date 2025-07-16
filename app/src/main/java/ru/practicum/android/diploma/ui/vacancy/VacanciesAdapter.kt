@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.ui.vacancy
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -57,9 +58,10 @@ class VacanciesAdapter(private val onVacancyClicked: (String) -> Unit) :
 
     class LoadingViewHolder(val binding: LoadingItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind() {}
+        fun bind() {
+            Log.d("bind", "binding")
+        }
     }
-
 
     class VacancyDiffCallback : DiffUtil.ItemCallback<RecyclerViewItem>() {
         override fun areItemsTheSame(
