@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AreaDto(
     val id: String,
-    val name: String,
     @SerialName("parent_id")
     val parentId: String?,
+    val name: String,
     val areas: List<AreaDto>
 )
 
