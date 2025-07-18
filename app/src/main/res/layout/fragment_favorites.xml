@@ -7,7 +7,7 @@
     tools:context=".ui.favorites.FavoritesFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarFavorites"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,10 +16,26 @@
         app:title="@string/favorite"
         app:titleTextAppearance="@style/appearance_medium_22" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvVacancies"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/favorite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:visibility="gone" />
+
+    <TextView
+        android:id="@+id/placeholder"
+        style="@style/appearance_medium_22"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="16dp"
+        android:paddingHorizontal="46dp"
+        android:gravity="center"
+        android:text="@string/empty_list"
+        app:drawableTopCompat="@drawable/empty_fav_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

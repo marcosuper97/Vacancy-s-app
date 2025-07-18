@@ -13,8 +13,7 @@
     <string name="сouldnt_get_list">Не удалось получить список</string>
     <string name="empty_list">Список пуст</string>
     <string name="vacancy_not_found_or_deleted">Вакансия не найдена или удалена</string>
-    <string name="found">Найдено</string>
-    <string name="vacancys">вакансий</string>
+    <string name="found">Найдено %1$s</string>
     <string name="the_vacancy">Вакансия</string>
     <string name="place_of_work">Место работы</string>
     <string name="branch">Отрасль</string>
@@ -49,6 +48,7 @@
     <string name="conditions">Условия</string>
     <string name="from">от</string>
     <string name="to">до</string>
+    <string name="currency">%1$s</string>
     <string name="server_error">Ошибка сервера</string>
     <string name="creators">Над приложением работали</string>
     <string name="gorpishin">Евгений Горпишин</string>
@@ -68,4 +68,15 @@
     <string name="uzs">so\'m</string>
     <string name="salary_not_specified">Зарплата не указана</string>
     <string name="binding_not_initialized">Binding wasn\'t initialized</string>
+    <string name="vacancy_name_area">%1$s, %2$s</string>
+    <string name="point">•</string>
+
+    <plurals name="vacancies_count">
+        <item quantity="zero">%d вакансий</item>
+        <item quantity="one">%d вакансия</item>
+        <item quantity="few">%d вакансии</item>
+        <item quantity="many">%d вакансий</item>
+        <item quantity="other">%d вакансий</item>
+    </plurals>
+
 </resources>
