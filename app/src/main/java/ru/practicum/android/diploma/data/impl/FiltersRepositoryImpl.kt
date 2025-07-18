@@ -14,8 +14,11 @@ class FiltersRepositoryImpl(private val dataBase: DataBase) : FiltersRepository 
             .map { entity ->
                 Filters(
                     country = entity.country,
+                    countryId = entity.countryId,
                     area = entity.area,
+                    areaId = entity.areaId,
                     industry = entity.industry,
+                    industryId = entity.industryId,
                     salary = entity.salary,
                     onlyWithSalary = entity.onlyWithSalary
                 )
@@ -25,4 +28,22 @@ class FiltersRepositoryImpl(private val dataBase: DataBase) : FiltersRepository 
         dataBase.filtersDao()
             .update(entity)
     }
+
+    override suspend fun reset() {
+        dataBase.filtersDao()
+            .update(
+                FiltersEntity(
+                    id = 1,
+                    country = null,
+                    countryId = null,
+                    area = null,
+                    areaId = null,
+                    industry = null,
+                    industryId = null,
+                    salary = null,
+                    onlyWithSalary = null
+                )
+            )
+    }
+
 }

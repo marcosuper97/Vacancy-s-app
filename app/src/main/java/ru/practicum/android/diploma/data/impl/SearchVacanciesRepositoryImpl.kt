@@ -2,8 +2,10 @@ package ru.practicum.android.diploma.data.impl
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
+import ru.practicum.android.diploma.data.db.DataBase
 import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchRequest
 import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchResponseDto
 import ru.practicum.android.diploma.data.network.NetworkClient
@@ -14,7 +16,8 @@ import ru.practicum.android.diploma.util.AppException
 import ru.practicum.android.diploma.util.toCurrencySymbol
 
 class SearchVacanciesRepositoryImpl(
-    private val networkClient: NetworkClient
+    private val networkClient: NetworkClient,
+    private val dataBase: DataBase
 ) : SearchVacanciesRepository {
 
     override fun doRequest(textRequest: String, page: Int): Flow<Result<VacanciesList>> = flow {
@@ -89,5 +92,19 @@ class SearchVacanciesRepositoryImpl(
                 )
             }
         )
+    }
+
+    override suspend fun thereIsFilters(): Boolean {
+        val entity = dataBase.filtersDao().getFilters().firstOrNull()
+        return entity == null || entity.run {
+            country.isNullOrEmpty() &&
+                countryId.isNullOrEmpty() &&
+                area.isNullOrEmpty() &&
+                areaId.isNullOrEmpty() &&
+                industry.isNullOrEmpty() &&
+                industryId.isNullOrEmpty() &&
+                salary.isNullOrEmpty() &&
+                onlyWithSalary == null
+        }
     }
 }

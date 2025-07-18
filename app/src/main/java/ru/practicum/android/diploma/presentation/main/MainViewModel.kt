@@ -13,7 +13,7 @@ import ru.practicum.android.diploma.util.AppException
 import ru.practicum.android.diploma.util.RecyclerViewItem
 import ru.practicum.android.diploma.util.SearchVacanciesState
 
-class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : ViewModel() {
+class MainViewModel(private var searchInteractor: SearchVacanciesInteractor) : ViewModel() {
     private var latestQueryText: String? = null
     private var currentPage = 0
     private var debounceJob: Job? = null // Для управления дебounced-поиском
@@ -90,7 +90,7 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : 
                 _uiState.value = SearchVacanciesState.Loading
             }
 
-            searchInteractor?.searchVacancies(queryText, page)?.collect { result ->
+            searchInteractor.searchVacancies(queryText, page).collect { result ->
                 result.onSuccess { vacanciesList ->
                     println("searchVacancies: success, found=${vacanciesList.vacanciesList.size}")
                     removeLoadingItem()
@@ -123,7 +123,6 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : 
     override fun onCleared() {
         super.onCleared()
         println("onCleared: cleaning up")
-        searchInteractor = null
         debounceJob?.cancel()
     }
 
@@ -145,6 +144,12 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor?) : 
         currentPage = 0
         _vacancies.value = mutableListOf()
         searchVacancies(queryText, 0)
+    }
+
+    fun thereIsFilters() {
+        viewModelScope.launch {
+            _uiState.value.thereIsFilters = searchInteractor.thereIsFilters()
+        }
     }
 
     companion object {

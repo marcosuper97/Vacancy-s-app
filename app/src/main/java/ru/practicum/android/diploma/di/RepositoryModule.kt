@@ -17,7 +17,7 @@ val repositoryModule = module {
     }
 
     factory<SearchVacanciesRepository> {
-        SearchVacanciesRepositoryImpl(get())
+        SearchVacanciesRepositoryImpl(get(), get())
     }
 
     factory<DetailsVacancyRepository> {

@@ -8,9 +8,12 @@ data class FiltersEntity(
     @PrimaryKey
     val id: Int = 1,
     val country: String?,
+    val countryId: String?,
     val area: String?,
+    val areaId: String?,
     val industry: String?,
-    val salary: Int?,
+    val industryId: String?,
+    val salary: String?,
     val onlyWithSalary: Boolean?
 )
 
