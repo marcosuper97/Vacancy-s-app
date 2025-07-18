@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.interactors.FavoritesInteractor
 
@@ -16,16 +16,21 @@ class FavoritesViewModel(private val interactor: FavoritesInteractor) : ViewMode
         viewModelScope.launch {
             interactor
                 .getAllVacancies()
-                .catch { throwable ->
-                    _screenState.value = FavoritesScreenState.Error
+                .onStart {
+                    _screenState.value = FavoritesScreenState.Loading
                 }
                 .collect { vacancies ->
-                    _screenState.value = if (vacancies.isEmpty()) {
-                        FavoritesScreenState.Empty
-                    } else {
-                        FavoritesScreenState.Content(vacancies)
+                    runCatching {
+                        if (vacancies.isEmpty()) {
+                            _screenState.value = FavoritesScreenState.Empty
+                        } else {
+                            _screenState.value = FavoritesScreenState.Content(vacancies)
+                        }
+                    }.onFailure {
+                        _screenState.value = FavoritesScreenState.Error
                     }
                 }
         }
     }
+
 }

@@ -7,6 +7,7 @@ sealed class FavoritesScreenState {
         val vacancies: List<VacanciesPreview>,
     ) : FavoritesScreenState()
 
+    data object Loading : FavoritesScreenState()
     data object Empty : FavoritesScreenState()
     data object Error : FavoritesScreenState()
 }
