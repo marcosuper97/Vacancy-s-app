@@ -6,7 +6,7 @@ import ru.practicum.android.diploma.data.dto.area.AreaDto
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.models.Areas
 import ru.practicum.android.diploma.domain.repositories.AreasRepository
-import ru.practicum.android.diploma.util.toDomain
+import ru.practicum.android.diploma.util.toModel
 
 class AreasRepositoryImpl(private val networkClient: NetworkClient) : AreasRepository {
 
@@ -14,7 +14,7 @@ class AreasRepositoryImpl(private val networkClient: NetworkClient) : AreasRepos
         return networkClient.getAreas().map { dto ->
             areasFiltered(dto)
                 .map { areaDto ->
-                    areaDto.toDomain()
+                    areaDto.toModel()
                 }
         }
     }

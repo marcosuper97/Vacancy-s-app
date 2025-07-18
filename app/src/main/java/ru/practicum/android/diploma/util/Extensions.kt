@@ -3,7 +3,9 @@ package ru.practicum.android.diploma.util
 import android.widget.TextView
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.data.dto.area.AreaDto
+import ru.practicum.android.diploma.data.dto.industry.IndustryDto
 import ru.practicum.android.diploma.domain.models.Areas
+import ru.practicum.android.diploma.domain.models.Industry
 
 fun TextView.setVacanciesCountText(count: Long) {
     this.text = String.format(
@@ -16,12 +18,19 @@ fun TextView.setVacanciesCountText(count: Long) {
     )
 }
 
-fun AreaDto.toDomain(): Areas {
+fun AreaDto.toModel(): Areas {
     return Areas(
         id = this.id,
         parentId = this.parentId,
         name = this.name,
-        areas = this.areas.map { it.toDomain() }
+        areas = this.areas.map { it.toModel() }
+    )
+}
+
+fun IndustryDto.toModel(): Industry {
+    return Industry(
+        id = this.id,
+        name = this.name
     )
 }
 
