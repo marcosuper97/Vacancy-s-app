@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.domain.interactors
 
+import ru.practicum.android.diploma.domain.models.Areas
+
 interface AreasInteractor {
-    suspend fun getAreas()
-    suspend fun getCountriesData()
-    suspend fun getAreasOfCountry()
+    suspend fun getAreas():Result<Areas>
 }
