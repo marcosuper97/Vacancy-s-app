@@ -29,9 +29,17 @@ interface HhApiService {
         @Path("vacancy_id") vacancyId: String
     ): VacancyDetailsDto
 
+    @Headers(
+        "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
+        "HH-User-Agent: Vacancy's app/1.0 anannat@yandex.ru"
+    )
     @GET("industries")
     suspend fun getIndustries(): List<IndustryDto>
 
+    @Headers(
+        "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
+        "HH-User-Agent: Vacancy's app/1.0 anannat@yandex.ru"
+    )
     @GET("areas")
     suspend fun getAreas(): List<AreaDto>
 }
