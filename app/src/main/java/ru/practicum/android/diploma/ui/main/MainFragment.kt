@@ -28,6 +28,7 @@ import ru.practicum.android.diploma.presentation.main.MainViewModel
 import ru.practicum.android.diploma.ui.vacancy.VacanciesAdapter
 import ru.practicum.android.diploma.util.SearchVacanciesState
 import ru.practicum.android.diploma.util.setVacanciesCountText
+import androidx.core.view.get
 
 class MainFragment : Fragment() {
 
@@ -35,11 +36,13 @@ class MainFragment : Fragment() {
     private val binding: FragmentMainBinding get() = _binding!!
     private val viewModel: MainViewModel by viewModel()
     private var vacanciesAdapter: VacanciesAdapter? = null
+    private val menuItem = binding.toolbarMain.menu[R.id.filtering]
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
@@ -48,7 +51,7 @@ class MainFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.thereIsFilters()
         vacanciesAdapter = VacanciesAdapter(::onVacancyClicked)
         binding.mainRv.layoutManager = LinearLayoutManager(context)
         binding.mainRv.adapter = vacanciesAdapter
@@ -154,6 +157,10 @@ class MainFragment : Fragment() {
             SearchVacanciesState.NothingFound -> showNothingFound()
             is SearchVacanciesState.ShowContent -> showContent(state)
             SearchVacanciesState.NoInternet -> showNoInternet()
+        }
+        when (state.thereIsFilters) {
+            false -> menuItem.setIcon(R.drawable.filters)
+            true -> menuItem.setIcon(R.drawable.filters_active)
         }
     }
 

@@ -6,10 +6,14 @@ import ru.practicum.android.diploma.domain.repositories.SearchVacanciesInteracto
 import ru.practicum.android.diploma.domain.repositories.SearchVacanciesRepository
 
 class SearchVacanciesInteractorImpl(
-    private val repository: SearchVacanciesRepository
+    private val repository: SearchVacanciesRepository,
 ) : SearchVacanciesInteractor {
 
     override fun searchVacancies(textRequest: String, page: Int): Flow<Result<VacanciesList>> {
         return repository.doRequest(textRequest, page)
     }
+
+    override suspend fun thereIsFilters(): Boolean =
+        repository.thereIsFilters()
+
 }
