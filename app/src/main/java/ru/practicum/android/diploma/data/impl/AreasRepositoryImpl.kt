@@ -21,11 +21,17 @@ class AreasRepositoryImpl(private val networkClient: NetworkClient) : AreasRepos
 
     private suspend fun areasFiltered(areas: List<AreaDto>): List<AreaDto> {
         return withContext(Dispatchers.IO) {
-            areas.filter { dto ->
+            areas
+                .filter { dto ->
                 ACCESS_AREAS.any { allowed ->
                     dto.name.contains(allowed, ignoreCase = true)
                 }
             }
+                .sortedBy { dto ->
+                    ACCESS_AREAS.indexOfFirst { allowed ->
+                        dto.name.contains(allowed, ignoreCase = true)
+                    }
+                }
         }
     }
 
