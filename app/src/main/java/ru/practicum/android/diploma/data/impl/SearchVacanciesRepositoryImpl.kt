@@ -18,7 +18,7 @@ import ru.practicum.android.diploma.util.toCurrencySymbol
 
 class SearchVacanciesRepositoryImpl(
     private val networkClient: NetworkClient,
-    private val dataBase: DataBase
+    private val dataBase: DataBase,
 ) : SearchVacanciesRepository {
 
     override fun doRequest(textRequest: String, page: Int): Flow<Result<VacanciesList>> = flow {
@@ -96,7 +96,7 @@ class SearchVacanciesRepositoryImpl(
     }
 
     override suspend fun thereIsFilters(): Flow<Boolean> {
-       return dataBase.filtersDao().getFilters()
+        return dataBase.filtersDao().getFilters()
             .map { it != FiltersEntity.EMPTY }
     }
 }
