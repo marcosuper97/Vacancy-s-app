@@ -17,72 +17,44 @@
         app:title="@string/choosing_a_place_of_work"
         app:titleTextAppearance="@style/appearance_medium_22" />
 
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/choiceCountry"
+        style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        android:layout_marginTop="@dimen/dp_16"
-        android:clickable="true"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/dp_16"
-        android:paddingVertical="@dimen/dp_12"
+        android:layout_marginTop="16dp"
+        android:hint="@string/country"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarPlaceWork"
-        tools:ignore="UseCompoundDrawables">
+        app:hintTextAppearance="@style/appearance_regular_12"
+        app:layout_constraintTop_toBottomOf="@id/toolbarPlaceWork">
 
-        <TextView
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputCountry"
-            style="@style/appearance_regular_16"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:hint="@string/country"
-            android:text=""
-            android:textColorHint="@color/grey" />
+            style="@style/TextInputEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="@style/appearance_regular_16"
+ />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageView
-            android:id="@+id/iconInputCountry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center"
-            android:contentDescription="@string/country"
-            android:src="@drawable/arrow_forward_24" />
-    </LinearLayout>
-
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/choiceRegion"
+        style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        android:clickable="true"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/dp_16"
-        android:paddingVertical="@dimen/dp_12"
+        android:layout_height="wrap_content"
+        app:boxCollapsedPaddingTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/choiceCountry"
-        tools:ignore="UseCompoundDrawables">
+        app:layout_constraintTop_toBottomOf="@id/choiceCountry">
 
-        <TextView
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputRegion"
-            style="@style/appearance_regular_16"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
+            style="@style/TextInputEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
             android:hint="@string/region"
-            android:text=""
-            android:textColorHint="@color/grey" />
-
-        <ImageView
-            android:id="@+id/iconInputRegion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center"
-            android:contentDescription="@string/region"
-            android:src="@drawable/arrow_forward_24" />
-    </LinearLayout>
+            android:text=""/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:layout_width="wrap_content"

@@ -108,4 +108,24 @@
         <item name="strokeWidth">1dp</item>
         <item name="strokeColor">@color/light_grey</item>
     </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="android:layout_height">60dp</item>
+        <item name="android:textColorHint">@color/grey</item>
+        <item name="hintTextColor">@color/text_color</item>
+        <item name="hintTextAppearance">@style/appearance_regular_16</item>
+        <item name="endIconDrawable">@drawable/arrow_forward_24</item>
+        <item name="endIconMode">custom</item>
+        <item name="hintAnimationEnabled">true</item>
+        <item name="hintEnabled">true</item>
+        <item name="boxStrokeWidth">@dimen/dp_0</item>
+        <item name="boxStrokeColor">@color/transparent</item>
+    </style>
+
+    <style name="TextInputEditTextStyle">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:clickable">true</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:focusable">false</item>
+    </style>
 </resources>
