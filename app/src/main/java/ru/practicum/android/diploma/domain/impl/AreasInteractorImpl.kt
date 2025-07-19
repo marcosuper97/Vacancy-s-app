@@ -52,9 +52,11 @@ class AreasInteractorImpl(
                 area.parentId == targetParentId -> {
                     listOf(area.copy(areas = filterRegionsOfCountry(area.areas, area.id)))
                 }
+
                 area.areas.isNotEmpty() -> {
                     filterRegionsOfCountry(area.areas, targetParentId)
                 }
+
                 else -> emptyList()
             }
         }
