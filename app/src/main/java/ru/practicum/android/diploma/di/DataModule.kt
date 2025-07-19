@@ -44,12 +44,7 @@ val dataModule = module {
         CoroutineScope(Dispatchers.IO).launch {
             dao.insert(
                 FiltersEntity(
-                    id = 1,
-                    country = null,
-                    area = null,
-                    industry = null,
-                    salary = null,
-                    onlyWithSalary = null
+                    id = 1
                 )
             )
         }

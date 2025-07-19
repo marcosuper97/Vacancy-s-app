@@ -36,7 +36,7 @@ class MainFragment : Fragment() {
     private val binding: FragmentMainBinding get() = _binding!!
     private val viewModel: MainViewModel by viewModel()
     private var vacanciesAdapter: VacanciesAdapter? = null
-    private lateinit var menuItem: MenuItem
+    private var menuItem: MenuItem? = null
 
 
     override fun onCreateView(
@@ -160,8 +160,8 @@ class MainFragment : Fragment() {
             SearchVacanciesState.NoInternet -> showNoInternet()
         }
         when (state.thereIsFilters) {
-            false -> menuItem.setIcon(R.drawable.filters)
-            true -> menuItem.setIcon(R.drawable.filters_active)
+            false -> menuItem?.setIcon(R.drawable.filters)
+            true -> menuItem?.setIcon(R.drawable.filters_active)
         }
     }
 
