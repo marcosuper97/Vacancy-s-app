@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.data.db.DataBase
+import ru.practicum.android.diploma.data.db.FiltersEntity
 import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchRequest
 import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchResponseDto
 import ru.practicum.android.diploma.data.network.NetworkClient
@@ -96,15 +97,6 @@ class SearchVacanciesRepositoryImpl(
 
     override suspend fun thereIsFilters(): Boolean {
         val entity = dataBase.filtersDao().getFilters().firstOrNull()
-        return entity == null || entity.run {
-            country.isNullOrEmpty() &&
-                countryId.isNullOrEmpty() &&
-                area.isNullOrEmpty() &&
-                areaId.isNullOrEmpty() &&
-                industry.isNullOrEmpty() &&
-                industryId.isNullOrEmpty() &&
-                salary.isNullOrEmpty() &&
-                onlyWithSalary == null
-        }
+        return entity != null && entity != FiltersEntity.EMPTY
     }
 }
