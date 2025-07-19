@@ -15,7 +15,7 @@ class AreasRepositoryImpl(
     private val accessAreas: Set<String>
 ) : AreasRepository {
     private val _areasData = MutableSharedFlow<Result<List<Areas>>>(replay = 1)
-    val areasData: SharedFlow<Result<List<Areas>>> = _areasData
+    override val areasData: SharedFlow<Result<List<Areas>>> = _areasData
 
     override suspend fun fetchAreas() {
         val data = networkClient.getAreas().map { dto ->
