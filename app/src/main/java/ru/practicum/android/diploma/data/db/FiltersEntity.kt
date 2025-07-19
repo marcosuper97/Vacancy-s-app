@@ -7,13 +7,16 @@ import androidx.room.PrimaryKey
 data class FiltersEntity(
     @PrimaryKey
     val id: Int = 1,
-    val country: String?,
-    val countryId: String?,
-    val area: String?,
-    val areaId: String?,
-    val industry: String?,
-    val industryId: String?,
-    val salary: String?,
-    val onlyWithSalary: Boolean?
-)
-
+    val country: String? = null,
+    val countryId: String? = null,
+    val area: String? = null,
+    val areaId: String? = null,
+    val industry: String? = null,
+    val industryId: String? = null,
+    val salary: String? = null,
+    val onlyWithSalary: Boolean? = null,
+) {
+    companion object {
+        val EMPTY = FiltersEntity()
+    }
+}
