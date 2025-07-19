@@ -2,8 +2,8 @@ package ru.practicum.android.diploma.data.impl
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.data.db.DataBase
 import ru.practicum.android.diploma.data.db.FiltersEntity
@@ -95,8 +95,8 @@ class SearchVacanciesRepositoryImpl(
         )
     }
 
-    override suspend fun thereIsFilters(): Boolean {
-        val entity = dataBase.filtersDao().getFilters().firstOrNull()
-        return entity != null && entity != FiltersEntity.EMPTY
+    override suspend fun thereIsFilters(): Flow<Boolean> {
+       return dataBase.filtersDao().getFilters()
+            .map { it != FiltersEntity.EMPTY }
     }
 }
