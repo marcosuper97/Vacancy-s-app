@@ -13,7 +13,7 @@ class SearchVacanciesInteractorImpl(
         return repository.doRequest(textRequest, page)
     }
 
-    override suspend fun thereIsFilters(): Boolean =
+    override suspend fun thereIsFilters(): Flow<Boolean> =
         repository.thereIsFilters()
 
 }

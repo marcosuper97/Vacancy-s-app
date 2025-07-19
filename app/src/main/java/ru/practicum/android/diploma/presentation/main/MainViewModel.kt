@@ -28,6 +28,13 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor) : V
     private val _isLoadingNextPage = MutableStateFlow(false)
     val isLoadingNextPage: StateFlow<Boolean> = _isLoadingNextPage
 
+    private val _filtersState = MutableStateFlow(false)
+    val filtersState: StateFlow<Boolean> = _filtersState.asStateFlow()
+
+    init {
+        observeFilters()
+    }
+
     private fun searchDebounce(changedText: String) {
         if (latestQueryText == changedText || isSearchActive) {
             println("searchDebounce skipped: text=$changedText, isSearchActive=$isSearchActive")
@@ -146,9 +153,11 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor) : V
         searchVacancies(queryText, 0)
     }
 
-    fun thereIsFilters() {
+    private fun observeFilters() {
         viewModelScope.launch {
-            _uiState.value.thereIsFilters = searchInteractor.thereIsFilters()
+            searchInteractor.thereIsFilters().collect { hasFilters ->
+                _filtersState.value = hasFilters
+            }
         }
     }
 

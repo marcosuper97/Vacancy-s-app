@@ -51,7 +51,6 @@ class MainFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.thereIsFilters()
         vacanciesAdapter = VacanciesAdapter(::onVacancyClicked)
         binding.mainRv.layoutManager = LinearLayoutManager(context)
         binding.mainRv.adapter = vacanciesAdapter
@@ -65,6 +64,12 @@ class MainFragment : Fragment() {
                 }
 
                 else -> false
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.filtersState.collect { state ->
+                showFilterState(state)
             }
         }
 
@@ -159,10 +164,6 @@ class MainFragment : Fragment() {
             is SearchVacanciesState.ShowContent -> showContent(state)
             SearchVacanciesState.NoInternet -> showNoInternet()
         }
-        when (state.thereIsFilters) {
-            false -> menuItem?.setIcon(R.drawable.filters)
-            true -> menuItem?.setIcon(R.drawable.filters_active)
-        }
     }
 
     fun showDefault() {
@@ -236,5 +237,12 @@ class MainFragment : Fragment() {
             return true
         }
         return false
+    }
+
+    private fun showFilterState(state: Boolean) {
+        when (state) {
+            false -> menuItem?.setIcon(R.drawable.filters)
+            true -> menuItem?.setIcon(R.drawable.filters_active)
+        }
     }
 }
