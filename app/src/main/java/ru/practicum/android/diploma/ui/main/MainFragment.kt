@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,6 @@ import ru.practicum.android.diploma.presentation.main.MainViewModel
 import ru.practicum.android.diploma.ui.vacancy.VacanciesAdapter
 import ru.practicum.android.diploma.util.SearchVacanciesState
 import ru.practicum.android.diploma.util.setVacanciesCountText
-import androidx.core.view.get
 
 class MainFragment : Fragment() {
 
@@ -36,7 +36,7 @@ class MainFragment : Fragment() {
     private val binding: FragmentMainBinding get() = _binding!!
     private val viewModel: MainViewModel by viewModel()
     private var vacanciesAdapter: VacanciesAdapter? = null
-    private val menuItem = binding.toolbarMain.menu[R.id.filtering]
+    private lateinit var menuItem: MenuItem
 
 
     override fun onCreateView(
@@ -55,6 +55,7 @@ class MainFragment : Fragment() {
         vacanciesAdapter = VacanciesAdapter(::onVacancyClicked)
         binding.mainRv.layoutManager = LinearLayoutManager(context)
         binding.mainRv.adapter = vacanciesAdapter
+        menuItem = binding.toolbarMain.menu.findItem(R.id.filtering)
 
         binding.toolbarMain.setOnMenuItemClickListener {
             when (it.itemId) {
