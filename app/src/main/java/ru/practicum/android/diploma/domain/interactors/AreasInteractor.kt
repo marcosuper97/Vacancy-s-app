@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.domain.interactors
 
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import ru.practicum.android.diploma.domain.models.Areas
 
