@@ -28,7 +28,7 @@ class PlaceWorkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        println("ViewModel instance: $viewModel")
         binding.toolbarPlaceWork.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
