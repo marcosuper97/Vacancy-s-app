@@ -19,14 +19,13 @@ class PlaceWorkViewModel(
         viewModelScope.launch {
             areasInteractor.fetchData()
 
-            launch{
+            launch {
                 areasInteractor.regionsData.collect { data ->
                     Log.d("РЕГИОНЫ ГОТОВО", "${data.getOrNull()}")
                 }
             }
 
-            areasInteractor.countriesData.collect{
-                    data ->
+            areasInteractor.countriesData.collect { data ->
                 Log.d("СТРАНЫ", "${data.getOrNull()}")
             }
         }

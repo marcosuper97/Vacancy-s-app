@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentPlaceWorkBinding
 import ru.practicum.android.diploma.presentation.placework.PlaceWorkViewModel
@@ -15,7 +15,7 @@ class PlaceWorkFragment : Fragment() {
 
     private var _binding: FragmentPlaceWorkBinding? = null
     private val binding: FragmentPlaceWorkBinding get() = _binding!!
-    private val viewModel: PlaceWorkViewModel by viewModels()
+    private val viewModel: PlaceWorkViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
