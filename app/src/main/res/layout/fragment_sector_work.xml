@@ -6,8 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".ui.sectorwork.SectorWorkFragment">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/dp_16" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/dp_16" />
+
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarSectorWork"
+        android:id="@+id/toolbar_sector_work"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,12 +31,80 @@
         app:title="@string/select_branch"
         app:titleTextAppearance="@style/appearance_medium_22" />
 
-    <TextView
+    <EditText
+        android:id="@+id/sector_work_input_et"
+        style="@style/EditTextStyle"
+        android:drawableEnd="@drawable/ic_search_24"
+        android:hint="@string/entry_branch"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_sector_work" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sector_work_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_8"
+        android:clipToPadding="false"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/sector_work_choose_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sector_work_input_et"
+        tools:listitem="@layout/sector_work_item" />
+
+    <Button
+        android:id="@+id/sector_work_choose_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_24"
+        android:enabled="true"
+        android:paddingVertical="@dimen/dp_20"
+        android:text="@string/select"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@+id/guideline_start" />
+
+    <LinearLayout
+        android:id="@+id/error_image_and_message_ll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/sector_work_input_et">
+
+        <ImageView
+            android:id="@+id/error_image_iv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/image_couldnt_get_list" />
+
+        <TextView
+            android:id="@+id/error_text_tv"
+            style="@style/appearance_medium_22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/dp_28"
+            android:layout_marginTop="@dimen/dp_16"
+            android:gravity="center"
+            android:text="@string/сouldnt_get_list" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/sector_work_pb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/select_branch"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/sector_work_input_et" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
