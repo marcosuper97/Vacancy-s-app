@@ -19,15 +19,15 @@ class AreasRepositoryImpl(
     override val areasData: SharedFlow<Result<List<Areas>>> = _areasData
 
     override suspend fun fetchAreas() {
-        Log.d("AreasRepository", "Fetching areas")
+        Log.d("AreasRepository1", "Fetching areas")
         val data = networkClient.getAreas().map { dto ->
             val filtered = areasFiltered(dto)
-            Log.d("AreasRepository", "Filtered areas: ${filtered.size}")
+            Log.d("AreasRepository2", "Filtered areas: ${filtered.size}")
             filtered.map { areaDto ->
                 areaDto.toModel()
             }
         }
-        Log.d("AreasRepository", "Emitting areas: success=${data.isSuccess}, size=${data.getOrNull()?.size}")
+        Log.d("AreasRepository3", "Emitting areas: success=${data.isSuccess}, size=${data.getOrNull()?.size}")
         _areasData.emit(data)
     }
 
