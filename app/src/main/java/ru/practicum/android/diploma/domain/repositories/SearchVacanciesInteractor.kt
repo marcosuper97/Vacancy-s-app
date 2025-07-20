@@ -5,4 +5,5 @@ import ru.practicum.android.diploma.domain.models.VacanciesList
 
 interface SearchVacanciesInteractor {
     fun searchVacancies(textRequest: String, page: Int): Flow<Result<VacanciesList>>
+    suspend fun thereIsFilters(): Flow<Boolean>
 }

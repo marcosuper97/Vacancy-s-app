@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "vacancies_table"
+    tableName = "vacancies"
 )
 data class VacancyEntity(
     @PrimaryKey

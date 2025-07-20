@@ -15,33 +15,30 @@ import ru.practicum.android.diploma.ui.common.CommandChannel
 class VacancyDetailsViewModel(
     private val detailsVacancyInteractor: DetailsVacancyInteractor,
     private val favoritesInteractor: FavoritesInteractor,
-    private val vacancyId: String
+    private val vacancyId: String,
 ) : ViewModel() {
 
     init {
         viewModelScope.launch {
             try {
-                _uiState.update {
-                    it.copy(isFetching = true)
-                }
+                _uiState.update { it.copy(isFetching = true) }
                 val vacancyDetails = detailsVacancyInteractor.doRequest(vacancyId)
-                _uiState.update { prefState ->
-                    prefState.copy(
+                _uiState.update {
+                    it.copy(
                         isFetching = false,
                         isError = false,
-                        vacancyDetails = vacancyDetails.getOrNull(),
-                        isFavorite = favoritesInteractor.isFavorite(vacancyId)
+                        vacancyDetails = vacancyDetails.getOrNull()
                     )
                 }
             } catch (e: CancellationException) {
                 println(e)
-                _uiState.update { prefState ->
-                    prefState.copy(
-                        isFetching = false,
-                        isError = true,
-                        isFavorite = favoritesInteractor.isFavorite(vacancyId)
-                    )
-                }
+                _uiState.update { it.copy(isFetching = false, isError = true) }
+            }
+        }
+
+        viewModelScope.launch {
+            favoritesInteractor.isFavorite(vacancyId).collect { isFavorite ->
+                _uiState.update { it.copy(isFavorite = isFavorite) }
             }
         }
 
@@ -70,24 +67,11 @@ class VacancyDetailsViewModel(
 
     fun favoriteControl(vacancy: VacancyDetails) {
         viewModelScope.launch {
-            when (favoritesInteractor.isFavorite(vacancyId)) {
-                true -> {
-                    favoritesInteractor.deleteVacancy(vacancyId)
-                    _uiState.update { prefState ->
-                        prefState.copy(
-                            isFavorite = false
-                        )
-                    }
-                }
-
-                false -> {
-                    favoritesInteractor.insertVacancy(vacancy)
-                    _uiState.update { prefState ->
-                        prefState.copy(
-                            isFavorite = true
-                        )
-                    }
-                }
+            val isFavoriteNow = uiState.value.isFavorite
+            if (isFavoriteNow) {
+                favoritesInteractor.deleteVacancy(vacancyId)
+            } else {
+                favoritesInteractor.insertVacancy(vacancy)
             }
         }
     }

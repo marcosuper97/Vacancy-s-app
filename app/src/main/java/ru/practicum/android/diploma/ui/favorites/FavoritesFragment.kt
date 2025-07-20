@@ -82,6 +82,7 @@ class FavoritesFragment : Fragment() {
             is FavoritesScreenState.Content -> showContent(state.vacancies)
             FavoritesScreenState.Empty -> showEmpty()
             FavoritesScreenState.Error -> showError()
+            FavoritesScreenState.Loading -> Unit
         }
     }
 

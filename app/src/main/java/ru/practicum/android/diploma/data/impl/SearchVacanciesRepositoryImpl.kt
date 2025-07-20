@@ -3,7 +3,10 @@ package ru.practicum.android.diploma.data.impl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import ru.practicum.android.diploma.data.db.DataBase
+import ru.practicum.android.diploma.data.db.FiltersEntity
 import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchRequest
 import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchResponseDto
 import ru.practicum.android.diploma.data.network.NetworkClient
@@ -14,7 +17,8 @@ import ru.practicum.android.diploma.util.AppException
 import ru.practicum.android.diploma.util.toCurrencySymbol
 
 class SearchVacanciesRepositoryImpl(
-    private val networkClient: NetworkClient
+    private val networkClient: NetworkClient,
+    private val dataBase: DataBase,
 ) : SearchVacanciesRepository {
 
     override fun doRequest(textRequest: String, page: Int): Flow<Result<VacanciesList>> = flow {
@@ -89,5 +93,10 @@ class SearchVacanciesRepositoryImpl(
                 )
             }
         )
+    }
+
+    override suspend fun thereIsFilters(): Flow<Boolean> {
+        return dataBase.filtersDao().getFilters()
+            .map { it != FiltersEntity.EMPTY }
     }
 }

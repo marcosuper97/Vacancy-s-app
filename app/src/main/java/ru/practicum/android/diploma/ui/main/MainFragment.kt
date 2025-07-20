@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -35,11 +36,13 @@ class MainFragment : Fragment() {
     private val binding: FragmentMainBinding get() = _binding!!
     private val viewModel: MainViewModel by viewModel()
     private var vacanciesAdapter: VacanciesAdapter? = null
+    private var menuItem: MenuItem? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
@@ -48,10 +51,10 @@ class MainFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         vacanciesAdapter = VacanciesAdapter(::onVacancyClicked)
         binding.mainRv.layoutManager = LinearLayoutManager(context)
         binding.mainRv.adapter = vacanciesAdapter
+        menuItem = binding.toolbarMain.menu.findItem(R.id.filtering)
 
         binding.toolbarMain.setOnMenuItemClickListener {
             when (it.itemId) {
@@ -61,6 +64,12 @@ class MainFragment : Fragment() {
                 }
 
                 else -> false
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.filtersState.collect { state ->
+                showFilterState(state)
             }
         }
 
@@ -228,5 +237,12 @@ class MainFragment : Fragment() {
             return true
         }
         return false
+    }
+
+    private fun showFilterState(state: Boolean) {
+        when (state) {
+            false -> menuItem?.setIcon(R.drawable.filters)
+            true -> menuItem?.setIcon(R.drawable.filters_active)
+        }
     }
 }
