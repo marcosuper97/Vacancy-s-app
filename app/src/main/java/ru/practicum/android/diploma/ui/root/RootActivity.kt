@@ -44,7 +44,12 @@ class RootActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.vacancy_details_fragment -> {
+                R.id.vacancy_details_fragment,
+                R.id.filtering_fragment,
+                R.id.sector_work_fragment,
+                R.id.place_work_fragment,
+                R.id.country_fragment,
+                R.id.region_fragment -> {
                     binding.bottomNav.visibility = View.GONE
                     binding.bottomNavView.visibility = View.GONE
                     systemBottomPadding(APPLY_BOTTOM_PADDING)
