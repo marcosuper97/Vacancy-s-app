@@ -132,7 +132,8 @@ class MainFragment : Fragment() {
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
-                    firstVisibleItemPosition >= 0 && !viewModel.isLoadingNextPage.value) {
+                    firstVisibleItemPosition >= 0 && !viewModel.isLoadingNextPage.value
+                ) {
                     viewModel.searchNextPage()
                 }
             }

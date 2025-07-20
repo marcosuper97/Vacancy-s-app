@@ -3,6 +3,8 @@ package ru.practicum.android.diploma.data.network
 import android.content.Context
 import android.util.Log
 import retrofit2.HttpException
+import ru.practicum.android.diploma.data.dto.area.AreaDto
+import ru.practicum.android.diploma.data.dto.industry.IndustryGroupDto
 import ru.practicum.android.diploma.data.dto.vacancy.vacancydetails.VacancyDetailsDto
 import ru.practicum.android.diploma.data.dto.vacancy.vacanysearch.VacancySearchResponseDto
 import ru.practicum.android.diploma.util.AppException
@@ -20,6 +22,14 @@ class RetrofitNetworkClient(
 
     override suspend fun vacanciesSearchRequest(requestQuery: Map<String, String>): Result<VacancySearchResponseDto> {
         return executeRequest { apiService.searchVacancies(requestQuery) }
+    }
+
+    override suspend fun getAreas(): Result<List<AreaDto>> {
+        return executeRequest { apiService.getAreas() }
+    }
+
+    override suspend fun getIndustries(): Result<List<IndustryGroupDto>> {
+        return executeRequest { apiService.getIndustries() }
     }
 
     private suspend fun <T> executeRequest(block: suspend () -> T): Result<T> {

@@ -166,7 +166,10 @@ class VacancyDetailsAdapter : ListAdapter<VacancyDetailsItemUiModel,
         }
     }
 
-    private fun getSalaryText(item: VacancyDetailsItemUiModel.VacancyName, context: Context): String {
+    private fun getSalaryText(
+        item: VacancyDetailsItemUiModel.VacancyName,
+        context: Context
+    ): String {
         return StringBuilder().apply {
             if (item.from != null || item.to != null) {
                 if (item.from != null) {
