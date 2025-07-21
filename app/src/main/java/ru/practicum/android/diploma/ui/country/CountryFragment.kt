@@ -47,23 +47,23 @@ class CountryFragment : Fragment() {
         }
     }
 
-    private fun renderUi(state: CountryState) {
+    private fun renderUi(state: AreasState) {
         Log.d("fragment", state.toString())
         when (state) {
-            is CountryState.Content -> {
+            is AreasState.Content -> {
                 adapter?.countries = state.areas
                 binding.progressBar.visibility = View.GONE
                 binding.countryRev.visibility = View.VISIBLE
             }
 
-            CountryState.Error -> {
+            AreasState.Error -> {
                 binding.progressBar.visibility = View.GONE
                 binding.countryRev.visibility = View.GONE
                 binding.countryPlaceholder.visibility = View.VISIBLE
                 binding.errorText.visibility = View.VISIBLE
             }
 
-            CountryState.Loading -> {
+            AreasState.Loading -> {
                 binding.countryRev.visibility = View.GONE
                 binding.progressBar.visibility = View.VISIBLE
                 binding.countryPlaceholder.visibility = View.GONE
