@@ -59,11 +59,15 @@ class CountryFragment : Fragment() {
             CountryState.Error -> {
                 binding.progressBar.visibility = View.GONE
                 binding.countryRev.visibility = View.GONE
+                binding.countryPlaceholder.visibility = View.VISIBLE
+                binding.errorText.visibility = View.VISIBLE
             }
 
             CountryState.Loading -> {
                 binding.countryRev.visibility = View.GONE
                 binding.progressBar.visibility = View.VISIBLE
+                binding.countryPlaceholder.visibility = View.GONE
+                binding.errorText.visibility = View.GONE
             }
         }
     }
