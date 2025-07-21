@@ -40,7 +40,7 @@ class PlaceWorkViewModel(
         viewModelScope.launch {
             areasInteractor.updateCountry(
                 country = null,
-                countryId = null
+                countryId = null,
             )
         }
     }

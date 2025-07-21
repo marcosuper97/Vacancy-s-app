@@ -19,7 +19,7 @@ class CountryFragment : Fragment() {
 
     private var _binding: FragmentCountryBinding? = null
     private val binding: FragmentCountryBinding get() = _binding!!
-    private var adapter: CountryAdapter? = null
+    private var adapter: AreasAdapter? = null
     private val viewModel: CountryViewModel by viewModel()
 
     override fun onCreateView(
@@ -33,7 +33,7 @@ class CountryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = CountryAdapter(::onItemClick)
+        adapter = AreasAdapter(::onItemClick)
         binding.countryRev.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
         binding.countryRev.adapter = adapter
         lifecycleScope.launch {

@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import okio.Closeable
-import ru.practicum.android.diploma.data.db.FiltersEntity
 import ru.practicum.android.diploma.domain.interactors.AreasInteractor
 import ru.practicum.android.diploma.domain.models.Areas
 import ru.practicum.android.diploma.domain.repositories.AreasRepository
@@ -37,17 +36,27 @@ class AreasInteractorImpl(
     ) { areasData, currentCountryId ->
         areasData.map { areas ->
             when (currentCountryId.countryId) {
-                null -> filterAllRegions(areas)
+                null -> filterRegionsOfCountry(areas, null)
                 else -> filterRegionsOfCountry(areas, currentCountryId.countryId)
             }
         }
     }.shareIn(interactorScope, SharingStarted.Eagerly, 1)
 
-    private fun filterRegionsOfCountry(areas: List<Areas>, targetParentId: String): List<Areas> {
+    private fun flattenAreas(areas: List<Areas>): List<Areas> {
+        return areas.flatMap { area ->
+            listOf(area.copy(areas = emptyList())) + flattenAreas(area.areas)
+        }
+    }
+
+    private fun filterRegionsOfCountry(areas: List<Areas>, targetParentId: String?): List<Areas> {
         return areas.flatMap { area ->
             when {
+                area.parentId == null && targetParentId == null -> {
+                    filterRegionsOfCountry(area.areas, area.id) // Продолжаем искать вложенные элементы
+                }
+
                 area.parentId == targetParentId -> {
-                    listOf(area.copy(areas = filterRegionsOfCountry(area.areas, area.id)))
+                    listOf(area.copy(areas = emptyList())) + flattenAreas(area.areas)
                 }
 
                 area.areas.isNotEmpty() -> {
@@ -59,13 +68,6 @@ class AreasInteractorImpl(
         }
     }
 
-    private fun filterAllRegions(areas: List<Areas>): List<Areas> {
-        return areas.filterNot { it.parentId == null }
-            .map { area ->
-                area.copy(areas = filterAllRegions(area.areas))
-            }
-    }
-
     override suspend fun fetchData() {
         areasRepository.fetchAreas()
     }
@@ -74,7 +76,7 @@ class AreasInteractorImpl(
         val filterCurrent = filters.first()
         val newFilters = filterCurrent.copy(
             country = country,
-            countryId = countryId
+            countryId = countryId,
         )
         filtersRepository.update(newFilters.toEntity())
     }
