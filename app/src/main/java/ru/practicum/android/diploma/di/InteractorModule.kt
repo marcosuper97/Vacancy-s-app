@@ -27,6 +27,6 @@ val interactorModule = module {
     }
 
     single<AreasInteractor> {
-        AreasInteractorImpl(get())
+        AreasInteractorImpl(get(), get())
     }
 }

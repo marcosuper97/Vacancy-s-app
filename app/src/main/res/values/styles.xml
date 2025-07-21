@@ -111,8 +111,8 @@
 
     <style name="TextInputLayoutStyle" parent="Widget.Material3.TextInputLayout.FilledBox">
         <item name="android:layout_height">60dp</item>
-        <item name="android:textColorHint">@color/text_field_hint_color</item>
-        <item name="hintTextColor">@color/text_field_hint_color</item>
+        <item name="android:textColorHint">@color/grey</item>
+        <item name="hintTextColor">@color/text_color</item>
         <item name="hintTextAppearance">@style/appearance_regular_12</item>
         <item name="endIconDrawable">@drawable/arrow_forward_24</item>
         <item name="endIconMode">custom</item>

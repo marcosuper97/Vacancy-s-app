@@ -1,29 +1,29 @@
 package ru.practicum.android.diploma.domain.impl
 
-import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import okio.Closeable
+import ru.practicum.android.diploma.data.db.FiltersEntity
 import ru.practicum.android.diploma.domain.interactors.AreasInteractor
 import ru.practicum.android.diploma.domain.models.Areas
 import ru.practicum.android.diploma.domain.repositories.AreasRepository
+import ru.practicum.android.diploma.domain.repositories.FiltersRepository
+import ru.practicum.android.diploma.util.toEntity
 
 class AreasInteractorImpl(
-    private val areasRepository: AreasRepository
+    private val areasRepository: AreasRepository,
+    private val filtersRepository: FiltersRepository
 ) : AreasInteractor, Closeable {
-    private val countryId = MutableStateFlow<String?>("9")
+    override val filters = filtersRepository.getFilters()
     private val interactorScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-
     override val countriesData: SharedFlow<Result<List<Areas>>> = areasRepository.areasData.map { result ->
         result.map { areas ->
             areas.filter { it.parentId == null }
@@ -33,12 +33,12 @@ class AreasInteractorImpl(
 
     override val regionsData: SharedFlow<Result<List<Areas>>> = combine(
         areasRepository.areasData,
-        countryId
+        filters
     ) { areasData, currentCountryId ->
         areasData.map { areas ->
-            when (currentCountryId) {
+            when (currentCountryId.countryId) {
                 null -> filterAllRegions(areas)
-                else -> filterRegionsOfCountry(areas, currentCountryId)
+                else -> filterRegionsOfCountry(areas, currentCountryId.countryId)
             }
         }
     }.shareIn(interactorScope, SharingStarted.Eagerly, 1)
@@ -68,6 +68,24 @@ class AreasInteractorImpl(
 
     override suspend fun fetchData() {
         areasRepository.fetchAreas()
+    }
+
+    override suspend fun updateCountry(country: String?, countryId: String?) {
+        val filterCurrent = filters.first()
+        val newFilters = filterCurrent.copy(
+            country = country,
+            countryId = countryId
+        )
+        filtersRepository.update(newFilters.toEntity())
+    }
+
+    override suspend fun updateRegion(region: String?, regionId: String?) {
+        val filterCurrent = filters.first()
+        val newFilters = filterCurrent.copy(
+            area = region,
+            areaId = regionId
+        )
+        filtersRepository.update(newFilters.toEntity())
     }
 
     override fun close() {
