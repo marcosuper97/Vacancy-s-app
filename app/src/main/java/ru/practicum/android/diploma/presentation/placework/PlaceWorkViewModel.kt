@@ -15,11 +15,15 @@ class PlaceWorkViewModel(
 
     init {
         viewModelScope.launch {
-            areasInteractor.filters.collect{ data ->
-                _state.value = _state.value.copy(country = data.country,
-                    area = data.area)
+            launch{
+                areasInteractor.filters.collect { data ->
+                    _state.value = _state.value.copy(
+                        country = data.country,
+                        area = data.area
+                    )
+                }
             }
-            areasInteractor.fetchData()
+           launch { areasInteractor.fetchData() }
         }
     }
 

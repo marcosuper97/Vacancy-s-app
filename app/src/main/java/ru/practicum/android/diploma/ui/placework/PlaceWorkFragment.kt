@@ -50,6 +50,10 @@ class PlaceWorkFragment : Fragment() {
         binding.regionNavigation.setOnClickListener {
             findNavController().navigate(R.id.action_to_region_fragment)
         }
+
+        binding.applyButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun textFieldBehavior(
@@ -83,6 +87,11 @@ class PlaceWorkFragment : Fragment() {
     }
 
     private fun renderUi(state: PlaceWorkState) {
+        if (state.area != null || state.country != null) {
+            binding.applyButton.visibility = View.VISIBLE
+        } else {
+            binding.applyButton.visibility = View.GONE
+        }
         textFieldBehavior(
             binding.choiceRegion,
             binding.inputRegion,
