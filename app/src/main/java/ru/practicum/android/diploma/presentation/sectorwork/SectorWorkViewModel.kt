@@ -14,7 +14,7 @@ import ru.practicum.android.diploma.ui.sectorwork.IndustryState
 class SectorWorkViewModel(
     private val industryInteractor: IndustryInteractor
 ) : ViewModel() {
-    private val _state = MutableStateFlow<IndustryState>(IndustryState.Loading)
+    private val _state = MutableStateFlow<IndustryState>(IndustryState.Loading(false))
     val state: StateFlow<IndustryState> get() = _state
     private var industryList: List<Industry> = emptyList()
     private var searchJob: Job? = null
@@ -23,11 +23,12 @@ class SectorWorkViewModel(
         viewModelScope.launch {
             industryInteractor.getIndustries()
                 .onSuccess { industriesData ->
-                    _state.value = IndustryState.Content(industriesData)
+                    val applyButton = showApplyButton(industriesData)
+                    _state.value = IndustryState.Content(industriesData, applyButton)
                     industryList = industriesData
                 }
                 .onFailure {
-                    _state.value = IndustryState.Error
+                    _state.value = IndustryState.Error(false)
                 }
         }
     }
@@ -35,23 +36,29 @@ class SectorWorkViewModel(
     fun searchIndustry(query: String) {
         searchJob?.cancel()
         if (query.isEmpty()) {
-            _state.value = IndustryState.Content(industryList)
+            val applyButton = showApplyButton(industryList)
+            _state.value = IndustryState.Content(industryList,applyButton)
             return
         }
         searchJob = viewModelScope.launch {
             delay(500)
             val filteredList = filterIndustries(industryList, query)
             _state.value = if (filteredList.isEmpty()) {
-                IndustryState.NotFound
+                IndustryState.NotFound(false)
             } else {
-                IndustryState.Search(filteredList)
+                val applyButton = showApplyButton(filteredList)
+                IndustryState.Search(filteredList, applyButton)
             }
         }
     }
 
-    private fun filterIndustries(regions: List<Industry>, query: String): List<Industry> {
-        return regions.filter { region ->
-            region.name.contains(query, ignoreCase = true)
+    private fun showApplyButton(industries: List<Industry>): Boolean {
+        return industries.any { it.select }
+    }
+
+    private fun filterIndustries(industries: List<Industry>, query: String): List<Industry> {
+        return industries.filter { industry ->
+            industry.name.contains(query, ignoreCase = true)
         }
     }
 

@@ -19,9 +19,21 @@ class IndustryInteractorImpl(
     private val filtersRepository: FiltersRepository
 ) : IndustryInteractor {
     private val interactorScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-    override suspend fun getIndustries(): Result<List<Industry>> = industryRepository.getIndustries()
     val filters: SharedFlow<Filters> =
         filtersRepository.getFilters().shareIn(interactorScope, SharingStarted.Eagerly, 1)
+
+    override suspend fun getIndustries(): Result<List<Industry>> {
+        val favoriteIndustry = filters.first().industryId
+        return industryRepository.getIndustries().map { industryList ->
+            industryList.map { item ->
+                if (item.id == favoriteIndustry) {
+                    item.copy(select = true)
+                } else {
+                    item.copy(select = false)
+                }
+            }
+        }
+    }
 
     override suspend fun updateIndustry(industry: Industry) {
         val filterCurrent = filters.first()

@@ -84,40 +84,53 @@ class SectorWorkFragment : Fragment() {
     }
 
     private fun renderUi(state: IndustryState) {
-        Log.d("fragment", state.toString())
         when (state) {
             is IndustryState.Content -> {
+                Log.d("CONTENT", state.showApplyButton.toString())
+                binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
                 adapter?.update(state.areas)
                 hidePlaceholder()
                 binding.progressBar.visibility = View.GONE
                 binding.industriesRev.visibility = View.VISIBLE
             }
 
-            IndustryState.Error -> {
+            is IndustryState.Error -> {
+                Log.d("ERROR", state.showApplyButton.toString())
+                binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
                 binding.progressBar.visibility = View.GONE
                 binding.industriesRev.visibility = View.GONE
                 showPlaceholder(ERROR)
             }
 
-            IndustryState.Loading -> {
+            is IndustryState.Loading -> {
+                Log.d("LOADING", state.showApplyButton.toString())
+                binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
                 binding.industriesRev.visibility = View.GONE
                 binding.progressBar.visibility = View.VISIBLE
                 hidePlaceholder()
             }
 
-            IndustryState.NotFound -> {
+            is IndustryState.NotFound -> {
+                Log.d("NOTFOUND", state.showApplyButton.toString())
+                binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
                 binding.progressBar.visibility = View.GONE
                 binding.industriesRev.visibility = View.GONE
                 showPlaceholder(NOT_FOUND)
             }
 
             is IndustryState.Search -> {
+                Log.d("SEARCH", state.showApplyButton.toString())
+                binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
                 hidePlaceholder()
                 adapter?.update(state.areas)
                 binding.progressBar.visibility = View.GONE
                 binding.industriesRev.visibility = View.VISIBLE
             }
         }
+    }
+
+    private fun showApplyButton(boolean: Boolean): Int {
+        return if (boolean) View.VISIBLE else View.GONE
     }
 
     private fun showPlaceholder(boolean: Boolean) {
@@ -152,7 +165,7 @@ class SectorWorkFragment : Fragment() {
 
     private fun onItemClick(industry: Industry) {
         viewModel.industryUpdate(industry)
-        findNavController().navigateUp()
+
     }
 
 
