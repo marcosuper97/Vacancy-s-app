@@ -18,7 +18,11 @@
         tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_favorites_fragment_to_vacancy_details_fragment"
-            app:destination="@id/vacancy_details_fragment" />
+            app:destination="@id/vacancy_details_fragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/slide_out_top"
+            app:popEnterAnim="@anim/slide_in_top"
+            app:popExitAnim="@anim/slide_out_bottom" />
     </fragment>
 
     <fragment
@@ -28,10 +32,18 @@
         tools:layout="@layout/fragment_filtering">
         <action
             android:id="@+id/action_to_place_work_fragment"
-            app:destination="@id/place_work_fragment" />
+            app:destination="@id/place_work_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_to_sector_work_fragment"
-            app:destination="@id/sector_work_fragment" />
+            app:destination="@id/sector_work_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -41,10 +53,18 @@
         tools:layout="@layout/fragment_place_work">
         <action
             android:id="@+id/action_to_country_fragment"
-            app:destination="@id/country_fragment" />
+            app:destination="@id/country_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_to_region_fragment"
-            app:destination="@id/region_fragment" />
+            app:destination="@id/region_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -60,10 +80,18 @@
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_to_filtering_fragment"
-            app:destination="@id/filtering_fragment" />
+            app:destination="@id/filtering_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_to_vacancy_details_fragment"
-            app:destination="@id/vacancy_details_fragment" />
+            app:destination="@id/vacancy_details_fragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/slide_out_top"
+            app:popEnterAnim="@anim/slide_in_top"
+            app:popExitAnim="@anim/slide_out_bottom" />
     </fragment>
 
     <fragment
