@@ -85,7 +85,6 @@ class RegionFragment : Fragment() {
     }
 
     private fun renderUi(state: RegionState) {
-        Log.d("fragment", state.toString())
         when (state) {
             is RegionState.Content -> {
                 adapter?.update(state.areas)

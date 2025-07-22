@@ -56,7 +56,7 @@ class FiltersRepositoryImpl(private val dataBase: DataBase) : FiltersRepository 
             )
     }
 
-    companion object{
+    companion object {
         private const val TIME_STOP = 5000L
     }
 

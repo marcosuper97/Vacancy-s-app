@@ -49,7 +49,6 @@ class CountryFragment : Fragment() {
     }
 
     private fun renderUi(state: CountryState) {
-        Log.d("fragment", state.toString())
         when (state) {
             is CountryState.Content -> {
                 adapter?.countries = state.areas

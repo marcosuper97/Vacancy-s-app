@@ -91,7 +91,6 @@ class SectorWorkFragment : Fragment() {
     private fun renderUi(state: IndustryState) {
         when (state) {
             is IndustryState.Content -> {
-                Log.d("CONTENT", state.showApplyButton.toString())
                 binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
                 adapter?.update(state.areas)
                 hidePlaceholder()
@@ -99,28 +98,24 @@ class SectorWorkFragment : Fragment() {
                 binding.industriesRev.visibility = View.VISIBLE
             }
             is IndustryState.Error -> {
-                Log.d("ERROR", state.showApplyButton.toString())
                 binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
                 binding.progressBar.visibility = View.GONE
                 binding.industriesRev.visibility = View.GONE
                 showPlaceholder(ERROR)
             }
             is IndustryState.Loading -> {
-                Log.d("LOADING", state.showApplyButton.toString())
                 binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
                 binding.industriesRev.visibility = View.GONE
                 binding.progressBar.visibility = View.VISIBLE
                 hidePlaceholder()
             }
             is IndustryState.NotFound -> {
-                Log.d("NOTFOUND", state.showApplyButton.toString())
                 binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
                 binding.progressBar.visibility = View.GONE
                 binding.industriesRev.visibility = View.GONE
                 showPlaceholder(NOT_FOUND)
             }
             is IndustryState.Search -> {
-                Log.d("SEARCH", state.showApplyButton.toString())
                 binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
                 hidePlaceholder()
                 adapter?.update(state.areas)

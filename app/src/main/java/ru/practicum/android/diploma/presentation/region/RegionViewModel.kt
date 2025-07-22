@@ -48,7 +48,7 @@ class RegionViewModel(
             return
         }
         searchJob = viewModelScope.launch {
-            delay(500)
+            delay(SEARCH_DELAY)
             val filteredList = filterRegions(regionList, query)
             _state.value = if (filteredList.isEmpty()) {
                 RegionState.NotFound
@@ -71,6 +71,10 @@ class RegionViewModel(
         viewModelScope.launch {
             areasInteractor.updateRegion(area)
         }
+    }
+
+    companion object {
+        private const val SEARCH_DELAY = 500L
     }
 }
 
