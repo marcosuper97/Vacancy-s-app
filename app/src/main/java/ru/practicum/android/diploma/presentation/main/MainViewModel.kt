@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.presentation.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
@@ -18,6 +19,7 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor) : V
     private var currentPage = 0
     private var debounceJob: Job? = null // Для управления дебounced-поиском
     private var isSearchActive = false // Флаг для отслеживания активного поиска
+    private var pagesOnResponse = 0
 
     private val _uiState = MutableStateFlow<SearchVacanciesState>(SearchVacanciesState.Default)
     val uiState = _uiState.asStateFlow()
@@ -50,19 +52,23 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor) : V
         debounceJob = viewModelScope.launch {
             delay(SEARCH_DEBOUNCE_DELAY)
             searchVacancies(changedText, currentPage)
+            currentPage = 1
         }
     }
 
     fun searchNextPage() {
-        if (_isLoadingNextPage.value || isSearchActive) {
-            return
-        }
-        currentPage++
-        latestQueryText?.let {
-            println("searchNextPage: text=$it, page=$currentPage")
-            _isLoadingNextPage.value = true
-            addLoadingItem()
-            searchVacancies(it, currentPage)
+        if (pagesOnResponse-1 > currentPage){
+            Log.d("search", "$pagesOnResponse || $currentPage")
+            if (_isLoadingNextPage.value || isSearchActive) {
+                return
+            }
+            currentPage++
+            latestQueryText?.let {
+                println("searchNextPage: text=$it, page=$currentPage")
+                _isLoadingNextPage.value = true
+                addLoadingItem()
+                searchVacancies(it, currentPage)
+            }
         }
     }
 
@@ -100,6 +106,7 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor) : V
             searchInteractor.searchVacancies(queryText, page).collect { result ->
                 result.onSuccess { vacanciesList ->
                     println("searchVacancies: success, found=${vacanciesList.vacanciesList.size}")
+                    pagesOnResponse = vacanciesList.pages
                     removeLoadingItem()
                     val newList = vacanciesList.vacanciesList.map { RecyclerViewItem.VacancyItem(it) }
                     if (page == 0) {
