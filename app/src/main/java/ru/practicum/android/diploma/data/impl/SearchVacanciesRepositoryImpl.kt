@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.data.impl
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -40,16 +41,17 @@ class SearchVacanciesRepositoryImpl(
     }
 
     // Пока работает на запрос без фильтров
-    override fun createRequest(textRequest: String, page: Int): Map<String, String> {
-        val requestWithoutFilters = VacancySearchRequest(
+    override suspend fun createRequest(textRequest: String, page: Int): Map<String, String> {
+        val filters = dataBase.filtersDao().getFilters().first()
+        val request = VacancySearchRequest(
             page = page,
             text = textRequest,
-            area = null,
-            industry = null,
-            salary = null,
-            onlyWithSalary = null
+            area = filters.areaId ?: filters.countryId,
+            industry = filters.industryId,
+            salary = filters.salary,
+            onlyWithSalary = filters.onlyWithSalary
         )
-        return toQueryMap(requestWithoutFilters)
+        return toQueryMap(request)
     }
 
     // Пока работает на запрос без фильтров
