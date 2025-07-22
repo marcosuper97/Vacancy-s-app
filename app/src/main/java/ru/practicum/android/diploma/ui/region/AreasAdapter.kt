@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.ui.country
+package ru.practicum.android.diploma.ui.region
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

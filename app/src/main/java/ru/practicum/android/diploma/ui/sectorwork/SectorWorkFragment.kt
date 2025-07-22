@@ -19,16 +19,12 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSectorWorkBinding
 import ru.practicum.android.diploma.domain.models.Industry
 import ru.practicum.android.diploma.presentation.sectorwork.SectorWorkViewModel
-import ru.practicum.android.diploma.ui.country.AreasAdapter
-import ru.practicum.android.diploma.ui.region.RegionFragment
-import ru.practicum.android.diploma.ui.region.RegionFragment.Companion
-import ru.practicum.android.diploma.ui.region.RegionState
 
 class SectorWorkFragment : Fragment() {
 
     private var _binding: FragmentSectorWorkBinding? = null
     private val binding: FragmentSectorWorkBinding get() = _binding!!
-    private var adapter: AreasAdapter? = null
+    private var adapter: IndustriesAdapter? = null
     private val viewModel: SectorWorkViewModel by viewModel()
 
     override fun onCreateView(
@@ -43,7 +39,7 @@ class SectorWorkFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = AreasAdapter(::onItemClick)
+        adapter = IndustriesAdapter(::onItemClick)
         binding.industryUnput.setOnTouchListener(::handleTouchEvent)
         binding.industriesRev.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.industriesRev.adapter = adapter

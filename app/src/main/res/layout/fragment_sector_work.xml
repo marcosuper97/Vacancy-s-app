@@ -66,4 +66,15 @@
         android:text="@string/couldnt_get_list"
         android:layout_marginTop="@dimen/dp_16"
         android:textAppearance="@style/appearance_medium_22" />
+
+    <Button
+        android:id="@+id/applyIndustry"
+        android:layout_width="0dp"
+        android:layout_height="59dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="24dp"
+        android:layout_marginHorizontal="17dp"
+        android:text="@string/select" />
 </androidx.constraintlayout.widget.ConstraintLayout>

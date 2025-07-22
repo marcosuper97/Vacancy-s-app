@@ -1,24 +1,25 @@
-package ru.practicum.android.diploma.ui.country
+package ru.practicum.android.diploma.ui.sectorwork
 
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.domain.models.Areas
+import ru.practicum.android.diploma.domain.models.Industry
 
-class AreasViewHolder(
+class IndustriesViewHolder(
     itemView: View,
-    val onItemClickListener: (Areas) -> Unit
+    val onItemClickListener: (Industry) -> Unit
 ) : RecyclerView.ViewHolder(itemView) {
-    private val textItem: TextView = itemView.findViewById(R.id.text_item)
+    private val textItem: TextView = itemView.findViewById(R.id.industry)
 
-    fun bind(area: Areas) {
+    fun bind(industry: Industry) {
         itemView.setOnClickListener {
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                onItemClickListener(area)
+                onItemClickListener(industry)
             }
         }
-        textItem.text = area.name
+        textItem.text = industry.name
     }
 }

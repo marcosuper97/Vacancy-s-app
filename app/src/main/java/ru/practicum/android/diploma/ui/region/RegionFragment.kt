@@ -19,7 +19,6 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentRegionBinding
 import ru.practicum.android.diploma.domain.models.Areas
 import ru.practicum.android.diploma.presentation.region.RegionViewModel
-import ru.practicum.android.diploma.ui.country.AreasAdapter
 
 class RegionFragment : Fragment() {
 
