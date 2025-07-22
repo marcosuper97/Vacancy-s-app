@@ -57,7 +57,7 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor) : V
     }
 
     fun searchNextPage() {
-        if (pagesOnResponse-1 > currentPage){
+        if (pagesOnResponse - 1 > currentPage) {
             Log.d("search", "$pagesOnResponse || $currentPage")
             if (_isLoadingNextPage.value || isSearchActive) {
                 return
