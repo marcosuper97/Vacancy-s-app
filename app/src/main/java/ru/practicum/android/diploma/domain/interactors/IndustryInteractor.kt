@@ -4,4 +4,5 @@ import ru.practicum.android.diploma.domain.models.Industry
 
 interface IndustryInteractor {
     suspend fun getIndustries(): Result<List<Industry>>
+    suspend fun updateIndustry(industry: Industry)
 }

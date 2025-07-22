@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentSectorWorkBinding
 import ru.practicum.android.diploma.presentation.sectorwork.SectorWorkViewModel
 
@@ -14,7 +15,7 @@ class SectorWorkFragment : Fragment() {
 
     private var _binding: FragmentSectorWorkBinding? = null
     private val binding: FragmentSectorWorkBinding get() = _binding!!
-    private val viewModel: SectorWorkViewModel by viewModels()
+    private val viewModel: SectorWorkViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -68,21 +68,14 @@ class AreasInteractorImpl(
         }
     }
 
-    fun flattenAreas(area: Areas): List<Areas> {
-        return listOf(area) + area.areas.flatMap { flattenAreas(it) }
-    }
-
     fun findTopLevelArea(target: Areas, allAreas: List<Areas>): Areas? {
-        // Создаём Map для быстрого поиска родителя по ID
         val areaById = allAreas.associateBy { it.id }
-
         var current: Areas? = target
         while (current?.parentId != null) {
             current = areaById[current.parentId]
         }
         return current
     }
-
 
     override suspend fun fetchData() {
         areasRepository.fetchAreas()
