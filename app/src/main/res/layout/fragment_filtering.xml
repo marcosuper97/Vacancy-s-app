@@ -19,78 +19,66 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/area"
-        style="@style/unactiveTextInput"
+        style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:clickable="true"
+        android:layout_marginTop="16dp"
         android:hint="@string/place_of_work"
-        android:paddingTop="12.5dp"
-        app:endIconDrawable="@drawable/arrow_forward_24"
-        app:endIconMode="custom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbarFiltering">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/areaEdit"
+            style="@style/TextInputEditTextStyle"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
             android:focusable="false"
-            android:paddingTop="0dp"
-            android:paddingBottom="12.5dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/grey"
-            tools:text="Россия, Москва" />
+            android:clickable="false"
+            tools:text="@string/country" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/sector"
-        style="@style/unactiveTextInput"
+        style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:clickable="true"
         android:hint="@string/branch"
-        android:paddingTop="12.5dp"
-        app:endIconDrawable="@drawable/arrow_forward_24"
-        app:endIconMode="custom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/area">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/sectorEdit"
+            style="@style/TextInputEditTextStyle"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
             android:focusable="false"
-            android:paddingTop="0dp"
-            android:paddingBottom="12.5dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/grey"
-            tools:text="IT" />
+            android:clickable="false"
+            tools:text="@string/country" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/salaryInput"
-        style="@style/textInputLayoutSalary"
+        style="@style/SalaryTextInputLayoutStyle"
         android:layout_width="match_parent"
-        android:layout_height="51dp"
         android:layout_marginHorizontal="@dimen/dp_16"
         android:layout_marginVertical="@dimen/dp_24"
         android:background="@drawable/shape_corner_and_back_edit_text"
         android:hint="@string/expected_salary"
-        android:paddingTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sector">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/salaryEdit"
-            style="@style/textInputEditTextSalary"
+            style="@style/SalaryTextInputEditTextStyle"
             android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:paddingTop="0dp"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:digits="0123456789"
             android:paddingBottom="@dimen/dp_8"
-            android:text="@string/enter_the_amount" />
+            android:focusable="false"
+            android:enabled="true"
+            android:text="@string/enter_the_amount"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -106,8 +94,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/salaryInput" />
 
-    <CheckBox
-        style="@style/Widget.App.CheckBox"
+    <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/salaryCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -117,33 +104,56 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/show_salary_text" />
 
-
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/apply"
-        style="@style/applyButton"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="59dp"
-        android:layout_marginHorizontal="17dp"
-        android:layout_marginBottom="28dp"
-        android:background="@drawable/shape_corner_button"
-        android:text="@string/apply"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/drop"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/drop"
-        style="@style/dropText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp_44"
-        android:gravity="center"
-        android:text="@string/drop"
-        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="91dp"
+        android:layout_marginHorizontal="17dp"
+        android:text="@string/apply" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/drop"
+        android:background="@color/transparent"
+        android:textColor="@color/red"
+        android:layout_width="0dp"
+        android:layout_height="59dp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="visible" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="24dp"
+        android:layout_marginHorizontal="17dp"
+        android:text="@string/drop" />
+
+    <View
+        android:id="@+id/area_navigation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="55dp"
+        app:layout_constraintTop_toTopOf="@id/area"
+        app:layout_constraintBottom_toBottomOf="@id/area"
+        app:layout_constraintStart_toStartOf="@id/area"
+        app:layout_constraintEnd_toEndOf="@id/area" />
+
+    <View
+        android:id="@+id/sector_navigation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="55dp"
+        app:layout_constraintTop_toTopOf="@id/sector"
+        app:layout_constraintBottom_toBottomOf="@id/sector"
+        app:layout_constraintStart_toStartOf="@id/sector"
+        app:layout_constraintEnd_toEndOf="@id/sector" />
+
+    <View
+        android:id="@+id/checkbox"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/show_salary_text"
+        app:layout_constraintBottom_toBottomOf="@id/show_salary_text"
+        app:layout_constraintStart_toStartOf="@id/show_salary_text"
+        app:layout_constraintEnd_toEndOf="@id/show_salary_text" />
 </androidx.constraintlayout.widget.ConstraintLayout>

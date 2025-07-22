@@ -1,9 +1,11 @@
 package ru.practicum.android.diploma.ui.filtering
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -146,6 +148,36 @@ class FilteringFragment : Fragment() {
 
         binding.apply.isVisible = true
         binding.drop.isVisible = true
+    }
+
+    private fun textFieldBehavior(
+        textInputLayout: TextInputLayout,
+        editText: EditText,
+        navigationActionId: Int,
+        text: String?
+    ) {
+        if (!text.isNullOrEmpty()) {
+            textInputLayout.setEndIconDrawable(R.drawable.cross)
+            editText.setText(text)
+            textInputLayout.defaultHintTextColor = ColorStateList.valueOf(requireContext().getColor(R.color.text_color))
+        } else {
+            textInputLayout.setEndIconDrawable(R.drawable.arrow_forward_24)
+            textInputLayout.defaultHintTextColor = ColorStateList.valueOf(requireContext().getColor(R.color.grey))
+            editText.text.clear()
+        }
+        textInputLayout.setEndIconOnClickListener {
+            if (!text.isNullOrEmpty()) {
+                editText.text.clear()
+                if (navigationActionId == R.id.action_to_country_fragment) {
+                    viewModel.deleteCountry()
+                } else {
+                    viewModel.deleteRegion()
+                }
+                textInputLayout.setEndIconDrawable(R.drawable.arrow_forward_24)
+            } else {
+                findNavController().navigate(navigationActionId)
+            }
+        }
     }
 
     private fun reset() {
