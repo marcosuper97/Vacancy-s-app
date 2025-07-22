@@ -4,8 +4,8 @@ import org.koin.dsl.module
 import ru.practicum.android.diploma.data.impl.AreasRepositoryImpl
 import ru.practicum.android.diploma.data.impl.DetailsVacancyRepositoryImpl
 import ru.practicum.android.diploma.data.impl.FavoritesRepositoryImpl
-import ru.practicum.android.diploma.data.impl.IndustryRepositoryImpl
 import ru.practicum.android.diploma.data.impl.FiltersRepositoryImpl
+import ru.practicum.android.diploma.data.impl.IndustryRepositoryImpl
 import ru.practicum.android.diploma.data.impl.SearchVacanciesRepositoryImpl
 import ru.practicum.android.diploma.domain.detailsvacancy.DetailsVacancyRepository
 import ru.practicum.android.diploma.domain.repositories.AreasRepository

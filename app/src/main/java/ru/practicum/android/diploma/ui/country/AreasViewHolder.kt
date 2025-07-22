@@ -12,10 +12,10 @@ class AreasViewHolder(
 ) : RecyclerView.ViewHolder(itemView) {
     private val textItem: TextView = itemView.findViewById(R.id.text_item)
 
-    fun bind(area: Areas){
-        itemView.setOnClickListener{
+    fun bind(area: Areas) {
+        itemView.setOnClickListener {
             val position = adapterPosition
-            if (position != RecyclerView.NO_POSITION){
+            if (position != RecyclerView.NO_POSITION) {
                 onItemClickListener(area)
             }
         }

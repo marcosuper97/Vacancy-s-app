@@ -23,7 +23,7 @@ class CountryViewModel(
                     _state.value = AreasState.Content(areas = areasData)
                 }
                 data.onFailure {
-                    when(data.exceptionOrNull()){
+                    when (data.exceptionOrNull()) {
                         is AppException -> {
                             _state.value = AreasState.Error
                         }
@@ -35,7 +35,7 @@ class CountryViewModel(
 
     fun countryUpdate(country: String, countryId: String) {
         viewModelScope.launch {
-            areasInteractor.updateCountry(country,countryId)
+            areasInteractor.updateCountry(country, countryId)
         }
     }
 

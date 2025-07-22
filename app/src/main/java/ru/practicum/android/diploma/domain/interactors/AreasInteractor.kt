@@ -18,6 +18,7 @@ interface AreasInteractor {
         country: String?,
         countryId: String?
     )
+
     suspend fun cleanPlaceWork()
     suspend fun deleteRegion()
 }

@@ -34,7 +34,7 @@ class CountryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = AreasAdapter(::onItemClick)
-        binding.countryRev.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+        binding.countryRev.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.countryRev.adapter = adapter
         lifecycleScope.launch {
             viewModel.state.collect { state ->
