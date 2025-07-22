@@ -35,6 +35,6 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:clickable="false"
-        android:longClickable="false"/>
+        android:longClickable="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

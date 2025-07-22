@@ -37,7 +37,7 @@ class SectorWorkViewModel(
         searchJob?.cancel()
         if (query.isEmpty()) {
             val applyButton = showApplyButton(industryList)
-            _state.value = IndustryState.Content(industryList,applyButton)
+            _state.value = IndustryState.Content(industryList, applyButton)
             return
         }
         searchJob = viewModelScope.launch {

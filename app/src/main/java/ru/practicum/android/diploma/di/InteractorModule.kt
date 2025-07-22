@@ -23,7 +23,7 @@ val interactorModule = module {
     factory<SearchVacanciesInteractor> { SearchVacanciesInteractorImpl(get()) }
 
     single<IndustryInteractor> {
-        IndustryInteractorImpl(get(),get())
+        IndustryInteractorImpl(get(), get())
     }
 
     single<AreasInteractor> {

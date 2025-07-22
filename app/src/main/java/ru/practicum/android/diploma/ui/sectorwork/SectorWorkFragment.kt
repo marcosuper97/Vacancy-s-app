@@ -21,7 +21,6 @@ import ru.practicum.android.diploma.domain.models.Industry
 import ru.practicum.android.diploma.presentation.sectorwork.SectorWorkViewModel
 
 class SectorWorkFragment : Fragment() {
-
     private var _binding: FragmentSectorWorkBinding? = null
     private val binding: FragmentSectorWorkBinding get() = _binding!!
     private var adapter: IndustriesAdapter? = null
@@ -79,6 +78,10 @@ class SectorWorkFragment : Fragment() {
         }
 
         binding.toolbarSectorWork.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.applyIndustry.setOnClickListener {
             findNavController().navigateUp()
         }
     }
@@ -140,7 +143,7 @@ class SectorWorkFragment : Fragment() {
             binding.errorText.visibility = View.VISIBLE
             binding.industriesPlaceholder.visibility = View.VISIBLE
         } else {
-            binding.errorText.text = getString(R.string.region_is_not_found)
+            binding.errorText.text = getString(R.string.no_such_branches)
             binding.industriesPlaceholder.setImageResource(R.drawable.error_cat_placeholder)
             binding.errorText.visibility = View.VISIBLE
             binding.industriesPlaceholder.visibility = View.VISIBLE
