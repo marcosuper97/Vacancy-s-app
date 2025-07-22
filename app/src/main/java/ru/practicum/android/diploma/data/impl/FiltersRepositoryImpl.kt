@@ -43,7 +43,6 @@ class FiltersRepositoryImpl(private val dataBase: DataBase) : FiltersRepository 
         dataBase.filtersDao()
             .update(
                 FiltersEntity(
-                    id = 1,
                     country = null,
                     countryId = null,
                     area = null,
@@ -62,6 +61,7 @@ class FiltersRepositoryImpl(private val dataBase: DataBase) : FiltersRepository 
 
     override fun thereIsFilters(): Flow<Boolean> {
         return dataBase.filtersDao().getFilters()
-            .map { it != FiltersEntity.EMPTY }    }
+            .map { it != FiltersEntity.EMPTY }
+    }
 
 }

@@ -9,47 +9,34 @@ import ru.practicum.android.diploma.domain.interactors.FiltersInteractor
 import ru.practicum.android.diploma.domain.models.Filters
 
 class FilteringViewModel(private val interactor: FiltersInteractor) : ViewModel() {
-    private val _screenState = MutableStateFlow<FilteringScreenState>(FilteringScreenState())
+    private val _screenState = MutableStateFlow<FilteringScreenState>(FilteringScreenState(null))
     val screenState: StateFlow<FilteringScreenState> = _screenState
 
     init {
-        observeFilters()
-    }
-
-    private fun observeFilters() {
         viewModelScope.launch {
             launch {
                 interactor.getFilters().collect { filters ->
-                    _screenState.value = _screenState.value.copy(filters = filters)
-                }
-            }
-            launch {
-                interactor.thereIsFilters().collect { thereIs ->
-                    _screenState.value = _screenState.value.copy(thereIsFilters = thereIs)
+                    _screenState.value = FilteringScreenState(filters)
                 }
             }
         }
     }
 
+    fun clearAreas(){
 
-    private fun updateFilters(transform: (Filters) -> Filters) {
-        viewModelScope.launch {
-            val current = _screenState.value.filters
-            val updated = transform(current!!)
-            interactor.update(updated)
-            _screenState.value = _screenState.value.copy(filters = updated)
-        }
     }
 
-    fun updateArea(area: String?) = updateFilters { it.copy(area = area) }
+    fun clearIndustry(){
 
-    fun updateIndustry(industry: String?) = updateFilters { it.copy(industry = industry) }
+    }
 
-    fun updateSalary(salary: Int?) = updateFilters { it.copy(salary = salary?.toString()) }
+    fun updateSalary(){
 
-    fun updateOnlyWithSalary(checked: Boolean?) = updateFilters { it.copy(onlyWithSalary = checked) }
+    }
 
-    fun clearSalary() = updateFilters { it.copy(salary = null) }
+    fun updateNoSalary(){
+
+    }
 
     suspend fun reset() {
         interactor.reset()
