@@ -60,4 +60,8 @@ class FiltersRepositoryImpl(private val dataBase: DataBase) : FiltersRepository 
         private const val TIME_STOP = 5000L
     }
 
+    override fun thereIsFilters(): Flow<Boolean> {
+        return dataBase.filtersDao().getFilters()
+            .map { it != FiltersEntity.EMPTY }    }
+
 }
