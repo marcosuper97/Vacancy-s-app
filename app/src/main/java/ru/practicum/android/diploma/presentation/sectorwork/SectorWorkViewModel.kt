@@ -67,6 +67,7 @@ class SectorWorkViewModel(
             industryInteractor.updateIndustry(industry)
         }
     }
+
     companion object {
         private const val SEARCH_DELAY = 500L
     }

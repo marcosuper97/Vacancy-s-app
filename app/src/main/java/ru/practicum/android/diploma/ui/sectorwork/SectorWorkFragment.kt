@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -97,24 +96,28 @@ class SectorWorkFragment : Fragment() {
                 binding.progressBar.visibility = View.GONE
                 binding.industriesRev.visibility = View.VISIBLE
             }
+
             is IndustryState.Error -> {
                 binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
                 binding.progressBar.visibility = View.GONE
                 binding.industriesRev.visibility = View.GONE
                 showPlaceholder(ERROR)
             }
+
             is IndustryState.Loading -> {
                 binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
                 binding.industriesRev.visibility = View.GONE
                 binding.progressBar.visibility = View.VISIBLE
                 hidePlaceholder()
             }
+
             is IndustryState.NotFound -> {
                 binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
                 binding.progressBar.visibility = View.GONE
                 binding.industriesRev.visibility = View.GONE
                 showPlaceholder(NOT_FOUND)
             }
+
             is IndustryState.Search -> {
                 binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
                 hidePlaceholder()
