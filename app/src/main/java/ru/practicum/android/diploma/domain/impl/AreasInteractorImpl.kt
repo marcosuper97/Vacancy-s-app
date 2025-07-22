@@ -6,6 +6,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -68,6 +69,22 @@ class AreasInteractorImpl(
         }
     }
 
+    fun flattenAreas(area: Areas): List<Areas> {
+        return listOf(area) + area.areas.flatMap { flattenAreas(it) }
+    }
+
+    fun findTopLevelArea(target: Areas, allAreas: List<Areas>): Areas? {
+        // Создаём Map для быстрого поиска родителя по ID
+        val areaById = allAreas.associateBy { it.id }
+
+        var current: Areas? = target
+        while (current?.parentId != null) {
+            current = areaById[current.parentId]
+        }
+        return current
+    }
+
+
     override suspend fun fetchData() {
         areasRepository.fetchAreas()
     }
@@ -77,15 +94,65 @@ class AreasInteractorImpl(
         val newFilters = filterCurrent.copy(
             country = country,
             countryId = countryId,
+            area = null,
+            areaId = null,
         )
         filtersRepository.update(newFilters.toEntity())
     }
 
-    override suspend fun updateRegion(region: String?, regionId: String?) {
+    override suspend fun updateRegion(area: Areas) {
+        val filterCurrent = filters.first()
+        if (filterCurrent.countryId != null) {
+            val newFilters = filterCurrent.copy(
+                area = area.name,
+                areaId = area.id
+            )
+            filtersRepository.update(newFilters.toEntity())
+        } else{
+            val allAreas: List<Areas> = flattenAreas(areasRepository.areasData.first().getOrNull()!!)
+            val parentCountry = findTopLevelArea(area, allAreas)
+            val newFilters = filterCurrent.copy(
+                area = area.name,
+                areaId = area.id,
+                country = parentCountry?.name,
+                countryId = parentCountry?.id
+            )
+            filtersRepository.update(newFilters.toEntity())
+        }
+    }
+
+    override suspend fun updateRegionWithParent(
+        region: String?,
+        regionId: String?,
+        country: String?,
+        countryId: String?
+    ) {
         val filterCurrent = filters.first()
         val newFilters = filterCurrent.copy(
             area = region,
-            areaId = regionId
+            areaId = regionId,
+            country = country,
+            countryId = countryId
+        )
+        filtersRepository.update(newFilters.toEntity())
+    }
+
+    override suspend fun cleanPlaceWork() {
+        val filterCurrent = filters.first()
+        val newFilters = filterCurrent.copy(
+            country = null,
+            countryId = null,
+            area = null,
+            areaId = null
+        )
+        filtersRepository.update(newFilters.toEntity())
+    }
+
+    override suspend fun deleteRegion() {
+        val filterCurrent = filters.first()
+        val newFilters = filterCurrent.copy(
+            area = null,
+            areaId = null
         )
         filtersRepository.update(newFilters.toEntity())
     }

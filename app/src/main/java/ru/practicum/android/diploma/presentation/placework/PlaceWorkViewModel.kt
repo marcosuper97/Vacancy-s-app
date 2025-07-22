@@ -15,7 +15,7 @@ class PlaceWorkViewModel(
 
     init {
         viewModelScope.launch {
-            launch{
+            launch {
                 areasInteractor.filters.collect { data ->
                     _state.value = _state.value.copy(
                         country = data.country,
@@ -23,25 +23,19 @@ class PlaceWorkViewModel(
                     )
                 }
             }
-           launch { areasInteractor.fetchData() }
+            launch { areasInteractor.fetchData() }
         }
     }
 
-    fun deleteRegion(){
+    fun deleteRegion() {
         viewModelScope.launch {
-            areasInteractor.updateRegion(
-                region = null,
-                regionId = null
-            )
+            areasInteractor.deleteRegion()
         }
     }
 
-    fun deleteCountry(){
+    fun deleteCountry() {
         viewModelScope.launch {
-            areasInteractor.updateCountry(
-                country = null,
-                countryId = null,
-            )
+            areasInteractor.cleanPlaceWork()
         }
     }
 }

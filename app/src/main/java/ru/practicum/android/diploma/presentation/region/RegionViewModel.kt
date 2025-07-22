@@ -50,17 +50,10 @@ class RegionViewModel(
         }
     }
 
-    private fun List<Areas>.containsInId(searchString: String): Boolean {
-        return this.any { it.id.contains(searchString, ignoreCase = true) }
-    }
-
     fun regionUpdate(area: Areas) {
         viewModelScope.launch {
-            if(countriesList.containsInId(area.parentId!!)){
-                areasInteractor.updateRegion(area.name, area.id)
-                areasInteractor.updateCountry()
-            }
-            areasInteractor.updateRegion(region, regionId)
+            areasInteractor.updateRegion(area)
         }
     }
 }
+
