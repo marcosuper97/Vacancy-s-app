@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.data.impl
 
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -19,15 +18,12 @@ class AreasRepositoryImpl(
     override val areasData: SharedFlow<Result<List<Areas>>> = _areasData
 
     override suspend fun fetchAreas() {
-        Log.d("AreasRepository1", "Fetching areas")
         val data = networkClient.getAreas().map { dto ->
             val filtered = areasFiltered(dto)
-            Log.d("AreasRepository2", "Filtered areas: ${filtered.size}")
             filtered.map { areaDto ->
                 areaDto.toModel()
             }
         }
-        Log.d("AreasRepository3", "Emitting areas: success=${data.isSuccess}, size=${data.getOrNull()?.size}")
         _areasData.emit(data)
     }
 

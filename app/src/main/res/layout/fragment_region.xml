@@ -17,12 +17,54 @@
         app:title="@string/region_choose"
         app:titleTextAppearance="@style/appearance_medium_22" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/region_choose"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <EditText
+        android:id="@+id/region_unput"
+        style="@style/EditTextStyle"
+        android:drawableEnd="@drawable/ic_search_24"
+        android:hint="@string/entry_region"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="@dimen/dp_16"
+        app:layout_constraintTop_toBottomOf="@id/toolbarRegion" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/regionRev"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_16"
+        app:layout_constraintTop_toBottomOf="@id/region_unput"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/region_placeholder"
+        android:layout_width="0dp"
+        android:layout_height="223dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginHorizontal="@dimen/dp_16"
+        android:src="@drawable/error_carpet_placeholder" />
+
+    <TextView
+        android:id="@+id/error_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@id/region_placeholder"
+        app:layout_constraintStart_toStartOf="@id/region_placeholder"
+        app:layout_constraintTop_toBottomOf="@id/region_placeholder"
+        android:text="@string/couldnt_get_list"
+        android:layout_marginTop="@dimen/dp_16"
+        android:textAppearance="@style/appearance_medium_22" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

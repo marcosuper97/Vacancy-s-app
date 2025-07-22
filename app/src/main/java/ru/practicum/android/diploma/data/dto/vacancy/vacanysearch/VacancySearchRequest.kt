@@ -6,6 +6,6 @@ data class VacancySearchRequest(
     val text: String,
     val area: String?,
     val industry: String?,
-    val salary: Long?,
+    val salary: String?,
     val onlyWithSalary: Boolean?
 )

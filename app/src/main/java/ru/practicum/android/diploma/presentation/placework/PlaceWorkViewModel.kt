@@ -1,33 +1,41 @@
 package ru.practicum.android.diploma.presentation.placework
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.interactors.AreasInteractor
 
 class PlaceWorkViewModel(
-    private val areasInteractor: AreasInteractor
+    private val areasInteractor: AreasInteractor,
 ) : ViewModel() {
+    private val _state = MutableStateFlow(PlaceWorkState())
+    val state: StateFlow<PlaceWorkState> get() = _state
 
     init {
-        Log.d("init start", "init")
-        loadData()
-    }
-
-    fun loadData() {
         viewModelScope.launch {
-            areasInteractor.fetchData()
-
             launch {
-                areasInteractor.regionsData.collect { data ->
-                    Log.d("РЕГИОНЫ ГОТОВО", "${data.getOrNull()}")
+                areasInteractor.filters.collect { data ->
+                    _state.value = _state.value.copy(
+                        country = data.country,
+                        area = data.area
+                    )
                 }
             }
+            launch { areasInteractor.fetchData() }
+        }
+    }
 
-            areasInteractor.countriesData.collect { data ->
-                Log.d("СТРАНЫ", "${data.getOrNull()}")
-            }
+    fun deleteRegion() {
+        viewModelScope.launch {
+            areasInteractor.deleteRegion()
+        }
+    }
+
+    fun deleteCountry() {
+        viewModelScope.launch {
+            areasInteractor.cleanPlaceWork()
         }
     }
 }

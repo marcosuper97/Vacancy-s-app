@@ -23,10 +23,10 @@ val interactorModule = module {
     factory<SearchVacanciesInteractor> { SearchVacanciesInteractorImpl(get()) }
 
     single<IndustryInteractor> {
-        IndustryInteractorImpl(get())
+        IndustryInteractorImpl(get(), get())
     }
 
     single<AreasInteractor> {
-        AreasInteractorImpl(get())
+        AreasInteractorImpl(get(), get())
     }
 }
