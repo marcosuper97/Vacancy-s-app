@@ -18,12 +18,15 @@ class IndustriesAdapter(
             .inflate(R.layout.sector_work_item, parent, false)
         return IndustriesViewHolder(view) { clickedPosition ->
             if (selectedPosition != clickedPosition) {
-                // Обновляем флаги в моделях
                 val oldSelected = selectedPosition
                 selectedPosition = clickedPosition
-                industries.forEachIndexed { index, industry ->
-                    industry.select = (index == selectedPosition)
-                }
+                industries = industries.mapIndexed { index, industry ->
+                    if (index == selectedPosition) {
+                        industry.copy(select = true)
+                    } else {
+                        industry.copy(select = false)
+                    }
+                }.toMutableList()
                 if (oldSelected != RecyclerView.NO_POSITION) notifyItemChanged(oldSelected)
                 notifyItemChanged(selectedPosition)
                 onIndustrySelected(industries[selectedPosition])

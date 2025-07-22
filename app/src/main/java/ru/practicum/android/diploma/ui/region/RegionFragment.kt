@@ -45,6 +45,7 @@ class RegionFragment : Fragment() {
         binding.regionRev.adapter = adapter
         binding.regionUnput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                println(s)
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -68,6 +69,7 @@ class RegionFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                println(s)
             }
 
         })

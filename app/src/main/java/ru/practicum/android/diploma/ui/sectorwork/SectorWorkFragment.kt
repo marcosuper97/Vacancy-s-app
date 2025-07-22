@@ -44,6 +44,7 @@ class SectorWorkFragment : Fragment() {
         binding.industriesRev.adapter = adapter
         binding.industryUnput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                println(s)
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -67,6 +68,7 @@ class SectorWorkFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                println(s)
             }
 
         })
@@ -96,7 +98,6 @@ class SectorWorkFragment : Fragment() {
                 binding.progressBar.visibility = View.GONE
                 binding.industriesRev.visibility = View.VISIBLE
             }
-
             is IndustryState.Error -> {
                 Log.d("ERROR", state.showApplyButton.toString())
                 binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
@@ -104,7 +105,6 @@ class SectorWorkFragment : Fragment() {
                 binding.industriesRev.visibility = View.GONE
                 showPlaceholder(ERROR)
             }
-
             is IndustryState.Loading -> {
                 Log.d("LOADING", state.showApplyButton.toString())
                 binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
@@ -112,7 +112,6 @@ class SectorWorkFragment : Fragment() {
                 binding.progressBar.visibility = View.VISIBLE
                 hidePlaceholder()
             }
-
             is IndustryState.NotFound -> {
                 Log.d("NOTFOUND", state.showApplyButton.toString())
                 binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
@@ -120,7 +119,6 @@ class SectorWorkFragment : Fragment() {
                 binding.industriesRev.visibility = View.GONE
                 showPlaceholder(NOT_FOUND)
             }
-
             is IndustryState.Search -> {
                 Log.d("SEARCH", state.showApplyButton.toString())
                 binding.applyIndustry.visibility = showApplyButton(state.showApplyButton)
@@ -170,7 +168,6 @@ class SectorWorkFragment : Fragment() {
         viewModel.industryUpdate(industry)
 
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

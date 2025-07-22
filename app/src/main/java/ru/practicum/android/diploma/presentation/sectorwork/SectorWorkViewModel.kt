@@ -41,7 +41,7 @@ class SectorWorkViewModel(
             return
         }
         searchJob = viewModelScope.launch {
-            delay(500)
+            delay(SEARCH_DELAY)
             val filteredList = filterIndustries(industryList, query)
             _state.value = if (filteredList.isEmpty()) {
                 IndustryState.NotFound(false)
@@ -66,5 +66,8 @@ class SectorWorkViewModel(
         viewModelScope.launch {
             industryInteractor.updateIndustry(industry)
         }
+    }
+    companion object {
+        private const val SEARCH_DELAY = 500L
     }
 }

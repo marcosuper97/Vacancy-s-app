@@ -29,9 +29,9 @@ class FiltersRepositoryImpl(private val dataBase: DataBase) : FiltersRepository 
             )
         }
         .shareIn(
-            scope = CoroutineScope(Dispatchers.IO),  // или другой Scope (например, viewModelScope)
-            started = SharingStarted.WhileSubscribed(5000),  // перестаёт делиться, если нет подписчиков 5 сек
-            replay = 1  // новые подписчики получают последнее значение
+            scope = CoroutineScope(Dispatchers.IO),
+            started = SharingStarted.WhileSubscribed(TIME_STOP),
+            replay = 1
         )
 
     override suspend fun update(entity: FiltersEntity) {
@@ -54,6 +54,10 @@ class FiltersRepositoryImpl(private val dataBase: DataBase) : FiltersRepository 
                     onlyWithSalary = null
                 )
             )
+    }
+
+    companion object{
+        private const val TIME_STOP = 5000L
     }
 
 }
