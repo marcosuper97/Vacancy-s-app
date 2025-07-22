@@ -53,7 +53,7 @@
         app:layout_constraintEnd_toEndOf="@id/country_placeholder"
         app:layout_constraintStart_toStartOf="@id/country_placeholder"
         app:layout_constraintTop_toBottomOf="@id/country_placeholder"
-        android:text="@string/сouldnt_get_list"
+        android:text="@string/couldnt_get_list"
         android:layout_marginTop="@dimen/dp_16"
         android:textAppearance="@style/appearance_medium_22" />
 

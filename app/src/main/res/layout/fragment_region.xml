@@ -63,7 +63,7 @@
         app:layout_constraintEnd_toEndOf="@id/region_placeholder"
         app:layout_constraintStart_toStartOf="@id/region_placeholder"
         app:layout_constraintTop_toBottomOf="@id/region_placeholder"
-        android:text="@string/сouldnt_get_list"
+        android:text="@string/couldnt_get_list"
         android:layout_marginTop="@dimen/dp_16"
         android:textAppearance="@style/appearance_medium_22" />
 

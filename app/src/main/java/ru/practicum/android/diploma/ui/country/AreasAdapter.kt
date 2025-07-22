@@ -19,6 +19,11 @@ class AreasAdapter(private val onTrackClickListener: (Areas) -> Unit) :
         return countries.size
     }
 
+    fun update(areas: List<Areas>) {
+        countries = areas
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: AreasViewHolder, position: Int) {
         holder.bind(countries[position])
     }
