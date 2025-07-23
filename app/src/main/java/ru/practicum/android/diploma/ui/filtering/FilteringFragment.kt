@@ -134,7 +134,6 @@ class FilteringFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-
         binding.apply.setOnClickListener {
             findNavController().previousBackStackEntry?.savedStateHandle?.set("reapplyFilters", true)
             findNavController().navigateUp()
@@ -192,7 +191,9 @@ class FilteringFragment : Fragment() {
     private fun checkBoxState(state: Boolean?) {
         if (state == null) {
             binding.salaryCheckBox.isChecked = false
-        } else binding.salaryCheckBox.isChecked = state
+        } else {
+            binding.salaryCheckBox.isChecked = state
+        }
     }
 
     private fun areaFieldBehavior(
@@ -260,5 +261,3 @@ class FilteringFragment : Fragment() {
         private const val CLEAN_REQUEST = ""
     }
 }
-
-
