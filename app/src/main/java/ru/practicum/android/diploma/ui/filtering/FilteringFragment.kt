@@ -136,6 +136,7 @@ class FilteringFragment : Fragment() {
 
 
         binding.apply.setOnClickListener {
+            findNavController().previousBackStackEntry?.savedStateHandle?.set("reapplyFilters", true)
             findNavController().navigateUp()
         }
 
