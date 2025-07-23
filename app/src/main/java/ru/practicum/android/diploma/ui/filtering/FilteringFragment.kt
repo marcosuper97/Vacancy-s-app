@@ -141,6 +141,7 @@ class FilteringFragment : Fragment() {
 
         binding.drop.setOnClickListener {
             lifecycleScope.launch {
+                binding.salaryCheckBox.isChecked = false
                 viewModel.reset()
             }
         }
@@ -189,7 +190,7 @@ class FilteringFragment : Fragment() {
 
     private fun checkBoxState(state: Boolean?) {
         if (state == null) {
-            binding.salaryCheckBox.isChecked = true
+            binding.salaryCheckBox.isChecked = false
         } else binding.salaryCheckBox.isChecked = state
     }
 
