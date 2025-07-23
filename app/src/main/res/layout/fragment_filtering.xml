@@ -17,79 +17,153 @@
         app:title="@string/filtering_settings"
         app:titleTextAppearance="@style/appearance_medium_22" />
 
-    <LinearLayout
-        android:id="@+id/choicePlaceWork"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/area"
+        style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        android:layout_marginTop="@dimen/dp_16"
-        android:clickable="true"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/dp_16"
-        android:paddingVertical="@dimen/dp_12"
+        android:layout_marginTop="16dp"
+        android:hint="@string/place_of_work"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarFiltering"
-        tools:ignore="UseCompoundDrawables">
+        app:layout_constraintTop_toBottomOf="@id/toolbarFiltering">
 
-        <TextView
-            android:id="@+id/inputPlaceWork"
-            style="@style/appearance_regular_16"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:hint="@string/place_of_work"
-            android:text=""
-            android:textColorHint="@color/grey" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/areaEdit"
+            style="@style/TextInputEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:focusable="false"
+            tools:text="@string/country" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageView
-            android:id="@+id/iconInputPlaceWork"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center"
-            android:contentDescription="@string/place_of_work"
-            android:src="@drawable/arrow_forward_24" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/choiceSectorWork"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/sector"
+        style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        android:clickable="true"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/dp_16"
-        android:paddingVertical="@dimen/dp_12"
+        android:hint="@string/branch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/choicePlaceWork"
-        tools:ignore="UseCompoundDrawables">
+        app:layout_constraintTop_toBottomOf="@id/area">
 
-        <TextView
-            android:id="@+id/inputSectorWork"
-            style="@style/appearance_regular_16"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:hint="@string/branch"
-            android:text=""
-            android:textColorHint="@color/grey" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/sectorEdit"
+            style="@style/TextInputEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:focusable="false"
+            android:maxLines="1"
+            tools:text="@string/country" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageView
-            android:id="@+id/iconInputSectorWork"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center"
-            android:contentDescription="@string/branch"
-            android:src="@drawable/arrow_forward_24" />
-    </LinearLayout>
+    <EditText
+        android:id="@+id/salaryInput"
+        style="@style/EditTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:layout_marginHorizontal="@dimen/dp_16"
+        android:layout_marginVertical="@dimen/dp_24"
+        android:hint="@string/enter_the_amount"
+        android:inputType="number"
+        android:maxLength="9"
+        android:maxLines="1"
+        android:paddingTop="11dp"
+        android:singleLine="true"
+        android:textCursorDrawable="@drawable/shape_cursor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sector" />
 
     <TextView
+        android:id="@+id/salary_hint"
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/expected_salary"
+        android:textAppearance="@style/appearance_regular_12"
+        android:textColor="@color/salary_filed_color"
+        android:clickable="false"
+        app:layout_constraintStart_toStartOf="@id/salaryInput"
+        app:layout_constraintTop_toTopOf="@id/salaryInput" />
+
+    <ImageView
+        android:id="@+id/delete_cross"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/filtering_settings"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/cross"
+        app:layout_constraintBottom_toBottomOf="@id/salaryInput"
+        app:layout_constraintEnd_toEndOf="@id/salaryInput"
+        app:layout_constraintTop_toTopOf="@id/salaryInput"
+        android:visibility="gone" />
+
+
+    <TextView
+        android:id="@+id/only_with_salary"
+        style="@style/appearance_regular_16"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_24"
+        android:gravity="center_vertical"
+        android:text="@string/do_not_show_without_salary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@id/salaryInput" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/salaryCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@id/only_with_salary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/only_with_salary" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/apply"
+        android:layout_width="0dp"
+        android:layout_height="59dp"
+        android:layout_marginHorizontal="17dp"
+        android:layout_marginBottom="91dp"
+        android:text="@string/apply"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/drop"
+        android:layout_width="0dp"
+        android:layout_height="59dp"
+        android:layout_marginHorizontal="17dp"
+        android:layout_marginBottom="24dp"
+        android:background="@color/transparent"
+        android:text="@string/drop"
+        android:textColor="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/area_navigation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="55dp"
+        app:layout_constraintBottom_toBottomOf="@id/area"
+        app:layout_constraintEnd_toEndOf="@id/area"
+        app:layout_constraintStart_toStartOf="@id/area"
+        app:layout_constraintTop_toTopOf="@id/area" />
+
+    <View
+        android:id="@+id/sector_navigation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="55dp"
+        app:layout_constraintBottom_toBottomOf="@id/sector"
+        app:layout_constraintEnd_toEndOf="@id/sector"
+        app:layout_constraintStart_toStartOf="@id/sector"
+        app:layout_constraintTop_toTopOf="@id/sector" />
 </androidx.constraintlayout.widget.ConstraintLayout>

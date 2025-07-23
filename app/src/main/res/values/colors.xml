@@ -12,4 +12,5 @@
     <color name="background_alpha_50">#801A1B22</color>
     <color name="transparent">#00000000</color>
     <color name="background_shape_color">#E6E8EB</color>
+    <color name="salary_filed_color">#AEAFB4</color>
 </resources>

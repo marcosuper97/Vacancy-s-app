@@ -8,4 +8,5 @@ interface FiltersRepository {
     fun getFilters(): Flow<Filters>
     suspend fun update(entity: FiltersEntity)
     suspend fun reset()
+    fun thereIsFilters(): Flow<Boolean>
 }

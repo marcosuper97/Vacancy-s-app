@@ -35,6 +35,10 @@
         <item name="materialThemeOverlay">@style/buttonOverlay</item>
         <item name="android:textAppearance">@style/TextAppearance.App.Button</item>
         <item name="shapeAppearance">@style/ShapeAppearance</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:minHeight">0dp</item>
     </style>
 
     <style name="buttonOverlay" parent="ThemeOverlay.Material3.Button">
@@ -129,6 +133,27 @@
         <item name="android:enabled">false</item>
         <item name="android:textAppearance">@style/appearance_regular_16</item>
         <item name="android:textColor">@color/text_color</item>
+    </style>
+
+    <style name="SalaryTextInputLayoutStyle" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="android:layout_height">51dp</item>
+        <item name="android:textColorHint">@color/blue</item>
+        <item name="hintTextColor">@color/grey</item>
+        <item name="hintTextAppearance">@style/appearance_regular_12</item>
+        <item name="endIconMode">custom</item>
+        <item name="hintAnimationEnabled">true</item>
+        <item name="hintEnabled">true</item>
+        <item name="boxStrokeWidth">@dimen/dp_0</item>
+        <item name="boxStrokeColor">@color/transparent</item>
+    </style>
+
+    <style name="SalaryTextInputEditTextStyle">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:clickable">true</item>
+        <item name="android:cursorVisible">true</item>
+        <item name="android:enabled">true</item>
+        <item name="android:textAppearance">@style/appearance_regular_16</item>
+        <item name="android:textColor">@color/grey</item>
     </style>
 
 </resources>

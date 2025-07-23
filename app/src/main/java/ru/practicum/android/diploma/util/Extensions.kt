@@ -47,6 +47,5 @@ fun Filters.toEntity(): FiltersEntity {
         salary = this.salary,
         onlyWithSalary = this.onlyWithSalary
     )
-
 }
 

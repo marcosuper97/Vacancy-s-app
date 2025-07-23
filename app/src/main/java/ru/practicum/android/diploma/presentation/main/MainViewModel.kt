@@ -53,6 +53,15 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor) : V
         }
     }
 
+    fun reapplyRequest(changedText: String) {
+        _uiState.value = SearchVacanciesState.Loading
+        debounceJob = viewModelScope.launch {
+            delay(SEARCH_DEBOUNCE_DELAY)
+            searchVacancies(changedText, currentPage)
+            currentPage = 1
+        }
+    }
+
     fun searchNextPage() {
         if (pagesOnResponse - 1 > currentPage) {
             if (_isLoadingNextPage.value || isSearchActive) {

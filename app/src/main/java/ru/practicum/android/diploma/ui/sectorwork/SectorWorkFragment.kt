@@ -4,12 +4,15 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
@@ -72,9 +75,11 @@ class SectorWorkFragment : Fragment() {
 
         })
 
-        lifecycleScope.launch {
-            viewModel.state.collect { state ->
-                renderUi(state)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state ->
+                    renderUi(state)
+                }
             }
         }
 
@@ -164,11 +169,12 @@ class SectorWorkFragment : Fragment() {
 
     private fun onItemClick(industry: Industry) {
         viewModel.industryUpdate(industry)
-
+        binding.applyIndustry.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d("DESTROY", "ASDASDASDASD")
         _binding = null
     }
 

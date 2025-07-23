@@ -37,6 +37,7 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModel()
     private var vacanciesAdapter: VacanciesAdapter? = null
     private var menuItem: MenuItem? = null
+    private var requestText: String = EMPTY_REQUEST
 
 
     override fun onCreateView(
@@ -66,6 +67,14 @@ class MainFragment : Fragment() {
                 else -> false
             }
         }
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("reapplyFilters")
+            ?.observe(viewLifecycleOwner) { reapply ->
+                if (reapply && requestText.isNotEmpty()) {
+                    viewModel.reapplyRequest(requestText)
+                    findNavController().currentBackStackEntry?.savedStateHandle?.set("reapplyFilters", false)
+                }
+            }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.filtersState.collect { state ->
@@ -108,7 +117,8 @@ class MainFragment : Fragment() {
                         R.drawable.cross,
                         0
                     )
-                    viewModel.onSearchTextChanged(s.toString())
+                    requestText = s.toString()
+                    viewModel.onSearchTextChanged(requestText)
                 }
             }
 
@@ -234,6 +244,7 @@ class MainFragment : Fragment() {
         ) {
             viewModel.onClearSearchClicked()
             binding.mainInputEt.text.clear()
+            requestText = EMPTY_REQUEST
             return true
         }
         return false
@@ -244,5 +255,9 @@ class MainFragment : Fragment() {
             false -> menuItem?.setIcon(R.drawable.filters)
             true -> menuItem?.setIcon(R.drawable.filters_active)
         }
+    }
+
+    companion object {
+        private const val EMPTY_REQUEST = ""
     }
 }
