@@ -101,7 +101,7 @@
 
 
     <TextView
-        android:id="@+id/show_salary_text"
+        android:id="@+id/only_with_salary"
         style="@style/appearance_regular_16"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -111,6 +111,7 @@
         android:text="@string/do_not_show_without_salary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:clickable="true"
         app:layout_constraintTop_toBottomOf="@id/salaryInput" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
@@ -118,9 +119,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        app:layout_constraintBottom_toBottomOf="@id/show_salary_text"
+        app:layout_constraintBottom_toBottomOf="@id/only_with_salary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/show_salary_text" />
+        app:layout_constraintTop_toTopOf="@id/only_with_salary" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/apply"
@@ -165,13 +166,4 @@
         app:layout_constraintEnd_toEndOf="@id/sector"
         app:layout_constraintStart_toStartOf="@id/sector"
         app:layout_constraintTop_toTopOf="@id/sector" />
-
-    <View
-        android:id="@+id/checkbox"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/show_salary_text"
-        app:layout_constraintEnd_toEndOf="@id/show_salary_text"
-        app:layout_constraintStart_toStartOf="@id/show_salary_text"
-        app:layout_constraintTop_toTopOf="@id/show_salary_text" />
 </androidx.constraintlayout.widget.ConstraintLayout>

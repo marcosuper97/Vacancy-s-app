@@ -47,9 +47,14 @@ class FilteringViewModel(private val interactor: FiltersInteractor) : ViewModel(
         }
     }
 
-    fun updateNoSalary(onlyWithSalary: Boolean) {
+    fun updateNoSalary() {
         viewModelScope.launch {
-            interactor.updateNoSalary(onlyWithSalary)
+            val noSalaryState = screenState.value.filters.onlyWithSalary
+            if (noSalaryState == null || noSalaryState == false) {
+                interactor.updateNoSalary(true)
+            } else {
+                interactor.updateNoSalary(false)
+            }
         }
     }
 

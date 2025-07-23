@@ -110,6 +110,18 @@ class FilteringFragment : Fragment() {
             }
         }
 
+        binding.onlyWithSalary.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.updateNoSalary()
+            }
+        }
+
+        binding.salaryCheckBox.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.updateNoSalary()
+            }
+        }
+
         binding.areaNavigation.setOnClickListener {
             findNavController().navigate(R.id.action_to_place_work_fragment)
         }
@@ -177,8 +189,8 @@ class FilteringFragment : Fragment() {
 
     private fun checkBoxState(state: Boolean?) {
         if (state == null) {
-            binding.checkbox.isEnabled = false
-        } else binding.checkbox.isEnabled = state
+            binding.salaryCheckBox.isChecked = true
+        } else binding.salaryCheckBox.isChecked = state
     }
 
     private fun areaFieldBehavior(
