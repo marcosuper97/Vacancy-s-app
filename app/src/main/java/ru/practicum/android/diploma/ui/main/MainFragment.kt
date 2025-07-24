@@ -27,6 +27,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
 import ru.practicum.android.diploma.presentation.main.MainViewModel
 import ru.practicum.android.diploma.ui.vacancy.VacanciesAdapter
+import ru.practicum.android.diploma.util.FragmentSnackExtension.showSnackBar
 import ru.practicum.android.diploma.util.SearchVacanciesState
 import ru.practicum.android.diploma.util.setVacanciesCountText
 
@@ -201,6 +202,7 @@ class MainFragment : Fragment() {
         binding.errorImageAndMessageLl.isVisible = true
         binding.errorImageIv.setImageResource(R.drawable.image_no_internet)
         binding.errorTextTv.setText(R.string.there_is_no_internet_connection)
+        this.showSnackBar(binding.root,getString(R.string.check_internet_connection))
     }
 
     fun showNetworkError() {
@@ -211,6 +213,7 @@ class MainFragment : Fragment() {
         binding.errorImageAndMessageLl.isVisible = true
         binding.errorImageIv.setImageResource(R.drawable.image_error_server)
         binding.errorTextTv.setText(R.string.server_error)
+        this.showSnackBar(binding.root,getString(R.string.server_mistake))
     }
 
     fun showNothingFound() {
