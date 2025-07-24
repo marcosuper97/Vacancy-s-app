@@ -9,4 +9,5 @@ sealed class SearchVacanciesState {
     data object NetworkError : SearchVacanciesState()
     data object NoInternet : SearchVacanciesState()
     data object Default : SearchVacanciesState()
+    data class PaginationError(val isNoInternet: Boolean) : SearchVacanciesState()
 }

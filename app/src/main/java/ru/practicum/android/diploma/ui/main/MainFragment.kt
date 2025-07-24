@@ -174,6 +174,7 @@ class MainFragment : Fragment() {
             SearchVacanciesState.NothingFound -> showNothingFound()
             is SearchVacanciesState.ShowContent -> showContent(state)
             SearchVacanciesState.NoInternet -> showNoInternet()
+            is SearchVacanciesState.PaginationError -> showPaginationError(state)
         }
     }
 
@@ -202,7 +203,6 @@ class MainFragment : Fragment() {
         binding.errorImageAndMessageLl.isVisible = true
         binding.errorImageIv.setImageResource(R.drawable.image_no_internet)
         binding.errorTextTv.setText(R.string.there_is_no_internet_connection)
-        this.showSnackBar(binding.root,getString(R.string.check_internet_connection))
     }
 
     fun showNetworkError() {
@@ -213,7 +213,6 @@ class MainFragment : Fragment() {
         binding.errorImageAndMessageLl.isVisible = true
         binding.errorImageIv.setImageResource(R.drawable.image_error_server)
         binding.errorTextTv.setText(R.string.server_error)
-        this.showSnackBar(binding.root,getString(R.string.server_mistake))
     }
 
     fun showNothingFound() {
@@ -233,6 +232,20 @@ class MainFragment : Fragment() {
         binding.mainDefaultIv.isVisible = false
         binding.errorImageAndMessageLl.isVisible = false
 
+    }
+
+    fun showPaginationError(state: SearchVacanciesState.PaginationError) {
+        binding.mainRv.isVisible = true
+        binding.countVacancyTv.isVisible = true
+        binding.mainPb.isVisible = false
+        binding.mainDefaultIv.isVisible = false
+        binding.errorImageAndMessageLl.isVisible = false
+        val message = if (state.isNoInternet) {
+            getString(R.string.check_internet_connection)
+        } else {
+            getString(R.string.server_mistake)
+        }
+        this.showSnackBar(binding.root, message)
     }
 
     override fun onDestroyView() {

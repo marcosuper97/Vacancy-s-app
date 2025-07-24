@@ -119,10 +119,16 @@ class MainViewModel(private var searchInteractor: SearchVacanciesInteractor) : V
 
                 result.onFailure {
                     removeLoadingItem()
-                    _uiState.value = when (result.exceptionOrNull()) {
-                        is AppException.EmptyResult, is AppException.NotFound -> SearchVacanciesState.NothingFound
-                        is AppException.NoInternetConnection -> SearchVacanciesState.NoInternet
-                        else -> SearchVacanciesState.NetworkError
+                    if (page == 0) {
+                        _uiState.value = when (result.exceptionOrNull()) {
+                            is AppException.EmptyResult, is AppException.NotFound -> SearchVacanciesState.NothingFound
+                            is AppException.NoInternetConnection -> SearchVacanciesState.NoInternet
+                            else -> SearchVacanciesState.NetworkError
+                        }
+                    } else {
+                        _uiState.value = SearchVacanciesState.PaginationError(
+                            isNoInternet = result.exceptionOrNull() is AppException.NoInternetConnection
+                        )
                     }
                     _isLoadingNextPage.value = false
                     isSearchActive = false // Сбрасываем флаг после завершения
