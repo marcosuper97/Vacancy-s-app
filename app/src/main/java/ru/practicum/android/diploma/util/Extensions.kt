@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.LayoutRes
-import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import ru.practicum.android.diploma.R
