@@ -27,6 +27,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
 import ru.practicum.android.diploma.presentation.main.MainViewModel
 import ru.practicum.android.diploma.ui.vacancy.VacanciesAdapter
+import ru.practicum.android.diploma.util.FragmentSnackExtension.showSnackBar
 import ru.practicum.android.diploma.util.SearchVacanciesState
 import ru.practicum.android.diploma.util.setVacanciesCountText
 
@@ -173,6 +174,7 @@ class MainFragment : Fragment() {
             SearchVacanciesState.NothingFound -> showNothingFound()
             is SearchVacanciesState.ShowContent -> showContent(state)
             SearchVacanciesState.NoInternet -> showNoInternet()
+            is SearchVacanciesState.PaginationError -> showPaginationError(state)
         }
     }
 
@@ -230,6 +232,20 @@ class MainFragment : Fragment() {
         binding.mainDefaultIv.isVisible = false
         binding.errorImageAndMessageLl.isVisible = false
 
+    }
+
+    fun showPaginationError(state: SearchVacanciesState.PaginationError) {
+        binding.mainRv.isVisible = true
+        binding.countVacancyTv.isVisible = true
+        binding.mainPb.isVisible = false
+        binding.mainDefaultIv.isVisible = false
+        binding.errorImageAndMessageLl.isVisible = false
+        val message = if (state.isNoInternet) {
+            getString(R.string.check_internet_connection)
+        } else {
+            getString(R.string.server_mistake)
+        }
+        this.showSnackBar(binding.root, message)
     }
 
     override fun onDestroyView() {
