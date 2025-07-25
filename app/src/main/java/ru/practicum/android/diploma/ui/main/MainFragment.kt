@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -35,11 +36,14 @@ class MainFragment : Fragment() {
     private val binding: FragmentMainBinding get() = _binding!!
     private val viewModel: MainViewModel by viewModel()
     private var vacanciesAdapter: VacanciesAdapter? = null
+    private var menuItem: MenuItem? = null
+    private var requestText: String = EMPTY_REQUEST
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
@@ -48,10 +52,10 @@ class MainFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         vacanciesAdapter = VacanciesAdapter(::onVacancyClicked)
         binding.mainRv.layoutManager = LinearLayoutManager(context)
         binding.mainRv.adapter = vacanciesAdapter
+        menuItem = binding.toolbarMain.menu.findItem(R.id.filtering)
 
         binding.toolbarMain.setOnMenuItemClickListener {
             when (it.itemId) {
@@ -61,6 +65,20 @@ class MainFragment : Fragment() {
                 }
 
                 else -> false
+            }
+        }
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("reapplyFilters")
+            ?.observe(viewLifecycleOwner) { reapply ->
+                if (reapply && requestText.isNotEmpty()) {
+                    viewModel.reapplyRequest(requestText)
+                    findNavController().currentBackStackEntry?.savedStateHandle?.set("reapplyFilters", false)
+                }
+            }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.filtersState.collect { state ->
+                showFilterState(state)
             }
         }
 
@@ -99,7 +117,8 @@ class MainFragment : Fragment() {
                         R.drawable.cross,
                         0
                     )
-                    viewModel.onSearchTextChanged(s.toString())
+                    requestText = s.toString()
+                    viewModel.onSearchTextChanged(requestText)
                 }
             }
 
@@ -132,7 +151,8 @@ class MainFragment : Fragment() {
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
-                    firstVisibleItemPosition >= 0 && !viewModel.isLoadingNextPage.value) {
+                    firstVisibleItemPosition >= 0 && !viewModel.isLoadingNextPage.value
+                ) {
                     viewModel.searchNextPage()
                 }
             }
@@ -224,8 +244,20 @@ class MainFragment : Fragment() {
         ) {
             viewModel.onClearSearchClicked()
             binding.mainInputEt.text.clear()
+            requestText = EMPTY_REQUEST
             return true
         }
         return false
+    }
+
+    private fun showFilterState(state: Boolean) {
+        when (state) {
+            false -> menuItem?.setIcon(R.drawable.filters)
+            true -> menuItem?.setIcon(R.drawable.filters_active)
+        }
+    }
+
+    companion object {
+        private const val EMPTY_REQUEST = ""
     }
 }

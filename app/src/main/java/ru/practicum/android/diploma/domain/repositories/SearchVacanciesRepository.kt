@@ -5,5 +5,6 @@ import ru.practicum.android.diploma.domain.models.VacanciesList
 
 interface SearchVacanciesRepository {
     fun doRequest(textRequest: String, page: Int): Flow<Result<VacanciesList>>
-    fun createRequest(textRequest: String, page: Int): Map<String, String>
+    suspend fun createRequest(textRequest: String, page: Int): Map<String, String>
+    suspend fun thereIsFilters(): Flow<Boolean>
 }

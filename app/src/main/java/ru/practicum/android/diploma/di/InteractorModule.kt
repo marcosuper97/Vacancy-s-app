@@ -3,18 +3,36 @@ package ru.practicum.android.diploma.di
 import org.koin.dsl.module
 import ru.practicum.android.diploma.domain.detailsvacancy.DetailsVacancyInteractor
 import ru.practicum.android.diploma.domain.detailsvacancy.DetailsVacancyInteractorImpl
+import ru.practicum.android.diploma.domain.impl.AreasInteractorImpl
 import ru.practicum.android.diploma.domain.impl.FavoritesInteractorImpl
+import ru.practicum.android.diploma.domain.impl.FiltersInteractorImpl
+import ru.practicum.android.diploma.domain.impl.IndustryInteractorImpl
 import ru.practicum.android.diploma.domain.impl.SearchVacanciesInteractorImpl
+import ru.practicum.android.diploma.domain.interactors.AreasInteractor
 import ru.practicum.android.diploma.domain.interactors.FavoritesInteractor
+import ru.practicum.android.diploma.domain.interactors.FiltersInteractor
+import ru.practicum.android.diploma.domain.interactors.IndustryInteractor
 import ru.practicum.android.diploma.domain.repositories.SearchVacanciesInteractor
 
 val interactorModule = module {
 
-    single<FavoritesInteractor> {
+    factory<FavoritesInteractor> {
         FavoritesInteractorImpl(get())
     }
-    single<DetailsVacancyInteractor> {
+    factory<DetailsVacancyInteractor> {
         DetailsVacancyInteractorImpl(get(), get())
     }
     factory<SearchVacanciesInteractor> { SearchVacanciesInteractorImpl(get()) }
+
+    single<IndustryInteractor> {
+        IndustryInteractorImpl(get(), get())
+    }
+
+    single<AreasInteractor> {
+        AreasInteractorImpl(get(), get())
+    }
+
+    factory<FiltersInteractor> {
+        FiltersInteractorImpl(get())
+    }
 }

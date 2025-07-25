@@ -28,6 +28,6 @@ class FavoritesRepositoryImpl(private val dataBase: DataBase) : FavoritesReposit
     override suspend fun getVacancy(id: String): VacancyDetails =
         mapToDetails(dataBase.vacanciesDao().getVacancy(id))
 
-    override suspend fun isFavorite(id: String): Boolean =
+    override fun isFavorite(id: String): Flow<Boolean> =
         dataBase.vacanciesDao().isFavorite(id)
 }

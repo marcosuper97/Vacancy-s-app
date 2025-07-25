@@ -1,21 +1,29 @@
 package ru.practicum.android.diploma.ui.placework
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentPlaceWorkBinding
+import ru.practicum.android.diploma.presentation.placework.PlaceWorkState
 import ru.practicum.android.diploma.presentation.placework.PlaceWorkViewModel
 
 class PlaceWorkFragment : Fragment() {
 
     private var _binding: FragmentPlaceWorkBinding? = null
     private val binding: FragmentPlaceWorkBinding get() = _binding!!
-    private val viewModel: PlaceWorkViewModel by viewModels()
+    private val viewModel: PlaceWorkViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,18 +36,78 @@ class PlaceWorkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state ->
+                    renderUi(state)
+                }
+            }
+        }
         binding.toolbarPlaceWork.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
 
-        binding.choiceCountry.setOnClickListener {
+        binding.countryNavigation.setOnClickListener {
             findNavController().navigate(R.id.action_to_country_fragment)
         }
 
-        binding.choiceRegion.setOnClickListener {
+        binding.regionNavigation.setOnClickListener {
             findNavController().navigate(R.id.action_to_region_fragment)
         }
+
+        binding.applyButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
+    }
+
+    private fun textFieldBehavior(
+        textInputLayout: TextInputLayout,
+        editText: EditText,
+        navigationActionId: Int,
+        text: String?
+    ) {
+        if (!text.isNullOrEmpty()) {
+            textInputLayout.setEndIconDrawable(R.drawable.cross)
+            editText.setText(text)
+            textInputLayout.defaultHintTextColor = ColorStateList.valueOf(requireContext().getColor(R.color.text_color))
+        } else {
+            textInputLayout.setEndIconDrawable(R.drawable.arrow_forward_24)
+            textInputLayout.defaultHintTextColor = ColorStateList.valueOf(requireContext().getColor(R.color.grey))
+            editText.text.clear()
+        }
+        textInputLayout.setEndIconOnClickListener {
+            if (!text.isNullOrEmpty()) {
+                editText.text.clear()
+                if (navigationActionId == R.id.action_to_country_fragment) {
+                    viewModel.deleteCountry()
+                } else {
+                    viewModel.deleteRegion()
+                }
+                textInputLayout.setEndIconDrawable(R.drawable.arrow_forward_24)
+            } else {
+                findNavController().navigate(navigationActionId)
+            }
+        }
+    }
+
+    private fun renderUi(state: PlaceWorkState) {
+        if (state.area != null || state.country != null) {
+            binding.applyButton.visibility = View.VISIBLE
+        } else {
+            binding.applyButton.visibility = View.GONE
+        }
+        textFieldBehavior(
+            binding.choiceRegion,
+            binding.inputRegion,
+            R.id.action_to_region_fragment,
+            state.area
+        )
+        textFieldBehavior(
+            binding.choiceCountry,
+            binding.inputCountry,
+            R.id.action_to_country_fragment,
+            state.country
+        )
     }
 
     override fun onDestroyView() {
