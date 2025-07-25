@@ -168,7 +168,8 @@ class SectorWorkFragment : Fragment() {
     }
 
     private fun onItemClick(industry: Industry) {
-        viewModel.industryUpdate(industry)
+        viewModel.filtersIndustryUpdate(industry)
+        viewModel.fixIndustryInList(industry)
         binding.applyIndustry.visibility = View.VISIBLE
     }
 
