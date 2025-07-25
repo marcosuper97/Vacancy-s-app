@@ -62,9 +62,18 @@ class SectorWorkViewModel(
         }
     }
 
-    fun industryUpdate(industry: Industry) {
+    fun filtersIndustryUpdate(industry: Industry) {
         viewModelScope.launch {
             industryInteractor.updateIndustry(industry)
+        }
+    }
+
+    fun fixIndustryInList(industry: Industry) {
+        viewModelScope.launch {
+            val updatedList = industryList.map { industryOld ->
+                industryOld.copy(select = industry.id == industryOld.id)
+            }
+            industryList = updatedList
         }
     }
 
