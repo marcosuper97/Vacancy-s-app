@@ -71,6 +71,8 @@
     <string name="binding_not_initialized">Binding wasn\'t initialized</string>
     <string name="vacancy_name_area">%1$s, %2$s</string>
     <string name="point">•</string>
+    <string name="check_internet_connection">Проверьте подключение к интернету</string>
+    <string name="server_mistake">Произошла ошибка</string>
 
     <plurals name="vacancies_count">
         <item quantity="zero">%d вакансий</item>
