@@ -2,15 +2,14 @@
 
 ## Описание
 
-Приложение для удобного поиска вакансий с гибкими фильтрами по заработной плате, региону и отрасли. Позволяет сохранить понравившиеся вакансии в локальной базе данных и комфортно искать рабочие места практически в любой стране мира.
+Приложение для удобного поиска вакансий с гибкими фильтрами по заработной плате, региону и отрасли. Реализована возможность сохранить понравившиеся вакансии в локальной базе данных и комфортно искать рабочие места практически в любой стране мира.
 
 ## Скриншоты
-
-<!-- Здесь будут размещены ваши скриншоты -->
-
-<div align="center">
-  <!-- Добавьте скриншоты здесь -->
-</div>
+<img src="https://github.com/user-attachments/assets/38e042e3-6384-43f7-89bd-abd88f97daaf" alt="Screenshot 1" width="150"/>
+<img src="https://github.com/user-attachments/assets/68342314-e4b2-450a-9ec0-7e43b5eca995" alt="Screenshot 2" width="150"/>
+<img src="https://github.com/user-attachments/assets/a137a952-d638-4cd3-b409-877cf8cb8b04" alt="Screenshot 3" width="150"/>
+<img src="https://github.com/user-attachments/assets/33c0c8d4-c233-4b5a-b62c-4b62809eede7" alt="Screenshot 4" width="150"/>
+<img src="https://github.com/user-attachments/assets/d7759404-6ef6-4217-9d03-969412721dc0" alt="Screenshot 5" width="150"/>
 
 ## Особенности
 
